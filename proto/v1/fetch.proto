@@ -1,0 +1,26 @@
+syntax = "proto3";
+package codes.spectrum.svdb.model.v1;
+option go_package = "gitlab.spectrumdata.tech/sd3/svdb/go/model/v1";
+
+
+// клиентский запрос для SVDB
+// пока это просто обертка над строкой в формате 
+// встроенного языка SdQL
+// NOTE: структура - чтобы не было простых типов в API,
+// под расширение
+message FetchOptions {
+    reserved 1 to 9; // мало ли что
+
+    // режим выполнения запроса
+    enum Mode {
+        ONE = 0; // один фетч батч размера от 1 до N
+        ALL = 10; // все записи - режим для fetchAll
+    }
+
+    // режим выполнения запроса
+    Mode mode = 10;
+
+    // uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
+    string cursorUid = 20;
+}
+ 

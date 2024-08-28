@@ -1,0 +1,60 @@
+syntax = "proto3";
+package codes.spectrum.svdb.model.v1;
+option go_package = "gitlab.spectrumdata.tech/sd3/svdb/go/model/v1";
+import "google/protobuf/empty.proto";
+
+import "v1/query.proto";
+import "v1/queryresult.proto";
+import "v1/state.proto";
+import "v1/fetch.proto";
+import "v1/cancel.proto";
+
+// интерфейс основного сервиса для удаленного обмена данными
+// 1. При установке соединения и успешной аутентификации клиент открывает сессию
+// 2. Команды выполняются в рамках сессии
+// 3. C закрытием соединения закроется и сессия
+// 4. В версии 0.1.0 - 0.2.0 позволяет открыть один запрос и при 
+//    запросе следующего он будет закрыт, более полное API подразумевает
+//    дизайн с несколькими одновременными результатами (это сразу будет сделано, 
+//    но только для embedded режима, а не на gRPC), публикация на gRPC будет
+//    уточнене после опытной эксплуатации
+// 5. получив корректный ответ на запрос, клиент может выполнять 
+//    последовательный Fetch из него - по одной записи или батчами
+service SvdbService {
+    // выполняет запрос, открывает курсор и получает QueryResult, 
+    // в котором есть токен для последующих fetch
+    // в нынешней реализации 
+    rpc Query(QueryOptions) returns (QueryResult);
+
+    // выполняет получение следующей записи по result_uid,
+    // NOTE: в версии 0.1.0 - 0.2.0 это единственный вариант
+    // фетча - по одной записи, то есть массив records 
+    // будет из одного элемента и по текущему результату
+    // по KISS пока делаем только такую сигнатуру
+    // имеется возможность передать cursorUid
+    // в Fetch и выбрать любой курсор из текущей сессии
+    rpc Fetch(FetchOptions) returns (QueryResult);
+    
+    // запрос для теста соединения
+    // реализует логику первого запроса после установки соединения
+    // для аутентификации и инициализации сессии
+    rpc Ping(google.protobuf.Empty) returns (State);
+
+    // позволяет удалить сессию или курсор до того,
+    // как ее зачистит внутренний сборщик мусора svdb
+    // передача uid сессии при закрытии курсора обязательна!!
+    rpc Cancel(CancelOptions) returns (State);
+
+    //@FUTURE: 0.3.0 // DECLINED BY KISS/YAGNI
+    // для паралелльно открытых курсоров - выбрать запись из любого
+    // rpc FetchResult(Query.Token) returns (RecordResult)
+
+    //@FUTURE: 0.3.0 // DECLINED BY KISS/YAGNI
+    // вариант для push отправки сервером батча (стрима рекордов)
+    // [count] за раз и может выдать меньше при 
+    // EOF или скажем таймаутах, соответственно будет
+    // для этого еще и статус EOL
+    // самая полная форма, по факту [FetchCurrentResult]
+    // это [FetchResultStrum(current.token, 1).firstOrEof()]
+    //rpc FetchResultStream(Query.Token, int32) returns (stream RecordResult)
+}

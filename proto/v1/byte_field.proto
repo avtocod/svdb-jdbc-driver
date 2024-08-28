@@ -1,0 +1,13 @@
+syntax = "proto3";
+package codes.spectrum.svdb.model.v1;
+
+option go_package = "gitlab.spectrumdata.tech/sd3/svdb/go/model/v1";
+
+// поле
+message ByteField {
+  // значение поля в виде массива байтов
+  bytes item = 1;
+
+  // не используется, будет DEPRECATED в версии 2.0
+  repeated bytes items = 2;
+}

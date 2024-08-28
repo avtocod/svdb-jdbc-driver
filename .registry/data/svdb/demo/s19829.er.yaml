@@ -1,0 +1,25 @@
+# Тестовый банк данных поиска по ИНН ФЛ
+pkg: svdb.demo.s19829
+#code: demo.s19829.main.bank (java-like)
+name: Тестовый банк данных поиска по ИНН ФЛ
+bank:
+  schema: demo
+# schema : s19829 (last go-like)
+  datasets:
+    - code: inns # SELECT * FROM s19829.inns WHERE inn = 123456789012
+      keys:
+        - fields: [{ code: inn } ]
+      fields:
+        - { code: inn }
+        - { code: pass, mappedCode: pass_number }
+    - code: passports # SELECT * FROM s19829.passports WHERE passport = 1234567890
+      # ищем только по паспорту
+      keys:
+         - fields: [ { code: pass } ]
+      # получаем ФИО, где меняем название поля "отчество"
+      fields:
+        - { code: pass, mappedCode: pass_number }
+        - { code: last_name }
+        - { code: first_name }
+        - { code: patronymic, mappedCode: middle_name }
+        - { code: birth, mappedCode: birth_date }

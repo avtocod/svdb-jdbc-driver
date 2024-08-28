@@ -1,0 +1,2 @@
+test_instance/svdb-srv filter=lfs diff=lfs merge=lfs -text
+test_instance/svdb-srv.exe filter=lfs diff=lfs merge=lfs -text

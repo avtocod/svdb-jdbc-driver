@@ -1,0 +1,14 @@
+syntax = "proto3";
+package codes.spectrum.svdb.model.v1;
+option go_package = "gitlab.spectrumdata.tech/sd3/svdb/go/model/v1";
+import "v1/value.proto";
+
+//Field - описатель значения одного поля для кортежей
+message Field {
+    //code - код поля
+    string code = 10;
+    //value - значение поля
+    Value value = 20;
+}
+
+

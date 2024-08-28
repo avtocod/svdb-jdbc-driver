@@ -1,0 +1,12 @@
+syntax = "proto3";
+package codes.spectrum.svdb.model.v1;
+option go_package = "gitlab.spectrumdata.tech/sd3/svdb/go/model/v1";
+
+message Warning {
+    // код ошибки SQL
+    int32 code = 10;
+    // SQLState
+    string state = 15;
+    // сообщение
+    string reason = 20;
+  }

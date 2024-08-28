@@ -1,0 +1,129 @@
+pkg: svdb.dict.modelref
+
+bank:
+  schema: dict
+  datasets:
+    - code: model_reference
+      name: "Справочник моделей автомобилей (сервис reference)"
+      platform: REST
+      connectionUrl: "https://production-references-referencesv2.spectrumdata.tech/api/v2/references/autoru/search"
+      options:
+        safety-level: "UNSAFE"
+      plainJson:
+        root: "content.marks"
+        aliases:
+          models: m
+          generations: g
+          cars: c
+          engines: e
+      fields:
+        - {
+            code: _raw,
+            comment: "сырой запрос",
+            isNull: true,
+            queryCode: "raw",
+            isQueryOnly: true,
+            isNativeFilter: true,
+            explicitOnly: true,
+            isPrimaryKey: true,
+          }
+        - { code: mark, comment: "марка", mappedCode: name }
+        - { code: model, comment: "модель", mappedCode: m_name }
+        - { code: gen, comment: "поколение", mappedCode: m_g_name }
+        - {
+            code: start_date,
+            comment: "дата начала выпуска",
+            mappedCode: m_g_dates_start,
+          }
+        - {
+            code: end_date,
+            comment: "дата начала выпуска",
+            mappedCode: m_g_dates_end,
+          }
+        - {
+            code: is_restyling,
+            comment: "признак рестайлинга",
+            mappedCode: m_g_is_restyling,
+            type: BOOL,
+          }
+        - { code: car, comment: "комплектация", mappedCode: m_g_c_name }
+        - { code: body, comment: "тип кузова", mappedCode: m_g_c_body }
+        - { code: engine, comment: "двигатель", mappedCode: m_g_c_e_name }
+        - {
+            code: power,
+            comment: "мощность",
+            mappedCode: m_g_c_e_power,
+            type: INT,
+          }
+        - {
+            code: volume,
+            comment: "объем двигателя",
+            mappedCode: m_g_c_e_volume,
+            type: FLOAT,
+          }
+        - {
+            code: transmission,
+            comment: "тип коробки передач",
+            mappedCode: m_g_c_e_transmission,
+          }
+        - { code: drive, comment: "тип привода", mappedCode: m_g_c_e_drive }
+        - { code: fuel, comment: "тип топлива", mappedCode: m_g_c_e_fuel_type }
+        - {
+            code: engine_complect,
+            comment: "комплектация двигателя",
+            mappedCode: m_g_c_e_complect,
+          }
+        - {
+            code: engine_url,
+            comment: "URL спецификации двигателя",
+            mappedCode: m_g_c_e_url,
+          }
+        - { code: url, comment: "URL марки на avto.ru" }
+        - {
+            code: id,
+            comment: "ID марки",
+            mappedCode: original_id,
+            type: INT,
+            explicitOnly: true,
+          }
+        - { code: uid, comment: "UID марки", explicitOnly: true }
+        - {
+            code: model_id,
+            comment: "ID модели",
+            mappedCode: m_original_id,
+            type: INT,
+            explicitOnly: true,
+          }
+        - {
+            code: model_uid,
+            comment: "UID модели",
+            mappedCode: m_uid,
+            explicitOnly: true,
+          }
+        - {
+            code: model_type,
+            comment: "код тип модели",
+            mappedCode: m_vehicle_type,
+            explicitOnly: true,
+          }
+        - {
+            code: gen_id,
+            comment: "ID поколения",
+            mappedCode: m_g_original_id,
+            type: INT,
+            explicitOnly: true,
+          }
+        - {
+            code: car_id,
+            comment: "ID комплектации",
+            mappedCode: m_g_c_original_id,
+            type: INT,
+            explicitOnly: true,
+          }
+        - {
+            code: engine_id,
+            comment: "ID двигателя",
+            mappedCode: m_g_c_e_original_id,
+            type: INT,
+            explicitOnly: true,
+          }

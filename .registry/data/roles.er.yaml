@@ -1,0 +1,8 @@
+pkg: roles
+
+# роль админа, которому можно все
+code: admin
+role:
+     grants :
+          - { permissions: [ ALL ], type: SCHEMA, targets: [ ALL ] }
+          - { permissions: [ ALL ], type: BACKSTORE, targets: [ ALL ] }

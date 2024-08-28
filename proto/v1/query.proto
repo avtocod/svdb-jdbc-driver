@@ -1,0 +1,36 @@
+syntax = "proto3";
+package codes.spectrum.svdb.model.v1;
+import "v1/value.proto";
+import "v1/column.proto";
+option go_package = "gitlab.spectrumdata.tech/sd3/svdb/go/model/v1";
+
+
+// клиентский запрос для SVDB
+// пока это просто обертка над строкой в формате 
+// встроенного языка SdQL
+// NOTE: структура - чтобы не было простых типов в API,
+// под расширение
+message QueryOptions {
+    reserved 1 to 9; // мало ли что
+
+    // текст запроса в формате SdQL
+    string text = 10;
+
+    // режим выполнения запроса
+    enum Mode {
+        ASYNC = 0; // асинхронный - режим по умолчанию
+        SYNC = 10; // запрос должен сразу вернуть все результаты, синхронны режим
+    }
+
+    // режим выполнения запроса
+    Mode mode = 20;
+
+
+    message Arg {
+        DataType dataType = 5;
+        string name = 10;
+        Value value = 20;
+    }
+
+    repeated Arg args = 30;
+}
