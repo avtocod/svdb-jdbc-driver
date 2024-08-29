@@ -10,16 +10,15 @@ variables:
   DOCKER_CERT_PATH: /certs/client
   WITH_SERVICE_DEPLOY: "true"
 
+stages:
+  - test
+
 workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
     - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
       when: never
     - if: $CI_COMMIT_BRANCH
-
-
-stages:
-  - test
 
 kt-test:
   image: $KT_IMAGE
