@@ -20,7 +20,5 @@ workflow:
 kt-test:
   image: $KT_IMAGE
   stage: test
-  before_script:
-    - ./test-instance/svdb-srv --demo-mode &
   script:
     - ./gradlew test
