@@ -90,7 +90,11 @@ class SvdbJdbcDriver(
             } catch (e: ExceptionGroup) {
                 var message = ""
                 e.exceptions.forEach {
-                    message = message.plus(it.cause.toString() + "\n\n")
+                    if (it.cause != null) {
+                        message = message.plus(it.cause.toString() + "\n")
+                    } else if (!it.message.isNullOrBlank()){
+                        message = message.plus(it.message + "\n")
+                    }
                 }
                 throw ExceptionGroup(message, e.exceptions)
             }

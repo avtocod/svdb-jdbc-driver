@@ -108,6 +108,9 @@ class NativeDriver {
             resolvedHost = firstPart.split("@")[0] + "${nodeNumber}.${splittedHost.drop(1).joinToString(".")}"
         }
 
+        if (options.useMTLS) {
+            checkMTLSOptions(options)
+        }
 
         val channel = getChannel(secure, resolvedHost, port, options)
         val sessionInterceptor = SessionInterceptor(creds)
@@ -145,7 +148,7 @@ class NativeDriver {
         port: Int,
         options: SvdbDriverOptions,
     ): ManagedChannel =
-        if (isMTLSEnabled(options)) {
+        if (options.useMTLS) {
             val CA_CERT = File(options.caCertPath).readText()
             val CLIENT_CERT = File(options.clientCertPath).readText()
             val CLIENT_KEY = File(options.clientKeyPath).readText()
@@ -193,11 +196,6 @@ private fun splitCertificatesPem(rawString: String): Sequence<X509Certificate> {
     }
 }
 
-private fun isMTLSEnabled(options: SvdbDriverOptions): Boolean = options.useMTLS
-        && options.caCertPath.isNotBlank()
-        && options.clientCertPath.isNotBlank()
-        && options.clientKeyPath.isNotBlank()
-
 private val customTrustManager =
     object : X509TrustManager {
         override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) =
@@ -209,3 +207,8 @@ private val customTrustManager =
         override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
     }
 
+private fun checkMTLSOptions(opts: SvdbDriverOptions){
+    if (opts.caCertPath.isBlank() || opts.clientCertPath.isBlank() || opts.clientKeyPath.isBlank()){
+        throw Exception("wrong mtls configuration, some params are missed")
+    }
+}
