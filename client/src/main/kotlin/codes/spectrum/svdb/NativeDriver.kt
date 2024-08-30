@@ -30,7 +30,6 @@ private fun Throwable?.isAuthError(): Boolean {
         return false
     }
     return this.toString().contains(authErrorMarker) || this.cause.isAuthError()
-
 }
 
 private fun Result<*>.isAuthError(): Boolean = this.exceptionOrNull().isAuthError()
@@ -151,7 +150,7 @@ class NativeDriver {
             val CLIENT_CERT = File(options.clientCertPath).readText()
             val CLIENT_KEY = File(options.clientKeyPath).readText()
 
-            val caBundle = CA_CERT.splitCertificatesPem()
+            val caBundle = splitCertificatesPem(CA_CERT)
             val heldCertificate = HeldCertificate.decode(CLIENT_CERT + CLIENT_KEY)
             val handshakeCerts = HandshakeCertificates.Builder().apply {
                 caBundle.forEach { addTrustedCertificate(it) }
@@ -186,10 +185,10 @@ class NativeDriver {
     }
 }
 
-private val PEM_REGEX = Regex("""-----BEGIN ([!-,.-~ ]*)-----([^-]*)-----END \1-----""")
+private val PEM_REGEX = Regex("""-+BEGIN\s+([!-,.-~\s+]+)-+([^-]+)-+END\s+\1-+""")
 
-fun String.splitCertificatesPem(): Sequence<X509Certificate> {
-    return PEM_REGEX.findAll(this).map { match ->
+private fun splitCertificatesPem(rawString: String): Sequence<X509Certificate> {
+    return PEM_REGEX.findAll(rawString).map { match ->
         match.groups[0]!!.value.decodeCertificatePem()
     }
 }
