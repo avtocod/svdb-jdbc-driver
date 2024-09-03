@@ -1,7 +1,9 @@
 package codes.spectrum.svdb.jdbc
 
-import codes.spectrum.commons.*
-import codes.spectrum.svdb.*
+import codes.spectrum.commons.ExceptionGroup
+import codes.spectrum.svdb.NativeDriver
+import codes.spectrum.svdb.ProjectInfo
+import codes.spectrum.svdb.SvdbCreds
 import kotlinx.coroutines.runBlocking
 import java.sql.Connection
 import java.sql.Driver
@@ -75,14 +77,24 @@ class SvdbJdbcDriver(
                             impersonateAs = props.impersonate_as,
                             impersonateRoles = props.impersonate_roles
                         ),
-                        options = NativeDriver.SvdbDriverOptions(props.queryTimeout)
+                        options = NativeDriver.SvdbDriverOptions(
+                            props.queryTimeout,
+                            props.useMTLS,
+                            props.caCertPath,
+                            props.clientCertPath,
+                            props.clientKeyPath
+                        )
                     )
                 )
                 connectionsCount++
             } catch (e: ExceptionGroup) {
                 var message = ""
                 e.exceptions.forEach {
-                    message = message.plus(it.cause.toString() + "\n\n")
+                    if (it.cause != null) {
+                        message = message.plus(it.cause.toString() + "\n")
+                    } else if (!it.message.isNullOrBlank()){
+                        message = message.plus(it.message + "\n")
+                    }
                 }
                 throw ExceptionGroup(message, e.exceptions)
             }
