@@ -66,12 +66,31 @@ class SvdbJdbcConnectionTest : FunSpec() {
             }
             err.message shouldBe """
                 io.grpc.StatusException: UNAVAILABLE: Unable to resolve host s-svdb-svdbgo-4.spectrumdata.tech1
-
                 io.grpc.StatusException: UNAVAILABLE: Unable to resolve host s-svdb-svdbgo-4.spectrumdata.tech1
-
-
+                
             """.trimIndent()
 
+        }
+
+        test("Проверяем наличие нормальной ошибки, в случае если mTLS сконфигурирован некорректно") {
+            val wrongHost = "s-svdb-svdbgo-4.spectrumdata.tech1"
+            val wrongLogin = "wrongLogin"
+            val wrongPass = "123"
+
+            val err = shouldThrow<SQLException> {
+                driver.connect("${wrongHost}:${SvdbDriverTest.SVDB_TEST_PORT}", Properties().apply {
+                    put("user", wrongLogin)
+                    put("password", wrongPass)
+                    put("use_mtls", "true")
+                    put("ca_cert_path", "")
+                    put("client_cert_path", "")
+                    put("client_key_path", "")
+                }) as SvdbJdbcConnection
+            }
+            err.message shouldBe """wrong mtls configuration, some params are missed
+wrong mtls configuration, some params are missed
+
+""".trimIndent()
         }
 
         test("!Проверяем что сессии не плодятся").config(invocations = 1) {

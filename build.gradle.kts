@@ -73,6 +73,8 @@ project("model") {
         api("io.grpc:grpc-stub:$grpcVersion")
         api("io.grpc:grpc-netty:$grpcVersion")
         api("io.grpc:grpc-kotlin-stub:$grpcKotlinStubVersion")
+        api("io.grpc:grpc-okhttp:$grpcVersion")
+        api("com.squareup.okhttp3:okhttp-tls:4.12.0")
     }
 
     extensions.getByType(ProtobufExtension::class).apply {
@@ -154,13 +156,18 @@ project("jdbc") {
     buildFatJar(
         configs = listOf(
             GradleConfigurations.COMPILE,
-            GradleConfigurations.RUNTIME
-        ), strategy = DuplicatesStrategy.INCLUDE,
-        filter = { !it.name.contains("pureMain") }) {
+            GradleConfigurations.RUNTIME,
+        ),
+        strategy = DuplicatesStrategy.INCLUDE,
+        filter = {
+            !it.name.contains("pureMain")
+        },
+    ) {
         from("./src/main/resources") {
             include("META-INF/services/java.sql.Driver")
         }
     }
+
 }
 
 enum class GradleConfigurations(
