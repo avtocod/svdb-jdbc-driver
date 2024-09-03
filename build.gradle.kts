@@ -290,6 +290,7 @@ class Sdevtool internal constructor(val project: Project) {
     }
 
     fun publishToNexus(sourceFile: String, targetFile: String): ProcessExecResult {
+        println("source file: $sourceFile")
         println("target file: $targetFile")
 
         return project.sdevtool.execute(
