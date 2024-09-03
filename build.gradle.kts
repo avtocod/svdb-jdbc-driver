@@ -183,6 +183,7 @@ project("jdbc") {
             include("META-INF/services/java.sql.Driver")
         }
     }
+
 }
 
 enum class GradleConfigurations(
