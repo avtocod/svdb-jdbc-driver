@@ -250,6 +250,7 @@ fun Project.buildFatJar(
 }
 
 val is_windows = System.getProperty("os.name").startsWith("Windows")
+
 class Sdevtool internal constructor(val project: Project) {
     private val execPath by lazy {
         val nexusHost: String = System.getenv("NEXUS_HOST") ?: ""
@@ -259,8 +260,7 @@ class Sdevtool internal constructor(val project: Project) {
 
 
         val cli = HttpClient.newHttpClient()
-        val verRequest =
-            HttpRequest.newBuilder(URI("${nexusHost}/repository/bin/sdevtool/versions.txt")).build()
+        val verRequest = HttpRequest.newBuilder(URI("${nexusHost}/repository/bin/sdevtool/versions.txt")).build()
         val verResponse = cli.send(verRequest, HttpResponse.BodyHandlers.ofString())
         val lastVer = verResponse.body().split("\n")[0]
 
@@ -290,6 +290,8 @@ class Sdevtool internal constructor(val project: Project) {
     }
 
     fun publishToNexus(sourceFile: String, targetFile: String): ProcessExecResult {
+        println("target file: $targetFile")
+
         return project.sdevtool.execute(
             "build", "nexus-publish",
             "--file", sourceFile, "--out-path", targetFile,
