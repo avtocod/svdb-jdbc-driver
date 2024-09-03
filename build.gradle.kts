@@ -1,6 +1,10 @@
 import com.google.protobuf.gradle.ProtobufExtension
 import com.google.protobuf.gradle.id
 import org.gradle.jvm.tasks.Jar
+import java.net.URI
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 
 plugins {
     kotlin("jvm") version "2.0.0"
@@ -26,6 +30,18 @@ val grpcPluginJavaVersion = "1.65.1"
 val grpcPluginKotlinVersion = "1.4.1:jdk8@jar"
 val coroutinesVersion = "1.9.0-RC"
 val gsonVersion = "2.11.0"
+
+
+val Project.sdevtool: Sdevtool
+    get() {
+        if (rootProject.extra.has("sdevtool")) {
+            return rootProject.extra.get("sdevtool") as Sdevtool
+        }
+        val result = Sdevtool(this)
+        rootProject.extra.set("sdevtool", result)
+        return result
+    }
+
 
 
 subprojects {
@@ -208,6 +224,106 @@ fun Project.buildFatJar(
             extraBuild()
         }
     }
+
+    val PUBLISH_FAT_JAR_TASK_NAME = "publishFatJar"
+    if (this.tasks.findByName(PUBLISH_FAT_JAR_TASK_NAME) == null) {
+        this.tasks.create(PUBLISH_FAT_JAR_TASK_NAME, Jar::class.java) {
+            group = "publishing"
+            dependsOn(FAT_JAR_TASK_NAME)
+
+            val project = this@buildFatJar
+            val jarToPublish = "${project.name}-${project.version}.jar"
+            val outJarName = "${rootProject.name}-${project.name}.jar"
+            synchronized(this.project) {
+                println("task $jarToPublish is started")
+                project.sdevtool.publishToNexus(
+                    sourceFile = "build/${project.name}/libs/${jarToPublish}",
+                    targetFile = outJarName
+                ).also {
+                    println("nexus-publish state: ${it.state}")
+                    println(it.output)
+                    if (it.state != 0) {
+                        error("could not execute task $PUBLISH_FAT_JAR_TASK_NAME ext code: ${it.state} msg: ${it.output}")
+                    }
+                }
+            }
+        }
+    }
 }
+
+val is_windows = System.getProperty("os.name").startsWith("Windows")
+class Sdevtool internal constructor(val project: Project) {
+    private val execPath by lazy {
+        val exename = if (is_windows) "sdevtool.exe" else "sdevtool"
+        val path = File(project.rootDir, "build/tools/$exename")
+        path.parentFile.mkdirs()
+
+
+        val cli = HttpClient.newHttpClient()
+        val verRequest =
+            HttpRequest.newBuilder(URI("https://nexus.spectrumdata.tech/repository/bin/sdevtool/versions.txt")).build()
+        val verResponse = cli.send(verRequest, HttpResponse.BodyHandlers.ofString())
+        val lastVer = verResponse.body().split("\n")[0]
+
+
+        val uri =
+            if (is_windows) URI("https://nexus.spectrumdata.tech/repository/bin/sdevtool/$lastVer/windows/sdevtool.exe") else URI(
+                "https://nexus.spectrumdata.tech/repository/bin/sdevtool/$lastVer/linux/sdevtool"
+            )
+        val binRequest = HttpRequest.newBuilder(uri).build()
+        val binResponse = cli.send(binRequest, HttpResponse.BodyHandlers.ofInputStream())
+        path.outputStream().use {
+            binResponse.body().copyTo(it)
+            it.flush()
+        }
+        if (!is_windows) {
+            executeProcess(project.rootDir, "chmod", "755", path.path)
+        }
+        project.logger.quiet("Successfully download...")
+        project.logger.quiet(
+            "Using ${path.path} with version ${
+                executeProcess(
+                    project.rootDir, path.path, "--version"
+                ).output.split(" ").last()
+            }"
+        )
+        path.path
+    }
+
+    fun publishToNexus(sourceFile: String, targetFile: String): ProcessExecResult {
+        return project.sdevtool.execute(
+            "build", "nexus-publish",
+            "--file", sourceFile, "--out-path", targetFile,
+        )
+    }
+
+
+    fun execute(command: String, vararg args: String): ProcessExecResult {
+        return executeProcess(project.projectDir, execPath, command, *args)
+    }
+
+}
+
+
+/**
+ * Результат выполнения консольной команды
+ */
+data class ProcessExecResult(val state: Int, val output: String)
+
+/**
+ * Вспомогательная функция для обертки вызовов внешних процессов (например GIT)
+ */
+fun executeProcess(workingDir: File, vararg cmd: String): ProcessExecResult {
+    val processStarted = ProcessBuilder(*cmd).redirectErrorStream(true).directory(workingDir).start()
+    val processOutput = processStarted.inputStream.reader().use {
+        it.readText()
+    }.trim()
+    processStarted.waitFor(5, TimeUnit.SECONDS)
+    val state = processStarted.exitValue()
+    return ProcessExecResult(state, processOutput)
+}
+
+
+
 
 
