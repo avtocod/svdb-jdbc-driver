@@ -121,14 +121,14 @@ project("model") {
 
     tasks.getByName("generateProto") {
         doLast {
-            File("$rootDir/build/model/generated/source/proto/main/java/codes/spectrum/svdb/model/")
-                .listFiles()?.forEach { dir ->
+            File("$rootDir/build/model/generated/source/proto/main/java/codes/spectrum/svdb/model/").listFiles()
+                ?.forEach { dir ->
                     dir.listFiles()?.forEach {
                         it.writeText("")
                     }
                 }
-            File("$rootDir/build/model/generated/source/proto/main/kotlin/codes/spectrum/svdb/model/")
-                .listFiles()?.forEach { dir ->
+            File("$rootDir/build/model/generated/source/proto/main/kotlin/codes/spectrum/svdb/model/").listFiles()
+                ?.forEach { dir ->
                     dir.listFiles()?.forEach {
                         it.writeText("")
                     }
@@ -183,7 +183,6 @@ project("jdbc") {
             include("META-INF/services/java.sql.Driver")
         }
     }
-
 }
 
 enum class GradleConfigurations(
@@ -198,6 +197,7 @@ enum class GradleConfigurations(
     TEST_RUNTIME("testRuntimeClasspath")
 }
 
+
 fun Project.buildFatJar(
     configs: List<GradleConfigurations> = listOf(GradleConfigurations.COMPILE),
     strategy: DuplicatesStrategy = DuplicatesStrategy.INCLUDE,
@@ -209,9 +209,7 @@ fun Project.buildFatJar(
         this.tasks.create(FAT_JAR_TASK_NAME, Jar::class.java) {
             dependsOn.addAll(listOf("compileJava", "compileKotlin", "processResources"))
             group = "build"
-            configs.flatMap { configurations.getByName(it.gradleValue) }
-                .filter(filter)
-                .distinct()
+            configs.flatMap { configurations.getByName(it.gradleValue) }.filter(filter).distinct()
                 // вот этого категорически нельзя - сортировать, потом не рабочие fatJar
                 // видимо влияет на резолюцию класов
                 //.sortedBy { it.name }
@@ -227,23 +225,23 @@ fun Project.buildFatJar(
 
     val PUBLISH_FAT_JAR_TASK_NAME = "publishFatJar"
     if (this.tasks.findByName(PUBLISH_FAT_JAR_TASK_NAME) == null) {
-        this.tasks.create(PUBLISH_FAT_JAR_TASK_NAME, Jar::class.java) {
+        this.tasks.register(PUBLISH_FAT_JAR_TASK_NAME) {
             group = "publishing"
             dependsOn(FAT_JAR_TASK_NAME)
-
-            val project = this@buildFatJar
-            val jarToPublish = "${project.name}-${project.version}.jar"
-            val outJarName = "${rootProject.name}-${project.name}.jar"
-            synchronized(this.project) {
-                println("task $jarToPublish is started")
-                project.sdevtool.publishToNexus(
-                    sourceFile = "build/${project.name}/libs/${jarToPublish}",
-                    targetFile = outJarName
-                ).also {
-                    println("nexus-publish state: ${it.state}")
-                    println(it.output)
-                    if (it.state != 0) {
-                        error("could not execute task $PUBLISH_FAT_JAR_TASK_NAME ext code: ${it.state} msg: ${it.output}")
+            doFirst {
+                val project = this@buildFatJar
+                val jarToPublish = "${project.name}-${project.version}.jar"
+                val outJarName = "${rootProject.name}-${project.name}.jar"
+                synchronized(this.project) {
+                    println("task $jarToPublish is started")
+                    project.sdevtool.publishToNexus(
+                        sourceFile = "build/${project.name}/libs/${jarToPublish}", targetFile = outJarName
+                    ).also {
+                        println("nexus-publish state: ${it.state}")
+                        println(it.output)
+                        if (it.state != 0) {
+                            error("could not execute task $PUBLISH_FAT_JAR_TASK_NAME ext code: ${it.state} msg: ${it.output}")
+                        }
                     }
                 }
             }
@@ -254,6 +252,7 @@ fun Project.buildFatJar(
 val is_windows = System.getProperty("os.name").startsWith("Windows")
 class Sdevtool internal constructor(val project: Project) {
     private val execPath by lazy {
+        val nexusHost: String = System.getenv("NEXUS_HOST") ?: ""
         val exename = if (is_windows) "sdevtool.exe" else "sdevtool"
         val path = File(project.rootDir, "build/tools/$exename")
         path.parentFile.mkdirs()
@@ -261,14 +260,14 @@ class Sdevtool internal constructor(val project: Project) {
 
         val cli = HttpClient.newHttpClient()
         val verRequest =
-            HttpRequest.newBuilder(URI("https://nexus.spectrumdata.tech/repository/bin/sdevtool/versions.txt")).build()
+            HttpRequest.newBuilder(URI("${nexusHost}/repository/bin/sdevtool/versions.txt")).build()
         val verResponse = cli.send(verRequest, HttpResponse.BodyHandlers.ofString())
         val lastVer = verResponse.body().split("\n")[0]
 
 
         val uri =
-            if (is_windows) URI("https://nexus.spectrumdata.tech/repository/bin/sdevtool/$lastVer/windows/sdevtool.exe") else URI(
-                "https://nexus.spectrumdata.tech/repository/bin/sdevtool/$lastVer/linux/sdevtool"
+            if (is_windows) URI("${nexusHost}/repository/bin/sdevtool/$lastVer/windows/sdevtool.exe") else URI(
+                "${nexusHost}/repository/bin/sdevtool/$lastVer/linux/sdevtool"
             )
         val binRequest = HttpRequest.newBuilder(uri).build()
         val binResponse = cli.send(binRequest, HttpResponse.BodyHandlers.ofInputStream())
