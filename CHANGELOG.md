@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.10.15
+## 1.11.0
 
 ### Changed
 
