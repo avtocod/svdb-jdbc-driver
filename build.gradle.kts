@@ -167,7 +167,51 @@ project("jdbc") {
             include("META-INF/services/java.sql.Driver")
         }
     }
+}
 
+project("jdbc_auto") {
+    // немного кодогенерации, чтобы динамически из енва выставлять местоположение собранного jar драйвера
+    tasks.getByName("compileKotlin").apply {
+        val exceptionText = "Переменная окружения SVDB_DRIVER_JAR_URL не установлена или пуста. " +
+                "Необходимо выставить перед сборкой автообновляющегося драйвера."
+        doFirst {
+            val jarUrl = System.getenv("SVDB_DRIVER_JAR_URL")
+                ?: throw IllegalStateException(exceptionText)
+            if (jarUrl.isBlank()) {
+                throw IllegalStateException(exceptionText)
+            }
+
+            // заменить <<JAR_URL_PLACEHOLDER>> на реальный URL местоположения jar в сети
+            val file = File("$projectDir/src/main/kotlin/codes/spectrum/svdb/jdbc/auto/SvdbJdbcAutoJarProvider.kt")
+            val currentContent = file.readText()
+            val updatedContent = currentContent.replace(Regex("<<\\s*JAR_URL_PLACEHOLDER\\s*>>"), jarUrl)
+            if (updatedContent != currentContent) {
+                file.writeText(updatedContent)
+            }
+        }
+    }
+}
+
+
+project("jdbc_auto_pub") {
+    dependencies {
+        api(project(":jdbc_auto"))
+    }
+
+    buildFatJar(
+        configs = listOf(
+            GradleConfigurations.COMPILE,
+            GradleConfigurations.RUNTIME,
+        ),
+        strategy = DuplicatesStrategy.INCLUDE,
+        filter = {
+            !it.name.contains("pureMain")
+        },
+    ) {
+        from("./src/main/resources") {
+            include("META-INF/services/java.sql.Driver")
+        }
+    }
 }
 
 enum class GradleConfigurations(
