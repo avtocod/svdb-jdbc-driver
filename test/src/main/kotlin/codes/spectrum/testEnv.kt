@@ -27,7 +27,7 @@ suspend fun <T> withSvdbServer(
 
     val process = ProcessBuilder()
         .command(
-            "./test_instance/$execFile",
+            "/opt/$execFile",
             "--demo-mode",
             "--registry-git",
             "offline",
