@@ -35,3 +35,6 @@ get-binary: clear-binary ## скачать бинарные файлы
 
 clear-binary: ## почистить директорию с бинарными файлами
 	rm -Rf ./test_instance
+
+local-test: get-binary ## запускает тесты локально(исполняемый файл сервера находится в ожидаемом месте)
+	LOCAL_RUN=true ./gradlew test

@@ -16,18 +16,19 @@ suspend fun <T> withSvdbServer(
 ): T {
     val gitToken = System.getenv().getOrDefault("SVDB_REGISTRY_GIT_TOKEN", "")
     val gitBranch = System.getenv().getOrDefault("SVDB_REGISTRY_GIT_BRANCH", "dev")
+    val isLocalRun = System.getenv().getOrDefault("LOCAL_RUN", "false").toBoolean()
+
 
     val tempFile = File.createTempFile("svdb-error", Instant.now().toString())
     tempFile.deleteOnExit()
 
-    val execFile = if (System.getProperty("os.name").contains("Windows"))
-        "svdb-srv.exe"
-    else
-        "svdb-srv"
+    val execFile = "svdb-srv"
 
+
+    val srvPath = if (isLocalRun) "./test_instance" else "/opt"
     val process = ProcessBuilder()
         .command(
-            "/opt/$execFile",
+            "$srvPath/$execFile",
             "--demo-mode",
             "--registry-git",
             "offline",
