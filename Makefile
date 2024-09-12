@@ -26,3 +26,12 @@ proto: --init-dirs $(PROTO_SRC)
 	mkdir -p $(GENERATED_TRG_KT)
 	mkdir -p $(GENERATED_TRG_KT)
 	mkdir -p $(ANTLR_TRG_J)
+
+get-binary: clear-binary ## скачать бинарные файлы
+	docker cp $$(docker create avtocod/svdb-jdbc-test:0.0.1):/opt/svdb-srv - > svdb-srv
+	mkdir "test_instance"
+	mv svdb-srv ./test_instance/svdb-srv
+	chmod +x ./test_instance/svdb-srv
+
+clear-binary: ## почистить директорию с бинарными файлами
+	rm -Rf ./test_instance
