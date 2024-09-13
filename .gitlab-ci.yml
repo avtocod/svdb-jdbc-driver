@@ -1,3 +1,10 @@
+# basic workflow setup
+.run_on_master: &run_on_master
+  if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"
+
+.run_on_dev: &run_on_dev
+  if: $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "dev"
+
 variables:
   KT_IMAGE: ${BUILD_IMAGE}
   DOCKER_DRIVER: overlay2
@@ -9,6 +16,7 @@ variables:
 
 stages:
   - test
+  - publish
 
 workflow:
   rules:
@@ -22,3 +30,14 @@ kt-test:
   stage: test
   script:
     - ./gradlew test
+
+
+#kt-publish:
+#  image: $KT_IMAGE
+#  stage: publish
+#  needs: [ kt-test ]
+#  rules:
+#    - *run_on_dev
+#    - *run_on_master
+#  script:
+#    - ./gradlew publishFatJar
