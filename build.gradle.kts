@@ -165,15 +165,21 @@ project("jdbc") {
     }
 }
 
+// драйвер с автообновлением. сборка требует указание места, откуда нужно выкачать драйвер
+// указать надо в переменную окружения SVDB_DRIVER_JAR_URL
 project("jdbc_auto") {
     // немного кодогенерации, чтобы динамически из енва выставлять местоположение собранного jar драйвера
     tasks.getByName("compileKotlin").apply {
         val exceptionText = "Переменная окружения SVDB_DRIVER_JAR_URL не установлена или пуста. " +
                 "Необходимо выставить перед сборкой автообновляющегося драйвера."
+        val jarUrlPlaceholder = "<<JAR_URL_PLACEHOLDER>>"
+
+
         doFirst {
-            val jarUrl = System.getenv("SVDB_DRIVER_JAR_URL")
-                ?: throw IllegalStateException(exceptionText)
-            if (jarUrl.isBlank()) {
+            val isInhouseCI = System.getenv().getOrDefault("IS_CI", "false").toBoolean()
+            val jarUrl = System.getenv().getOrDefault("SVDB_DRIVER_JAR_URL", jarUrlPlaceholder)
+
+            if ( isInhouseCI && jarUrl.equals(jarUrlPlaceholder)) {
                 throw IllegalStateException(exceptionText)
             }
 
