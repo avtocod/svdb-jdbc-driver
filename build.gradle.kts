@@ -156,6 +156,53 @@ project("jdbc") {
     buildFatJar(
         configs = listOf(
             GradleConfigurations.COMPILE,
+            GradleConfigurations.RUNTIME
+        ), strategy = DuplicatesStrategy.INCLUDE,
+        filter = { !it.name.contains("pureMain") }) {
+        from("./src/main/resources") {
+            include("META-INF/services/java.sql.Driver")
+        }
+    }
+}
+
+// драйвер с автообновлением. сборка требует указание места, откуда нужно выкачать драйвер
+// указать надо в переменную окружения SVDB_DRIVER_JAR_URL
+project("jdbc_auto") {
+    // немного кодогенерации, чтобы динамически из енва выставлять местоположение собранного jar драйвера
+    tasks.getByName("compileKotlin").apply {
+        val exceptionText = "Переменная окружения SVDB_DRIVER_JAR_URL не установлена или пуста. " +
+                "Необходимо выставить перед сборкой автообновляющегося драйвера."
+        val jarUrlPlaceholder = "<<JAR_URL_PLACEHOLDER>>"
+
+
+        doFirst {
+            val isInhouseCI = System.getenv().getOrDefault("IS_CI", "false").toBoolean()
+            val jarUrl = System.getenv().getOrDefault("SVDB_DRIVER_JAR_URL", jarUrlPlaceholder)
+
+            if ( isInhouseCI && jarUrl.equals(jarUrlPlaceholder)) {
+                throw IllegalStateException(exceptionText)
+            }
+
+            // заменить <<JAR_URL_PLACEHOLDER>> на реальный URL местоположения jar в сети
+            val file = File("$projectDir/src/main/kotlin/codes/spectrum/svdb/jdbc/auto/SvdbJdbcAutoJarProvider.kt")
+            val currentContent = file.readText()
+            val updatedContent = currentContent.replace(Regex("<<\\s*JAR_URL_PLACEHOLDER\\s*>>"), jarUrl)
+            if (updatedContent != currentContent) {
+                file.writeText(updatedContent)
+            }
+        }
+    }
+}
+
+
+project("jdbc_auto_pub") {
+    dependencies {
+        api(project(":jdbc_auto"))
+    }
+
+    buildFatJar(
+        configs = listOf(
+            GradleConfigurations.COMPILE,
             GradleConfigurations.RUNTIME,
         ),
         strategy = DuplicatesStrategy.INCLUDE,
@@ -167,8 +214,8 @@ project("jdbc") {
             include("META-INF/services/java.sql.Driver")
         }
     }
-
 }
+
 
 enum class GradleConfigurations(
     val gradleValue: String
