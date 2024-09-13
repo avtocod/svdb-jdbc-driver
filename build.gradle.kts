@@ -156,13 +156,9 @@ project("jdbc") {
     buildFatJar(
         configs = listOf(
             GradleConfigurations.COMPILE,
-            GradleConfigurations.RUNTIME,
-        ),
-        strategy = DuplicatesStrategy.INCLUDE,
-        filter = {
-            !it.name.contains("pureMain")
-        },
-    ) {
+            GradleConfigurations.RUNTIME
+        ), strategy = DuplicatesStrategy.INCLUDE,
+        filter = { !it.name.contains("pureMain") }) {
         from("./src/main/resources") {
             include("META-INF/services/java.sql.Driver")
         }
@@ -213,6 +209,7 @@ project("jdbc_auto_pub") {
         }
     }
 }
+
 
 enum class GradleConfigurations(
     val gradleValue: String

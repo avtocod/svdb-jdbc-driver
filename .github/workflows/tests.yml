@@ -3,20 +3,21 @@ on:
   push:
   workflow_dispatch:
 jobs:
-  test:
-    runs-on: 'ubuntu-latest'
+  test-and-build:
+    runs-on: ubuntu-latest
+    container:
+      image: avtocod/svdb-jdbc-test:0.0.2
+      options: --user root
+      volumes:
+        - /opt:/test_instance
     steps:
-      - id: 'step-0'
-        name: 'Check out'
-        with:
-          lfs: true
+      - name: 'Check out'
         uses: 'actions/checkout@v4'
-      - id: 'step-1'
-        name: 'Setup kotlin'
+      - name: 'Setup kotlin'
         uses: 'fwilhe2/setup-kotlin@main'
-      - id: 'step-2'
-        name: 'Tests'
+      - name: 'Tests'
+        env:
+          SVDB_SRV_DIRECTORY: "/opt"
         run: './gradlew test'
-      - id: 'step-3'
-        name: 'Build'
+      - name: 'Build step'
         run: './gradlew :jdbc:fatJar'
