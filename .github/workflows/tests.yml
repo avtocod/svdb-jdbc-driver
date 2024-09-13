@@ -6,7 +6,7 @@ jobs:
   test-and-build:
     runs-on: ubuntu-latest
     container:
-      image: avtocod/svdb-jdbc-test:0.0.1
+      image: avtocod/svdb-jdbc-test:0.0.2
       options: --user root
       volumes:
         - /opt:/test_instance
@@ -16,6 +16,8 @@ jobs:
       - name: 'Setup kotlin'
         uses: 'fwilhe2/setup-kotlin@main'
       - name: 'Tests'
+        env:
+          SVDB_SRV_DIRECTORY: "/opt"
         run: './gradlew test'
       - name: 'Build step'
         run: './gradlew :jdbc:fatJar'
