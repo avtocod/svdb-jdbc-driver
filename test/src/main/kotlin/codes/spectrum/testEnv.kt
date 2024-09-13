@@ -16,6 +16,7 @@ suspend fun <T> withSvdbServer(
 ): T {
     val gitToken = System.getenv().getOrDefault("SVDB_REGISTRY_GIT_TOKEN", "")
     val gitBranch = System.getenv().getOrDefault("SVDB_REGISTRY_GIT_BRANCH", "dev")
+    val svdbDirectory = System.getenv().getOrDefault("SVDB_SRV_DIRECTORY", "./test_instance")
 
     val tempFile = File.createTempFile("svdb-error", Instant.now().toString())
     tempFile.deleteOnExit()
@@ -27,7 +28,7 @@ suspend fun <T> withSvdbServer(
 
     val process = ProcessBuilder()
         .command(
-            "/opt/$execFile",
+            "$svdbDirectory/$execFile",
             "--demo-mode",
             "--registry-git",
             "offline",
