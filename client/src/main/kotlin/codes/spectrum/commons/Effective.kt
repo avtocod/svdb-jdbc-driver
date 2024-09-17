@@ -6,8 +6,10 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.*
+import java.util.concurrent.ConcurrentHashMap
+import kotlin.reflect.KClass
 
-object Effective {
+class Effective(override val extensions: List<IEffectiveTransformerExtension> = emptyList()) : IEffectiveTransformerService {
     fun boolean(obj: Any?) : Boolean {
         return when (obj) {
             null -> false
@@ -94,4 +96,105 @@ object Effective {
         }
         return LocalDate.from(instant(obj).atZone(DEFAULT_ZONE_ID))
     }
+
+    override fun <R : Any> transformTo(source: Any?, targetClazz: KClass<R>, strict: Boolean): R {
+        val result = describe(source, targetClazz, mutableListOf(), strict)
+        if (result.isSuccess) return result.result.unchecked()
+        if (result.error != null) {
+            throw EffectiveException.TransformerFail(result)
+        }
+        if (result.chain.isNullOrEmpty()) throw EffectiveException.NoHandler(result)
+        throw EffectiveException.CannotTransform(result)
+    }
+
+    override fun <R : Any> transformToOrNull(source: Any?, targetClazz: KClass<R>, strict: Boolean): R? {
+        TODO("Not yet implemented")
+    }
+
+    override fun <R : Any> describe(
+        source: Any?,
+        targetClazz: KClass<R>,
+        excludeHandlers: MutableList<IEffectiveTransformer>,
+        strict: Boolean
+    ): EffectiveTransformResult {
+        if ((source != null) && targetClazz.java.isAssignableFrom(source.javaClass)) {
+            return EffectiveTransformResult(
+                source,
+                source,
+                isSuccess = true,
+                targetClazz = targetClazz
+            )
+        }
+        val chain = resolveChain(TransformKey(source?.javaClass?.kotlin, targetClazz))
+            .filter { desc -> desc.handler !in excludeHandlers }
+        var current: EffectiveTransformResult? = null
+        for (transformDescription in chain) {
+            val subresult = try {
+                transformDescription.transfomTo(source, targetClazz, transformDescription, strict)
+            } catch (e: Throwable) {
+                EffectiveTransformResult(
+                    source,
+                    result = null,
+                    isSuccess = false,
+                    targetClazz = targetClazz,
+                    error = e
+                ).apply {
+                    description = transformDescription
+                    this.chain = chain
+                }
+            }
+            subresult.previous = current
+            current = subresult
+            if (current.isSuccess) {
+                current.chain = chain
+                if (current.isSubproduct) {
+                    val following = describe(
+                        current.subProduct,
+                        targetClazz,
+                        (excludeHandlers + transformDescription.handler).toMutableList(),
+                        strict
+                    )
+                    following.previous = current
+                    current = following
+                }
+                break
+            }
+        }
+        return (
+                current ?: EffectiveTransformResult(
+                    source,
+                    result = null,
+                    isSuccess = false,
+                    targetClazz = targetClazz
+                )
+                ).apply {
+                this.chain = this.chain ?: chain
+            }
+    }
+
+    private val transformerChainCache: ConcurrentHashMap<TransformKey, List<TransformationDescription>> =
+        ConcurrentHashMap()
+
+    private val transformations by lazy {
+        extensions
+            .flatMap { it.getSupportedTransformations() }
+            .sortedByDescending { it.priority }
+    }
+
+    private fun resolveChain(key: TransformKey): List<TransformationDescription> {
+        if (!transformerChainCache.containsKey(key)) {
+            val variants = transformations.filter { it.matches(key.source, key.target) }
+            transformerChainCache[key] = variants
+        }
+        return transformerChainCache.getValue(key)
+    }
+
 }
+
+/** Эффективное преобразование в [R], ошибка при невозможности преобразования */
+inline fun <reified R : Any> IEffective.cast(source: Any?, strict: Boolean = true) =
+    this.transformTo(source, R::class, strict)
+
+/** Эффективное преобразование  в [R], null при невозможности преобразования */
+inline fun <reified R : Any> IEffective.castOrNull(source: Any?) =
+    this.transformToOrNull(source, R::class, true)

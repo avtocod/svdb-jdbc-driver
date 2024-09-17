@@ -28,8 +28,8 @@ class SvdbJdbcConnection(
 
     internal val svdbJdbcSysData: SvdbJdbcSysData by UpdatableLazyDelegate(refreshTime) {
         runBlocking {
-            val tablesMap: List<Map<String, String>> = svdbConnection.executeList("select * from sys.tables $SDQL_DRIVER_PROTOCOL_V1")
-                .map { row -> row.fieldMapString() }
+            val tablesMap: List<Map<String, String>> = svdbConnection.executeList("select * from sys.tables")
+                .map { row -> row.toStringMap() }
             val schemas: List<Schema> = tablesMap.map {
                 (it["schema"] ?: "") to ((it["table_name"] ?: "") to (it["comment"] ?: ""))
             }.groupBy({ it.first }) { it.second }
@@ -55,7 +55,7 @@ class SvdbJdbcConnection(
                     )
                 }
 
-            val fieldsMap = svdbConnection.executeList("select * from sys.fields $SDQL_DRIVER_PROTOCOL_V1").map { it.fieldMapString() }
+            val fieldsMap = svdbConnection.executeList("select * from sys.fields").map { it.toStringMap() }
             val fields = fieldsMap.map {
                 SvdbJdbcField(
                     catalog = it["catalog"] ?: "",
@@ -70,8 +70,8 @@ class SvdbJdbcConnection(
             }
 
             val version =
-                svdbConnection.executeList("select app_version from sys.nodes limit 1 with local_node $SDQL_DRIVER_PROTOCOL_V1")
-                    .first().getFields(0).value.str
+                svdbConnection.executeList("select app_version from sys.nodes limit 1 with local_node")
+                    .first().atOf<String>(0)
 
             SvdbJdbcSysData(catalogList, fields, version)
         }

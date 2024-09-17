@@ -18,14 +18,14 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * </pre>
  */
 @javax.annotation.Generated(
-    value = "by gRPC proto compiler (version 1.65.1)",
+    value = "by gRPC proto compiler (version 1.56.1)",
     comments = "Source: v1/dbservice.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class SvdbServiceGrpc {
 
   private SvdbServiceGrpc() {}
 
-  public static final java.lang.String SERVICE_NAME = "codes.spectrum.svdb.model.v1.SvdbService";
+  public static final String SERVICE_NAME = "codes.spectrum.svdb.model.v1.SvdbService";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<codes.spectrum.svdb.model.v1.Query.QueryOptions,
@@ -654,9 +654,9 @@ public final class SvdbServiceGrpc {
   private static final class SvdbServiceMethodDescriptorSupplier
       extends SvdbServiceBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final java.lang.String methodName;
+    private final String methodName;
 
-    SvdbServiceMethodDescriptorSupplier(java.lang.String methodName) {
+    SvdbServiceMethodDescriptorSupplier(String methodName) {
       this.methodName = methodName;
     }
 
