@@ -358,11 +358,7 @@ class SvdbJdbcResultSet(
 
     override fun getCharacterStream(columnLabel: String?): Reader {
         checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
+        TODO("method name ${retriveFunName()} called")
     }
 
     override fun isBeforeFirst(): Boolean = TODO("method name ${retriveFunName()} called")

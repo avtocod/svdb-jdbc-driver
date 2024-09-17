@@ -9,7 +9,7 @@ import java.util.*
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 
-class Effective(override val extensions: List<IEffectiveTransformerExtension> = emptyList()) : IEffectiveTransformerService {
+object Effective : IEffectiveTransformerService {
     fun boolean(obj: Any?) : Boolean {
         return when (obj) {
             null -> false
@@ -111,6 +111,9 @@ class Effective(override val extensions: List<IEffectiveTransformerExtension> = 
         TODO("Not yet implemented")
     }
 
+    override val extensions: List<IEffectiveTransformerExtension>
+        get() = emptyList()
+
     override fun <R : Any> describe(
         source: Any?,
         targetClazz: KClass<R>,
@@ -198,3 +201,6 @@ inline fun <reified R : Any> IEffective.cast(source: Any?, strict: Boolean = tru
 /** Эффективное преобразование  в [R], null при невозможности преобразования */
 inline fun <reified R : Any> IEffective.castOrNull(source: Any?) =
     this.transformToOrNull(source, R::class, true)
+
+fun IEffective.int(source: Any?, strict: Boolean = true) = transformTo(source, Int::class,
+    strict)
