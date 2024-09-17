@@ -123,7 +123,7 @@ class SvdbConnection(
         }
 
         inline fun <reified T:Any> atOf(colIndex : Int) : T {
-            return Effective().cast(at(colIndex))
+            return Effective.cast(at(colIndex))
         }
 
         fun toStringMap() : Map<String, String> {
