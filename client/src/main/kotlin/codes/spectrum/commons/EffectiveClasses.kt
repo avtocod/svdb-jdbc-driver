@@ -1,5 +1,6 @@
 package codes.spectrum.commons
 
+import codes.spectrum.commons.transformers.IHosted
 import kotlin.reflect.KClass
 
 interface IEffectiveNullable {
@@ -163,7 +164,8 @@ inline fun <T> Any?.unchecked(): T = this as T
 data class TransformKey(val source: KClass<*>?, val target: KClass<*>)
 
 interface IEffectiveTransformerExtension :
-    IEffectiveTransformer{
+    IEffectiveTransformer,
+    IHosted<IEffectiveTransformerService> {
     /**
      * Возвращает набор поддерживаемых трансформаций
      */

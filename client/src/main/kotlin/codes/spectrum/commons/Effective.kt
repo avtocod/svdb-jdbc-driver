@@ -1,5 +1,8 @@
 package codes.spectrum.commons
 
+import codes.spectrum.commons.transformers.EffectiveBooleanTransformer
+import codes.spectrum.commons.transformers.EffectiveNumberTransformer
+import codes.spectrum.commons.transformers.EffectiveStringTransformer
 import java.math.BigDecimal
 import java.time.Instant
 import java.time.LocalDate
@@ -112,7 +115,11 @@ object Effective : IEffectiveTransformerService {
     }
 
     override val extensions: List<IEffectiveTransformerExtension>
-        get() = emptyList()
+        get() = listOf(
+            EffectiveStringTransformer,
+            EffectiveBooleanTransformer,
+            EffectiveNumberTransformer,
+        )
 
     override fun <R : Any> describe(
         source: Any?,
@@ -204,3 +211,9 @@ inline fun <reified R : Any> IEffective.castOrNull(source: Any?) =
 
 fun IEffective.toInt(source: Any?, strict: Boolean = true) = transformTo(source, Int::class,
     strict)
+
+fun IEffective.booleanOrDefault(
+    source: Any?,
+    default: Boolean = false,
+    strict: Boolean = false,
+) = transformToOrNull(source, Boolean::class, strict) ?: default
