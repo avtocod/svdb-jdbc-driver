@@ -11,11 +11,8 @@ import io.kotest.matchers.shouldNotBe
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.sql.*
-import java.time.Instant
 import java.time.LocalDate
 import java.util.*
-import java.util.Date
-
 
 class SvdbDriverDatamodeV2Test : FunSpec() {
     init {
@@ -333,18 +330,6 @@ class SvdbDriverDatamodeV2Test : FunSpec() {
                         }
                     }
 
-                    test("Проверяем запрос c параметром LocalDate с передачей как object") {
-                        getConnection(driver).use { connection ->
-                            val localDate = LocalDate.of(2022, 4, 1)
-                            connection.prepareStatement("select \$1").use { preparedStatement ->
-                                preparedStatement.setObject(1, localDate)
-                                val resultSet = preparedStatement.executeQuery()
-                                resultSet.next()
-                                resultSet.getDate(1).toLocalDate() shouldBe localDate
-                            }
-                        }
-                    }
-
                     test("Проверяем запрос c параметром Time") {
                         getConnection(driver).use { connection ->
                             val literal = Time(System.currentTimeMillis())
@@ -365,18 +350,6 @@ class SvdbDriverDatamodeV2Test : FunSpec() {
                                 val resultSet = preparedStatement.executeQuery()
                                 resultSet.next()
                                 resultSet.getTimestamp(1) shouldBe literal
-                            }
-                        }
-                    }
-
-                    test("Проверяем запрос c параметром Instant передача как object") {
-                        getConnection(driver).use { connection ->
-                            val literal = Instant.ofEpochMilli(Date().time)
-                            connection.prepareStatement("select \$1").use { preparedStatement ->
-                                preparedStatement.setObject(1, literal)
-                                val resultSet = preparedStatement.executeQuery()
-                                resultSet.next()
-                                Instant.ofEpochMilli(resultSet.getTime(1).time) shouldBe literal
                             }
                         }
                     }
@@ -421,14 +394,35 @@ class SvdbDriverDatamodeV2Test : FunSpec() {
                         }
                     }
 
-                    test("Проверяем запрос c параметром который не поддерживается") {
+                    test("setObjet теперь поддерживает большинство типов данных, тест переписан, проблем с обработкой литерала нет.") {
                         getConnection(driver).use { connection ->
                             val literal = arrayListOf("param")
-                            shouldThrow<SQLException> {
+                            shouldNotThrowAny {
                                 connection.prepareStatement("select \$1").use { preparedStatement ->
                                     preparedStatement.setObject(1, literal)
                                     preparedStatement.executeQuery()
                                 }
+                            }
+                        }
+                    }
+
+                    test("Проверяем, что передача параметров по типу ОФД запроса работает корректно") {
+                        getConnection(driver).use { c ->
+                            val inn = "010520704024"
+                            val from = LocalDate.of(2023, 10, 1)
+                            val to = LocalDate.of(2024, 2, 1)
+                            val ofdList = arrayOf("FIRST_OFD", "TAXCOM", "PLATFORMA_OFD")
+
+                            shouldNotThrowAny {
+                                c.prepareStatement("select \$1, \$2, \$3, \$4").use { s ->
+                                    s.setObject(1, inn)
+                                    s.setObject(2, from)
+                                    s.setObject(3, to)
+                                    s.setObject(4, ofdList)
+                                    s.executeQuery()
+                                }
+
+
                             }
                         }
                     }

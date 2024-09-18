@@ -37,7 +37,7 @@ public object CancelOptionsKt {
      * uid сессии, которую необходимо закрыть
      * ```
      *
-     * `string sessionUid = 10;`
+     * `string sessionUid = 1;`
      */
     public var sessionUid: kotlin.String
       @JvmName("getSessionUid")
@@ -51,7 +51,7 @@ public object CancelOptionsKt {
      * uid сессии, которую необходимо закрыть
      * ```
      *
-     * `string sessionUid = 10;`
+     * `string sessionUid = 1;`
      */
     public fun clearSessionUid() {
       _builder.clearSessionUid()
@@ -62,7 +62,7 @@ public object CancelOptionsKt {
      * uid курсора, который надо закрыть
      * ```
      *
-     * `string cursorUid = 20;`
+     * `string cursorUid = 2;`
      */
     public var cursorUid: kotlin.String
       @JvmName("getCursorUid")
@@ -76,7 +76,7 @@ public object CancelOptionsKt {
      * uid курсора, который надо закрыть
      * ```
      *
-     * `string cursorUid = 20;`
+     * `string cursorUid = 2;`
      */
     public fun clearCursorUid() {
       _builder.clearCursorUid()

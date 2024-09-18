@@ -35,9 +35,9 @@ public final class ColumnOuterClass {
      * ZERO
      * </pre>
      *
-     * <code>AUTO = 0;</code>
+     * <code>UNDEFINED = 0;</code>
      */
-    AUTO(0),
+    UNDEFINED(0),
     /**
      * <pre>
      * ПЕРВИЧНЫЕ ТИПЫ
@@ -67,11 +67,6 @@ public final class ColumnOuterClass {
      */
     TIMESTAMP(32),
     /**
-     * <pre>
-     * DATE не используется
-     * будет DEPRECATED в версии 2.0
-     * </pre>
-     *
      * <code>DATE = 64;</code>
      */
     DATE(64),
@@ -87,6 +82,14 @@ public final class ColumnOuterClass {
      * <code>OBJECT = 256;</code>
      */
     OBJECT(256),
+    /**
+     * <pre>
+     * не "не типизированное значение" а значение в которое префиксом вшит еще тип
+     * </pre>
+     *
+     * <code>ANY = 4096;</code>
+     */
+    ANY(4096),
     UNRECOGNIZED(-1),
     ;
 
@@ -104,9 +107,9 @@ public final class ColumnOuterClass {
      * ZERO
      * </pre>
      *
-     * <code>AUTO = 0;</code>
+     * <code>UNDEFINED = 0;</code>
      */
-    public static final int AUTO_VALUE = 0;
+    public static final int UNDEFINED_VALUE = 0;
     /**
      * <pre>
      * ПЕРВИЧНЫЕ ТИПЫ
@@ -136,11 +139,6 @@ public final class ColumnOuterClass {
      */
     public static final int TIMESTAMP_VALUE = 32;
     /**
-     * <pre>
-     * DATE не используется
-     * будет DEPRECATED в версии 2.0
-     * </pre>
-     *
      * <code>DATE = 64;</code>
      */
     public static final int DATE_VALUE = 64;
@@ -156,6 +154,14 @@ public final class ColumnOuterClass {
      * <code>OBJECT = 256;</code>
      */
     public static final int OBJECT_VALUE = 256;
+    /**
+     * <pre>
+     * не "не типизированное значение" а значение в которое префиксом вшит еще тип
+     * </pre>
+     *
+     * <code>ANY = 4096;</code>
+     */
+    public static final int ANY_VALUE = 4096;
 
 
     public final int getNumber() {
@@ -182,7 +188,7 @@ public final class ColumnOuterClass {
      */
     public static DataType forNumber(int value) {
       switch (value) {
-        case 0: return AUTO;
+        case 0: return UNDEFINED;
         case 1: return STRING;
         case 2: return BOOL;
         case 4: return INT;
@@ -193,6 +199,7 @@ public final class ColumnOuterClass {
         case 128: return DURATION;
         case 240: return ARRAY;
         case 256: return OBJECT;
+        case 4096: return ANY;
         default: return null;
       }
     }
@@ -294,23 +301,10 @@ public final class ColumnOuterClass {
 
     /**
      * <pre>
-     * в текущей реализации НЕ используется.
-     * в дальнейшем можно будет использовать
-     * для типизированных массивов, сохраняя
-     * в dataType тип элементов массива
-     * </pre>
-     *
-     * <code>bool isArray = 3;</code>
-     * @return The isArray.
-     */
-    boolean getIsArray();
-
-    /**
-     * <pre>
      * опции
      * </pre>
      *
-     * <code>map&lt;string, string&gt; options = 4;</code>
+     * <code>map&lt;string, string&gt; options = 3;</code>
      */
     int getOptionsCount();
     /**
@@ -318,7 +312,7 @@ public final class ColumnOuterClass {
      * опции
      * </pre>
      *
-     * <code>map&lt;string, string&gt; options = 4;</code>
+     * <code>map&lt;string, string&gt; options = 3;</code>
      */
     boolean containsOptions(
         java.lang.String key);
@@ -333,7 +327,7 @@ public final class ColumnOuterClass {
      * опции
      * </pre>
      *
-     * <code>map&lt;string, string&gt; options = 4;</code>
+     * <code>map&lt;string, string&gt; options = 3;</code>
      */
     java.util.Map<java.lang.String, java.lang.String>
     getOptionsMap();
@@ -342,7 +336,7 @@ public final class ColumnOuterClass {
      * опции
      * </pre>
      *
-     * <code>map&lt;string, string&gt; options = 4;</code>
+     * <code>map&lt;string, string&gt; options = 3;</code>
      */
     /* nullable */
 java.lang.String getOptionsOrDefault(
@@ -354,14 +348,14 @@ java.lang.String defaultValue);
      * опции
      * </pre>
      *
-     * <code>map&lt;string, string&gt; options = 4;</code>
+     * <code>map&lt;string, string&gt; options = 3;</code>
      */
     java.lang.String getOptionsOrThrow(
         java.lang.String key);
   }
   /**
    * <pre>
-   * метаданные
+   * Определение поля
    * </pre>
    *
    * Protobuf type {@code codes.spectrum.svdb.model.v1.Column}
@@ -399,7 +393,7 @@ java.lang.String defaultValue);
     protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
         int number) {
       switch (number) {
-        case 4:
+        case 3:
           return internalGetOptions();
         default:
           throw new RuntimeException(
@@ -487,25 +481,7 @@ java.lang.String defaultValue);
       return result == null ? codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType.UNRECOGNIZED : result;
     }
 
-    public static final int ISARRAY_FIELD_NUMBER = 3;
-    private boolean isArray_ = false;
-    /**
-     * <pre>
-     * в текущей реализации НЕ используется.
-     * в дальнейшем можно будет использовать
-     * для типизированных массивов, сохраняя
-     * в dataType тип элементов массива
-     * </pre>
-     *
-     * <code>bool isArray = 3;</code>
-     * @return The isArray.
-     */
-    @java.lang.Override
-    public boolean getIsArray() {
-      return isArray_;
-    }
-
-    public static final int OPTIONS_FIELD_NUMBER = 4;
+    public static final int OPTIONS_FIELD_NUMBER = 3;
     private static final class OptionsDefaultEntryHolder {
       static final com.google.protobuf.MapEntry<
           java.lang.String, java.lang.String> defaultEntry =
@@ -536,7 +512,7 @@ java.lang.String defaultValue);
      * опции
      * </pre>
      *
-     * <code>map&lt;string, string&gt; options = 4;</code>
+     * <code>map&lt;string, string&gt; options = 3;</code>
      */
     @java.lang.Override
     public boolean containsOptions(
@@ -557,7 +533,7 @@ java.lang.String defaultValue);
      * опции
      * </pre>
      *
-     * <code>map&lt;string, string&gt; options = 4;</code>
+     * <code>map&lt;string, string&gt; options = 3;</code>
      */
     @java.lang.Override
     public java.util.Map<java.lang.String, java.lang.String> getOptionsMap() {
@@ -568,7 +544,7 @@ java.lang.String defaultValue);
      * опции
      * </pre>
      *
-     * <code>map&lt;string, string&gt; options = 4;</code>
+     * <code>map&lt;string, string&gt; options = 3;</code>
      */
     @java.lang.Override
     public /* nullable */
@@ -586,7 +562,7 @@ java.lang.String defaultValue) {
      * опции
      * </pre>
      *
-     * <code>map&lt;string, string&gt; options = 4;</code>
+     * <code>map&lt;string, string&gt; options = 3;</code>
      */
     @java.lang.Override
     public java.lang.String getOptionsOrThrow(
@@ -617,18 +593,15 @@ java.lang.String defaultValue) {
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(code_)) {
         com.google.protobuf.GeneratedMessage.writeString(output, 1, code_);
       }
-      if (dataType_ != codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType.AUTO.getNumber()) {
+      if (dataType_ != codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType.UNDEFINED.getNumber()) {
         output.writeEnum(2, dataType_);
-      }
-      if (isArray_ != false) {
-        output.writeBool(3, isArray_);
       }
       com.google.protobuf.GeneratedMessage
         .serializeStringMapTo(
           output,
           internalGetOptions(),
           OptionsDefaultEntryHolder.defaultEntry,
-          4);
+          3);
       getUnknownFields().writeTo(output);
     }
 
@@ -641,13 +614,9 @@ java.lang.String defaultValue) {
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(code_)) {
         size += com.google.protobuf.GeneratedMessage.computeStringSize(1, code_);
       }
-      if (dataType_ != codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType.AUTO.getNumber()) {
+      if (dataType_ != codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType.UNDEFINED.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
           .computeEnumSize(2, dataType_);
-      }
-      if (isArray_ != false) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeBoolSize(3, isArray_);
       }
       for (java.util.Map.Entry<java.lang.String, java.lang.String> entry
            : internalGetOptions().getMap().entrySet()) {
@@ -657,7 +626,7 @@ java.lang.String defaultValue) {
             .setValue(entry.getValue())
             .build();
         size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(4, options__);
+            .computeMessageSize(3, options__);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -677,8 +646,6 @@ java.lang.String defaultValue) {
       if (!getCode()
           .equals(other.getCode())) return false;
       if (dataType_ != other.dataType_) return false;
-      if (getIsArray()
-          != other.getIsArray()) return false;
       if (!internalGetOptions().equals(
           other.internalGetOptions())) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -696,9 +663,6 @@ java.lang.String defaultValue) {
       hash = (53 * hash) + getCode().hashCode();
       hash = (37 * hash) + DATATYPE_FIELD_NUMBER;
       hash = (53 * hash) + dataType_;
-      hash = (37 * hash) + ISARRAY_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-          getIsArray());
       if (!internalGetOptions().getMap().isEmpty()) {
         hash = (37 * hash) + OPTIONS_FIELD_NUMBER;
         hash = (53 * hash) + internalGetOptions().hashCode();
@@ -802,7 +766,7 @@ java.lang.String defaultValue) {
     }
     /**
      * <pre>
-     * метаданные
+     * Определение поля
      * </pre>
      *
      * Protobuf type {@code codes.spectrum.svdb.model.v1.Column}
@@ -820,7 +784,7 @@ java.lang.String defaultValue) {
       protected com.google.protobuf.MapFieldReflectionAccessor internalGetMapFieldReflection(
           int number) {
         switch (number) {
-          case 4:
+          case 3:
             return internalGetOptions();
           default:
             throw new RuntimeException(
@@ -831,7 +795,7 @@ java.lang.String defaultValue) {
       protected com.google.protobuf.MapFieldReflectionAccessor internalGetMutableMapFieldReflection(
           int number) {
         switch (number) {
-          case 4:
+          case 3:
             return internalGetMutableOptions();
           default:
             throw new RuntimeException(
@@ -862,7 +826,6 @@ java.lang.String defaultValue) {
         bitField0_ = 0;
         code_ = "";
         dataType_ = 0;
-        isArray_ = false;
         internalGetMutableOptions().clear();
         return this;
       }
@@ -904,9 +867,6 @@ java.lang.String defaultValue) {
           result.dataType_ = dataType_;
         }
         if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.isArray_ = isArray_;
-        }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
           result.options_ = internalGetOptions();
           result.options_.makeImmutable();
         }
@@ -932,12 +892,9 @@ java.lang.String defaultValue) {
         if (other.dataType_ != 0) {
           setDataTypeValue(other.getDataTypeValue());
         }
-        if (other.getIsArray() != false) {
-          setIsArray(other.getIsArray());
-        }
         internalGetMutableOptions().mergeFrom(
             other.internalGetOptions());
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
@@ -974,20 +931,15 @@ java.lang.String defaultValue) {
                 bitField0_ |= 0x00000002;
                 break;
               } // case 16
-              case 24: {
-                isArray_ = input.readBool();
-                bitField0_ |= 0x00000004;
-                break;
-              } // case 24
-              case 34: {
+              case 26: {
                 com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
                 options__ = input.readMessage(
                     OptionsDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
                 internalGetMutableOptions().getMutableMap().put(
                     options__.getKey(), options__.getValue());
-                bitField0_ |= 0x00000008;
+                bitField0_ |= 0x00000004;
                 break;
-              } // case 34
+              } // case 26
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -1170,59 +1122,6 @@ java.lang.String defaultValue) {
         return this;
       }
 
-      private boolean isArray_ ;
-      /**
-       * <pre>
-       * в текущей реализации НЕ используется.
-       * в дальнейшем можно будет использовать
-       * для типизированных массивов, сохраняя
-       * в dataType тип элементов массива
-       * </pre>
-       *
-       * <code>bool isArray = 3;</code>
-       * @return The isArray.
-       */
-      @java.lang.Override
-      public boolean getIsArray() {
-        return isArray_;
-      }
-      /**
-       * <pre>
-       * в текущей реализации НЕ используется.
-       * в дальнейшем можно будет использовать
-       * для типизированных массивов, сохраняя
-       * в dataType тип элементов массива
-       * </pre>
-       *
-       * <code>bool isArray = 3;</code>
-       * @param value The isArray to set.
-       * @return This builder for chaining.
-       */
-      public Builder setIsArray(boolean value) {
-
-        isArray_ = value;
-        bitField0_ |= 0x00000004;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * в текущей реализации НЕ используется.
-       * в дальнейшем можно будет использовать
-       * для типизированных массивов, сохраняя
-       * в dataType тип элементов массива
-       * </pre>
-       *
-       * <code>bool isArray = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearIsArray() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        isArray_ = false;
-        onChanged();
-        return this;
-      }
-
       private com.google.protobuf.MapField<
           java.lang.String, java.lang.String> options_;
       private com.google.protobuf.MapField<java.lang.String, java.lang.String>
@@ -1242,7 +1141,7 @@ java.lang.String defaultValue) {
         if (!options_.isMutable()) {
           options_ = options_.copy();
         }
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         onChanged();
         return options_;
       }
@@ -1254,7 +1153,7 @@ java.lang.String defaultValue) {
        * опции
        * </pre>
        *
-       * <code>map&lt;string, string&gt; options = 4;</code>
+       * <code>map&lt;string, string&gt; options = 3;</code>
        */
       @java.lang.Override
       public boolean containsOptions(
@@ -1275,7 +1174,7 @@ java.lang.String defaultValue) {
        * опции
        * </pre>
        *
-       * <code>map&lt;string, string&gt; options = 4;</code>
+       * <code>map&lt;string, string&gt; options = 3;</code>
        */
       @java.lang.Override
       public java.util.Map<java.lang.String, java.lang.String> getOptionsMap() {
@@ -1286,7 +1185,7 @@ java.lang.String defaultValue) {
        * опции
        * </pre>
        *
-       * <code>map&lt;string, string&gt; options = 4;</code>
+       * <code>map&lt;string, string&gt; options = 3;</code>
        */
       @java.lang.Override
       public /* nullable */
@@ -1304,7 +1203,7 @@ java.lang.String defaultValue) {
        * опции
        * </pre>
        *
-       * <code>map&lt;string, string&gt; options = 4;</code>
+       * <code>map&lt;string, string&gt; options = 3;</code>
        */
       @java.lang.Override
       public java.lang.String getOptionsOrThrow(
@@ -1318,7 +1217,7 @@ java.lang.String defaultValue) {
         return map.get(key);
       }
       public Builder clearOptions() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
         internalGetMutableOptions().getMutableMap()
             .clear();
         return this;
@@ -1328,7 +1227,7 @@ java.lang.String defaultValue) {
        * опции
        * </pre>
        *
-       * <code>map&lt;string, string&gt; options = 4;</code>
+       * <code>map&lt;string, string&gt; options = 3;</code>
        */
       public Builder removeOptions(
           java.lang.String key) {
@@ -1343,7 +1242,7 @@ java.lang.String defaultValue) {
       @java.lang.Deprecated
       public java.util.Map<java.lang.String, java.lang.String>
           getMutableOptions() {
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         return internalGetMutableOptions().getMutableMap();
       }
       /**
@@ -1351,7 +1250,7 @@ java.lang.String defaultValue) {
        * опции
        * </pre>
        *
-       * <code>map&lt;string, string&gt; options = 4;</code>
+       * <code>map&lt;string, string&gt; options = 3;</code>
        */
       public Builder putOptions(
           java.lang.String key,
@@ -1360,7 +1259,7 @@ java.lang.String defaultValue) {
         if (value == null) { throw new NullPointerException("map value"); }
         internalGetMutableOptions().getMutableMap()
             .put(key, value);
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         return this;
       }
       /**
@@ -1368,13 +1267,13 @@ java.lang.String defaultValue) {
        * опции
        * </pre>
        *
-       * <code>map&lt;string, string&gt; options = 4;</code>
+       * <code>map&lt;string, string&gt; options = 3;</code>
        */
       public Builder putAllOptions(
           java.util.Map<java.lang.String, java.lang.String> values) {
         internalGetMutableOptions().getMutableMap()
             .putAll(values);
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000004;
         return this;
       }
 
@@ -1449,17 +1348,17 @@ java.lang.String defaultValue) {
   static {
     java.lang.String[] descriptorData = {
       "\n\017v1/column.proto\022\034codes.spectrum.svdb.m" +
-      "odel.v1\"\325\001\n\006Column\022\014\n\004code\030\001 \001(\t\0228\n\010data" +
+      "odel.v1\"\304\001\n\006Column\022\014\n\004code\030\001 \001(\t\0228\n\010data" +
       "Type\030\002 \001(\0162&.codes.spectrum.svdb.model.v" +
-      "1.DataType\022\017\n\007isArray\030\003 \001(\010\022B\n\007options\030\004" +
-      " \003(\01321.codes.spectrum.svdb.model.v1.Colu" +
-      "mn.OptionsEntry\032.\n\014OptionsEntry\022\013\n\003key\030\001" +
-      " \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001*\214\001\n\010DataType\022\010\n\004" +
-      "AUTO\020\000\022\n\n\006STRING\020\001\022\010\n\004BOOL\020\002\022\007\n\003INT\020\004\022\t\n" +
-      "\005FLOAT\020\010\022\013\n\007DECIMAL\020\020\022\r\n\tTIMESTAMP\020 \022\010\n\004" +
-      "DATE\020@\022\r\n\010DURATION\020\200\001\022\n\n\005ARRAY\020\360\001\022\013\n\006OBJ" +
-      "ECT\020\200\002B/Z-gitlab.spectrumdata.tech/sd3/s" +
-      "vdb/go/model/v1b\006proto3"
+      "1.DataType\022B\n\007options\030\003 \003(\01321.codes.spec" +
+      "trum.svdb.model.v1.Column.OptionsEntry\032." +
+      "\n\014OptionsEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001" +
+      "(\t:\0028\001*\233\001\n\010DataType\022\r\n\tUNDEFINED\020\000\022\n\n\006ST" +
+      "RING\020\001\022\010\n\004BOOL\020\002\022\007\n\003INT\020\004\022\t\n\005FLOAT\020\010\022\013\n\007" +
+      "DECIMAL\020\020\022\r\n\tTIMESTAMP\020 \022\010\n\004DATE\020@\022\r\n\010DU" +
+      "RATION\020\200\001\022\n\n\005ARRAY\020\360\001\022\013\n\006OBJECT\020\200\002\022\010\n\003AN" +
+      "Y\020\200 B/Z-gitlab.spectrumdata.tech/sd3/svd" +
+      "b/go/model/v1b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -1470,7 +1369,7 @@ java.lang.String defaultValue) {
     internal_static_codes_spectrum_svdb_model_v1_Column_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_codes_spectrum_svdb_model_v1_Column_descriptor,
-        new java.lang.String[] { "Code", "DataType", "IsArray", "Options", });
+        new java.lang.String[] { "Code", "DataType", "Options", });
     internal_static_codes_spectrum_svdb_model_v1_Column_OptionsEntry_descriptor =
       internal_static_codes_spectrum_svdb_model_v1_Column_descriptor.getNestedTypes().get(0);
     internal_static_codes_spectrum_svdb_model_v1_Column_OptionsEntry_fieldAccessorTable = new

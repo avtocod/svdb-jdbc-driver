@@ -40,6 +40,7 @@ public object StateKt {
      * уже известные коды
      * 200 - OK
      * 204 - EOF
+     * 206 - EOS
      * 400 - BAD_REQUEST  - ошибки во входных данных
      * 401 - UNAUTHORIZED - проблемы авторизации
      * 403 - FORBIDDEN    -  нарушение ACL
@@ -62,6 +63,7 @@ public object StateKt {
      * уже известные коды
      * 200 - OK
      * 204 - EOF
+     * 206 - EOS
      * 400 - BAD_REQUEST  - ошибки во входных данных
      * 401 - UNAUTHORIZED - проблемы авторизации
      * 403 - FORBIDDEN    -  нарушение ACL
@@ -82,7 +84,7 @@ public object StateKt {
      * известный тип - "EOF"
      * ```
      *
-     * `string type = 10;`
+     * `string type = 2;`
      */
     public var type: kotlin.String
       @JvmName("getType")
@@ -98,7 +100,7 @@ public object StateKt {
      * известный тип - "EOF"
      * ```
      *
-     * `string type = 10;`
+     * `string type = 2;`
      */
     public fun clearType() {
       _builder.clearType()
@@ -109,7 +111,7 @@ public object StateKt {
      * сообщение, связанное со статусом
      * ```
      *
-     * `string message = 20;`
+     * `string message = 3;`
      */
     public var message: kotlin.String
       @JvmName("getMessage")
@@ -123,7 +125,7 @@ public object StateKt {
      * сообщение, связанное со статусом
      * ```
      *
-     * `string message = 20;`
+     * `string message = 3;`
      */
     public fun clearMessage() {
       _builder.clearMessage()

@@ -1,10 +1,8 @@
 package codes.spectrum.svdb.jdbc
 
-import codes.spectrum.svdb.*
-import codes.spectrum.svdb.model.v1.ByteRecordOuterClass
 import codes.spectrum.svdb.model.v1.ColumnOuterClass
+import codes.spectrum.svdb.model.v1.Queryresult.QueryResult
 import codes.spectrum.svdb.model.v1.RecordOuterClass
-import codes.spectrum.svdb.model.v1.ValueOuterClass
 import com.google.protobuf.ByteString
 import com.google.protobuf.ListValue
 import com.google.protobuf.Value
@@ -28,36 +26,8 @@ const val CONNECTION_EXCEPTION_CODE = "08000"
 
 const val DATA_EXCEPTION = "22000"
 
-fun ValueOuterClass.Value.wrappedValue(): SvdbJdbcWrappedValue {
-    return when (this.valueCase) {
-        ValueOuterClass.Value.ValueCase.STR -> SvdbJdbcWrappedValue(str, ValueOuterClass.Value.ValueCase.STR)
-        ValueOuterClass.Value.ValueCase.I32 -> SvdbJdbcWrappedValue(i32, ValueOuterClass.Value.ValueCase.I32)
-        ValueOuterClass.Value.ValueCase.I64 -> SvdbJdbcWrappedValue(i64, ValueOuterClass.Value.ValueCase.I64)
-        ValueOuterClass.Value.ValueCase.F64 -> SvdbJdbcWrappedValue(f64, ValueOuterClass.Value.ValueCase.F64)
-        ValueOuterClass.Value.ValueCase.DEC -> SvdbJdbcWrappedValue(dec, ValueOuterClass.Value.ValueCase.DEC)
-        ValueOuterClass.Value.ValueCase.BIT -> SvdbJdbcWrappedValue(bit, ValueOuterClass.Value.ValueCase.BIT)
-        ValueOuterClass.Value.ValueCase.OBJ -> SvdbJdbcWrappedValue(obj, ValueOuterClass.Value.ValueCase.OBJ)
-        ValueOuterClass.Value.ValueCase.ARR -> SvdbJdbcWrappedValue(arr, ValueOuterClass.Value.ValueCase.ARR)
-        ValueOuterClass.Value.ValueCase.DUR -> SvdbJdbcWrappedValue(dur, ValueOuterClass.Value.ValueCase.DUR)
-        ValueOuterClass.Value.ValueCase.TIM -> SvdbJdbcWrappedValue(tim, ValueOuterClass.Value.ValueCase.TIM)
-        ValueOuterClass.Value.ValueCase.VALUE_NOT_SET, null ->
-            SvdbJdbcWrappedValue(
-                SvdbNull,
-                ValueOuterClass.Value.ValueCase.VALUE_NOT_SET,
-            )
-    }
-}
-
-fun RecordOuterClass.Record.fieldMap(): Map<String, SvdbJdbcWrappedValue> {
-    return this.fieldsList.associate { it.code to it.value.wrappedValue() }
-}
-
-fun RecordOuterClass.Record.fieldMapString(): Map<String, String> {
-    return this.fieldsList.associate { it.code to it.value.wrappedValue().value.toString() }
-}
-
-fun ByteRecordOuterClass.ByteRecord.toByteStringList(): List<ByteString> {
-    return fieldsList.map { it.item }
+fun RecordOuterClass.Record.toByteStringList(): List<ByteString> {
+    return fieldsList.map { it }
 }
 
 fun getIndexByLabel(
@@ -66,6 +36,15 @@ fun getIndexByLabel(
 ): Int {
     return columns.indexOfFirst { it.code == columnLabel }
 }
+
+fun QueryResult.at(rowIndex : Int, colIndex: Int): Any? {
+    val row = this.getRecords(rowIndex)
+    val value = row.getFields(colIndex)
+    val item = value
+    val type = this.columnsList[colIndex].dataType
+    return unmarshalByteField(item, type)
+}
+
 
 fun unmarshalByteField(
     byteItem: ByteString,

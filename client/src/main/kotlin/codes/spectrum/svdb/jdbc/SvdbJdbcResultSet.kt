@@ -1,10 +1,11 @@
 package codes.spectrum.svdb.jdbc
 
-import codes.spectrum.svdb.*
-import codes.spectrum.commons.*
+import codes.spectrum.commons.Effective
+import codes.spectrum.commons.toInt
+import codes.spectrum.svdb.ISvdbCursor
+import codes.spectrum.svdb.SvdbStateCodes
 import codes.spectrum.svdb.model.v1.*
 import codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType
-import codes.spectrum.svdb.model.v1.Queryresult.DataMode
 import com.google.protobuf.ByteString
 import kotlinx.coroutines.runBlocking
 import java.io.InputStream
@@ -20,47 +21,24 @@ import kotlin.collections.ArrayList
 class SvdbJdbcResultSet(
     val cursor: ISvdbCursor,
 ) : ResultSet {
-    private var currentElem: Map<String, SvdbJdbcWrappedValue>? = null
-    private var currentByteElem: List<ByteString>? = null
-    private val prefetchQueue: Queue<RecordOuterClass.Record> = LinkedList()
-    private val prefetchQueueByteRecords: Queue<ByteRecordOuterClass.ByteRecord> = LinkedList()
-    private var dataMode: DataMode = DataMode.V1
+    private var currentElem: List<ByteString>? = null
+    private val prefetchQueueRecords: Queue<RecordOuterClass.Record> = LinkedList()
     private val columnsData: MutableList<ColumnOuterClass.Column> = mutableListOf()
     private val warningsQueue: Queue<WarningOuterClass.Warning> = LinkedList()
     private var lastResult: Queryresult.QueryResult = queryResult { state = state { type = "OK" } }
-    private var metadataElement: Map<String, SvdbJdbcWrappedValue>? = null
     private var wasFirst = false
     private var internalIsClosed = false
-
-    private val firstElem: Map<String, SvdbJdbcWrappedValue>? by lazy {
-        if (metadataElement == null) {
-            while (lastResult.state.type == "OK" && prefetchQueue.size == 0) {
-                read()
-            }
-            metadataElement = when {
-                lastResult.state.type == "ERROR" -> emptyMap()
-                prefetchQueue.size == 0 -> emptyMap()
-                else -> prefetchQueue.peek().fieldMap()
-            }
-        }
-        metadataElement
-    }
 
     private fun read() {
         // подготовили новую очередь
         lastResult = runBlocking { cursor.fetch() }
 
-        dataMode = lastResult.dataMode
-
-        if (lastResult.dataMode == DataMode.V2) {
-            if (!wasFirst) {
-                wasFirst = true
-                columnsData.addAll(lastResult.columnsList)
-            }
-            prefetchQueueByteRecords.addAll(lastResult.byteRecordsList)
+        if (!wasFirst) {
+            wasFirst = true
+            columnsData.addAll(lastResult.columnsList)
         }
+        prefetchQueueRecords.addAll(lastResult.recordsList)
 
-        prefetchQueue.addAll(lastResult.recordsList)
         warningsQueue.addAll(lastResult.warningsList)
     }
 
@@ -76,20 +54,9 @@ class SvdbJdbcResultSet(
         }
 
         // если уже есть prefetch очередь - то берем из нее
-        if (dataMode == DataMode.V2) {
-            val prefetchedByteRecord = prefetchQueueByteRecords.poll()
-            if (prefetchedByteRecord != null && prefetchedByteRecord.fieldsList.isNotEmpty()) {
-                currentByteElem = prefetchedByteRecord.toByteStringList()
-                return true
-            }
-        }
-
-        val prefetched = prefetchQueue.poll()
-        if (prefetched != null && prefetched.fieldsList.isNotEmpty()) {
-            currentElem = prefetched.fieldMap()
-            if (metadataElement == null) {
-                metadataElement = currentElem
-            }
+        val prefetchedByteRecord = prefetchQueueRecords.poll()
+        if (prefetchedByteRecord != null && prefetchedByteRecord.fieldsList.isNotEmpty()) {
+            currentElem = prefetchedByteRecord.toByteStringList()
             return true
         }
 
@@ -99,8 +66,7 @@ class SvdbJdbcResultSet(
             return false
         }
 
-        while (lastResult.state.type == "OK" && prefetchQueue.size == 0 &&
-            prefetchQueueByteRecords.size == 0
+        while (lastResult.state.type == "OK" && prefetchQueueRecords.size == 0
         ) {
             read()
         }
@@ -125,51 +91,32 @@ class SvdbJdbcResultSet(
     override fun getString(columnIndex: Int): String? {
         checkIsClosed()
 
-        if (dataMode == DataMode.V2) {
-            val byteItem =
-                currentByteElem?.getOrNull(columnIndex - 1) ?: error("can't get column with index $columnIndex")
-            return when (val res = unmarshalByteField(byteItem, DataType.STRING)) {
-                null -> null
-                else -> res.toString()
-            }
-        }
-
-        val value = currentElem?.entries?.toList()?.get(columnIndex - 1)?.value?.value
-
-        return when (value) {
-            null -> error("can't get column with index $columnIndex")
-            is SvdbNull -> null
-            else -> value.toString()
+        val byteItem =
+            currentElem?.getOrNull(columnIndex - 1) ?: error("can't get column with index $columnIndex")
+        return when (val res = unmarshalByteField(byteItem, DataType.STRING)) {
+            null -> null
+            else -> res.toString()
         }
     }
 
     override fun getString(columnLabel: String): String? {
         checkIsClosed()
 
-        if (dataMode == DataMode.V2) {
-            if (columnsData.isEmpty()) {
-                error("can't get column with label $columnLabel")
-            }
-
-            val columnIndex = getIndexByLabel(columnsData, columnLabel)
-            if (columnIndex == -1) {
-                error("can't get column with label $columnLabel")
-            }
-
-            val byteItem = currentByteElem?.get(columnIndex) ?: error("can't get column with label $columnLabel")
-            return when (val res = unmarshalByteField(byteItem, DataType.STRING)) {
-                null -> null
-                else -> res.toString()
-            }
+        if (columnsData.isEmpty()) {
+            error("can't get column with label $columnLabel")
         }
 
-        val value = currentElem?.get(columnLabel)?.value
-
-        return when (value) {
-            null -> error("can't get column with label $columnLabel")
-            is SvdbNull -> null
-            else -> value.toString()
+        val columnIndex = getIndexByLabel(columnsData, columnLabel)
+        if (columnIndex == -1) {
+            error("can't get column with label $columnLabel")
         }
+
+        val byteItem = currentElem?.get(columnIndex) ?: error("can't get column with label $columnLabel")
+        return when (val res = unmarshalByteField(byteItem, DataType.STRING)) {
+            null -> null
+            else -> res.toString()
+        }
+
     }
 
     override fun getBoolean(columnIndex: Int): Boolean {
@@ -204,12 +151,12 @@ class SvdbJdbcResultSet(
 
     override fun getInt(columnIndex: Int): Int {
         checkIsClosed()
-        return getObject(columnIndex).let { Effective.int(it) }
+        return getObject(columnIndex).let { Effective.toInt(it) }
     }
 
     override fun getInt(columnLabel: String): Int {
         checkIsClosed()
-        return getObject(columnLabel).let { Effective.int(it) }
+        return getObject(columnLabel).let { Effective.toInt(it) }
     }
 
     override fun getLong(columnIndex: Int): Long {
@@ -298,23 +245,9 @@ class SvdbJdbcResultSet(
         return getObject(columnLabel)?.let { (Time(Effective.date(it).time)) }
     }
 
-    override fun getTime(columnIndex: Int, cal: Calendar?): Time {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getTime(columnIndex: Int, cal: Calendar?): Time = TODO("method name ${retriveFunName()} called")
 
-    override fun getTime(columnLabel: String?, cal: Calendar?): Time {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getTime(columnLabel: String?, cal: Calendar?): Time = TODO("method name ${retriveFunName()} called")
 
     override fun getTimestamp(columnIndex: Int): Timestamp? {
         checkIsClosed()
@@ -326,77 +259,21 @@ class SvdbJdbcResultSet(
         return getObject(columnLabel)?.let { Timestamp(Effective.date(it).time) }
     }
 
-    override fun getTimestamp(columnIndex: Int, cal: Calendar?): Timestamp {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getTimestamp(columnIndex: Int, cal: Calendar?): Timestamp = TODO("method name ${retriveFunName()} called")
 
-    override fun getTimestamp(columnLabel: String?, cal: Calendar?): Timestamp {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getTimestamp(columnLabel: String?, cal: Calendar?): Timestamp = TODO("method name ${retriveFunName()} called")
 
-    override fun getAsciiStream(columnIndex: Int): InputStream {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getAsciiStream(columnIndex: Int): InputStream = TODO("method name ${retriveFunName()} called")
 
-    override fun getAsciiStream(columnLabel: String?): InputStream {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getAsciiStream(columnLabel: String?): InputStream = TODO("method name ${retriveFunName()} called")
 
-    override fun getUnicodeStream(columnIndex: Int): InputStream {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getUnicodeStream(columnIndex: Int): InputStream = TODO("method name ${retriveFunName()} called")
 
-    override fun getUnicodeStream(columnLabel: String?): InputStream {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getUnicodeStream(columnLabel: String?): InputStream = TODO("method name ${retriveFunName()} called")
 
-    override fun getBinaryStream(columnIndex: Int): InputStream {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getBinaryStream(columnIndex: Int): InputStream = TODO("method name ${retriveFunName()} called")
 
-    override fun getBinaryStream(columnLabel: String?): InputStream {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getBinaryStream(columnLabel: String?): InputStream = TODO("method name ${retriveFunName()} called")
 
     private inner class SvdbSqlWarning(wd: WarningOuterClass.Warning) : SQLWarning(
         wd.reason,
@@ -426,25 +303,13 @@ class SvdbJdbcResultSet(
 
     override fun getMetaData(): ResultSetMetaData {
         checkIsClosed()
-
         read()
-
-        if (columnsData.isNotEmpty()) {
-            return SvdbJdbcResultSetMetaData(resolveWithColumns(columnsData))
-        }
-
-        return SvdbJdbcResultSetMetaData(resolveResultSetTypes(firstElem ?: emptyMap()))
+        return SvdbJdbcResultSetMetaData(resolveWithColumns(columnsData))
     }
 
     private fun resolveWithColumns(columnsData: List<ColumnOuterClass.Column>): List<SvdbJdbcColumnMetadata> {
         return columnsData.map {
             SvdbJdbcColumnMetadata(it.code, SvdbJdbcTypes.getByDataType(it.dataType), resolveScale(it.dataType))
-        }
-    }
-
-    private fun resolveResultSetTypes(firstElem: Map<String, SvdbJdbcWrappedValue>): List<SvdbJdbcColumnMetadata> {
-        return firstElem.map {
-            SvdbJdbcColumnMetadata(it.key, SvdbJdbcTypes.getByValueCase(it.value.type), resolveScale(it.value))
         }
     }
 
@@ -455,799 +320,321 @@ class SvdbJdbcResultSet(
             SCALE_NOT_SUPPORTED
         }
 
-    private fun resolveScale(wrappedValue: SvdbJdbcWrappedValue): Int =
-        if (wrappedValue.type == ValueOuterClass.Value.ValueCase.DEC) {
-            DECIMAL_DEFAULT_SCALE
-        } else {
-            SCALE_NOT_SUPPORTED
-        }
-
     override fun getObject(columnIndex: Int): Any? {
         checkIsClosed()
-
-        if (dataMode == DataMode.V2) {
-            val column = columnsData.getOrNull(columnIndex - 1) ?: return null
-            val byteItem = currentByteElem?.getOrNull(columnIndex - 1) ?: return null
-            return unmarshalByteField(byteItem, column.dataType)
-        }
-
-        val value = currentElem?.toList()?.get(columnIndex - 1)?.second
-        return if (value?.value is SvdbNull) null else value?.unwrap()
+        val column = columnsData.getOrNull(columnIndex - 1) ?: return null
+        val byteItem = currentElem?.getOrNull(columnIndex - 1) ?: return null
+        return unmarshalByteField(byteItem, column.dataType)
     }
 
     override fun getObject(columnLabel: String?): Any? {
         checkIsClosed()
 
-        if (dataMode == DataMode.V2) {
-            if (columnLabel == null) {
-                return null
-            }
-
-            val columnIndex = getIndexByLabel(columnsData, columnLabel)
-            if (columnIndex == -1) {
-                error("can't get column with label $columnLabel")
-            }
-
-            val column = columnsData.getOrNull(columnIndex) ?: return null
-            val byteItem = currentByteElem?.getOrNull(columnIndex) ?: return null
-            return unmarshalByteField(byteItem, column.dataType)
+        if (columnLabel == null) {
+            return null
         }
 
-        val value = currentElem?.get(columnLabel)
-        return if (value?.value is SvdbNull) null else value?.unwrap()
+        val columnIndex = getIndexByLabel(columnsData, columnLabel)
+        if (columnIndex == -1) {
+            error("can't get column with label $columnLabel")
+        }
+
+        val column = columnsData.getOrNull(columnIndex) ?: return null
+        val byteItem = currentElem?.getOrNull(columnIndex) ?: return null
+        return unmarshalByteField(byteItem, column.dataType)
     }
 
-    override fun getObject(columnIndex: Int, map: MutableMap<String, Class<*>>?): Any {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getObject(columnIndex: Int, map: MutableMap<String, Class<*>>?): Any = TODO("method name ${retriveFunName()} called")
 
-    override fun getObject(columnLabel: String?, map: MutableMap<String, Class<*>>?): Any {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getObject(columnLabel: String?, map: MutableMap<String, Class<*>>?): Any = TODO("method name ${retriveFunName()} called")
 
-    override fun <T : Any?> getObject(columnIndex: Int, type: Class<T>?): T {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun <T : Any?> getObject(columnIndex: Int, type: Class<T>?): T = TODO("method name ${retriveFunName()} called")
 
-    override fun <T : Any?> getObject(columnLabel: String?, type: Class<T>?): T {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun <T : Any?> getObject(columnLabel: String?, type: Class<T>?): T = TODO("method name ${retriveFunName()} called")
 
-    override fun findColumn(columnLabel: String?): Int {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun findColumn(columnLabel: String?): Int = TODO("method name ${retriveFunName()} called")
 
-    override fun getCharacterStream(columnIndex: Int): Reader {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getCharacterStream(columnIndex: Int): Reader = TODO("method name ${retriveFunName()} called")
 
     override fun getCharacterStream(columnLabel: String?): Reader {
         checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
+        TODO("method name ${retriveFunName()} called")
     }
 
-    override fun isBeforeFirst(): Boolean {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun isBeforeFirst(): Boolean = TODO("method name ${retriveFunName()} called")
 
-    override fun isAfterLast(): Boolean {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun isAfterLast(): Boolean = TODO("method name ${retriveFunName()} called")
 
-    override fun isFirst(): Boolean {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun isFirst(): Boolean = TODO("method name ${retriveFunName()} called")
 
-    override fun isLast(): Boolean {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun isLast(): Boolean = TODO("method name ${retriveFunName()} called")
 
-    override fun beforeFirst() {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun beforeFirst() = TODO("method name ${retriveFunName()} called")
 
-    override fun afterLast() {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun afterLast() = TODO("method name ${retriveFunName()} called")
 
-    override fun first(): Boolean {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun first(): Boolean = TODO("method name ${retriveFunName()} called")
 
-    override fun last(): Boolean {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun last(): Boolean = TODO("method name ${retriveFunName()} called")
 
-    override fun getRow(): Int {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getRow(): Int = TODO("method name ${retriveFunName()} called")
 
-    override fun absolute(row: Int): Boolean {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun absolute(row: Int): Boolean = TODO("method name ${retriveFunName()} called")
 
-    override fun relative(rows: Int): Boolean {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun relative(rows: Int): Boolean = TODO("method name ${retriveFunName()} called")
 
-    override fun previous(): Boolean {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun previous(): Boolean = TODO("method name ${retriveFunName()} called")
 
-    override fun setFetchDirection(direction: Int) {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun setFetchDirection(direction: Int) = TODO("method name ${retriveFunName()} called")
 
-    override fun getFetchDirection(): Int {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getFetchDirection(): Int = TODO("method name ${retriveFunName()} called")
 
-    override fun setFetchSize(rows: Int) {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun setFetchSize(rows: Int) = TODO("method name ${retriveFunName()} called")
 
-    override fun getFetchSize(): Int {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getFetchSize(): Int = TODO("method name ${retriveFunName()} called")
 
     override fun getType(): Int {
         checkIsClosed()
         return ResultSet.TYPE_FORWARD_ONLY
     }
 
-    override fun getConcurrency(): Int {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getConcurrency(): Int = TODO("method name ${retriveFunName()} called")
 
-    override fun rowUpdated(): Boolean {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun rowUpdated(): Boolean = TODO("method name ${retriveFunName()} called")
 
-    override fun rowInserted(): Boolean {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun rowInserted(): Boolean = TODO("method name ${retriveFunName()} called")
 
-    override fun rowDeleted(): Boolean {
-        checkIsClosed()
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun rowDeleted(): Boolean = TODO("method name ${retriveFunName()} called")
 
-    override fun updateNull(columnIndex: Int)  = TODO("method name ${retriveFunName()} called")
+    override fun updateNull(columnIndex: Int) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateNull(columnLabel: String?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateNull(columnLabel: String?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBoolean(columnIndex: Int, x: Boolean)  = TODO("method name ${retriveFunName()} called")
+    override fun updateBoolean(columnIndex: Int, x: Boolean) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBoolean(columnLabel: String?, x: Boolean)  = TODO("method name ${retriveFunName()} called")
+    override fun updateBoolean(columnLabel: String?, x: Boolean) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateByte(columnIndex: Int, x: Byte)  = TODO("method name ${retriveFunName()} called")
+    override fun updateByte(columnIndex: Int, x: Byte) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateByte(columnLabel: String?, x: Byte)  = TODO("method name ${retriveFunName()} called")
+    override fun updateByte(columnLabel: String?, x: Byte) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateShort(columnIndex: Int, x: Short)  = TODO("method name ${retriveFunName()} called")
+    override fun updateShort(columnIndex: Int, x: Short) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateShort(columnLabel: String?, x: Short)  = TODO("method name ${retriveFunName()} called")
+    override fun updateShort(columnLabel: String?, x: Short) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateInt(columnIndex: Int, x: Int)  = TODO("method name ${retriveFunName()} called")
+    override fun updateInt(columnIndex: Int, x: Int) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateInt(columnLabel: String?, x: Int)  = TODO("method name ${retriveFunName()} called")
+    override fun updateInt(columnLabel: String?, x: Int) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateLong(columnIndex: Int, x: Long)  = TODO("method name ${retriveFunName()} called")
+    override fun updateLong(columnIndex: Int, x: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateLong(columnLabel: String?, x: Long)  = TODO("method name ${retriveFunName()} called")
+    override fun updateLong(columnLabel: String?, x: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateFloat(columnIndex: Int, x: Float)  = TODO("method name ${retriveFunName()} called")
+    override fun updateFloat(columnIndex: Int, x: Float) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateFloat(columnLabel: String?, x: Float)  = TODO("method name ${retriveFunName()} called")
+    override fun updateFloat(columnLabel: String?, x: Float) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateDouble(columnIndex: Int, x: Double)  = TODO("method name ${retriveFunName()} called")
+    override fun updateDouble(columnIndex: Int, x: Double) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateDouble(columnLabel: String?, x: Double)  = TODO("method name ${retriveFunName()} called")
+    override fun updateDouble(columnLabel: String?, x: Double) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBigDecimal(columnIndex: Int, x: BigDecimal?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateBigDecimal(columnIndex: Int, x: BigDecimal?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBigDecimal(columnLabel: String?, x: BigDecimal?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateBigDecimal(columnLabel: String?, x: BigDecimal?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateString(columnIndex: Int, x: String?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateString(columnIndex: Int, x: String?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateString(columnLabel: String?, x: String?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateString(columnLabel: String?, x: String?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBytes(columnIndex: Int, x: ByteArray?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateBytes(columnIndex: Int, x: ByteArray?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBytes(columnLabel: String?, x: ByteArray?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateBytes(columnLabel: String?, x: ByteArray?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateDate(columnIndex: Int, x: Date?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateDate(columnIndex: Int, x: Date?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateDate(columnLabel: String?, x: Date?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateDate(columnLabel: String?, x: Date?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateTime(columnIndex: Int, x: Time?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateTime(columnIndex: Int, x: Time?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateTime(columnLabel: String?, x: Time?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateTime(columnLabel: String?, x: Time?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateTimestamp(columnIndex: Int, x: Timestamp?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateTimestamp(columnIndex: Int, x: Timestamp?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateTimestamp(columnLabel: String?, x: Timestamp?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateTimestamp(columnLabel: String?, x: Timestamp?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateAsciiStream(columnIndex: Int, x: InputStream?, length: Int)  = TODO("method name ${retriveFunName()} called")
+    override fun updateAsciiStream(columnIndex: Int, x: InputStream?, length: Int) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateAsciiStream(columnLabel: String?, x: InputStream?, length: Int)  = TODO("method name ${retriveFunName()} called")
+    override fun updateAsciiStream(columnLabel: String?, x: InputStream?, length: Int) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateAsciiStream(columnIndex: Int, x: InputStream?, length: Long)  = TODO("method name ${retriveFunName()} called")
+    override fun updateAsciiStream(columnIndex: Int, x: InputStream?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateAsciiStream(columnLabel: String?, x: InputStream?, length: Long)  = TODO("method name ${retriveFunName()} called")
+    override fun updateAsciiStream(columnLabel: String?, x: InputStream?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateAsciiStream(columnIndex: Int, x: InputStream?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateAsciiStream(columnIndex: Int, x: InputStream?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateAsciiStream(columnLabel: String?, x: InputStream?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateAsciiStream(columnLabel: String?, x: InputStream?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBinaryStream(columnIndex: Int, x: InputStream?, length: Int)  = TODO("method name ${retriveFunName()} called")
+    override fun updateBinaryStream(columnIndex: Int, x: InputStream?, length: Int) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBinaryStream(columnLabel: String?, x: InputStream?, length: Int)  = TODO("method name ${retriveFunName()} called")
+    override fun updateBinaryStream(columnLabel: String?, x: InputStream?, length: Int) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBinaryStream(columnIndex: Int, x: InputStream?, length: Long)  = TODO("method name ${retriveFunName()} called")
+    override fun updateBinaryStream(columnIndex: Int, x: InputStream?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBinaryStream(columnLabel: String?, x: InputStream?, length: Long)  = TODO("method name ${retriveFunName()} called")
+    override fun updateBinaryStream(columnLabel: String?, x: InputStream?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBinaryStream(columnIndex: Int, x: InputStream?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateBinaryStream(columnIndex: Int, x: InputStream?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBinaryStream(columnLabel: String?, x: InputStream?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateBinaryStream(columnLabel: String?, x: InputStream?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateCharacterStream(columnIndex: Int, x: Reader?, length: Int)  = TODO("method name ${retriveFunName()} called")
+    override fun updateCharacterStream(columnIndex: Int, x: Reader?, length: Int) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateCharacterStream(columnLabel: String?, reader: Reader?, length: Int)  = TODO("method name ${retriveFunName()} called")
+    override fun updateCharacterStream(columnLabel: String?, reader: Reader?, length: Int) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateCharacterStream(columnIndex: Int, x: Reader?, length: Long)  = TODO("method name ${retriveFunName()} called")
+    override fun updateCharacterStream(columnIndex: Int, x: Reader?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateCharacterStream(columnLabel: String?, reader: Reader?, length: Long)  = TODO("method name ${retriveFunName()} called")
+    override fun updateCharacterStream(columnLabel: String?, reader: Reader?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateCharacterStream(columnIndex: Int, x: Reader?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateCharacterStream(columnIndex: Int, x: Reader?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateCharacterStream(columnLabel: String?, reader: Reader?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateCharacterStream(columnLabel: String?, reader: Reader?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateObject(columnIndex: Int, x: Any?, scaleOrLength: Int)  = TODO("method name ${retriveFunName()} called")
+    override fun updateObject(columnIndex: Int, x: Any?, scaleOrLength: Int) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateObject(columnIndex: Int, x: Any?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateObject(columnIndex: Int, x: Any?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateObject(columnLabel: String?, x: Any?, scaleOrLength: Int)  = TODO("method name ${retriveFunName()} called")
+    override fun updateObject(columnLabel: String?, x: Any?, scaleOrLength: Int) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateObject(columnLabel: String?, x: Any?)  = TODO("method name ${retriveFunName()} called")
+    override fun updateObject(columnLabel: String?, x: Any?) = TODO("method name ${retriveFunName()} called")
 
-    override fun insertRow()  = TODO("method name ${retriveFunName()} called")
+    override fun insertRow() = TODO("method name ${retriveFunName()} called")
 
-    override fun updateRow()  = TODO("method name ${retriveFunName()} called")
+    override fun updateRow() = TODO("method name ${retriveFunName()} called")
 
-    override fun deleteRow()  = TODO("method name ${retriveFunName()} called")
+    override fun deleteRow() = TODO("method name ${retriveFunName()} called")
 
-    override fun refreshRow()  = TODO("method name ${retriveFunName()} called")
+    override fun refreshRow() = TODO("method name ${retriveFunName()} called")
 
-    override fun cancelRowUpdates()  = TODO("method name ${retriveFunName()} called")
+    override fun cancelRowUpdates() = TODO("method name ${retriveFunName()} called")
 
-    override fun moveToInsertRow()  = TODO("method name ${retriveFunName()} called")
+    override fun moveToInsertRow() = TODO("method name ${retriveFunName()} called")
 
-    override fun moveToCurrentRow()  = TODO("method name ${retriveFunName()} called")
+    override fun moveToCurrentRow() = TODO("method name ${retriveFunName()} called")
 
-    override fun getStatement(): Statement  = TODO("method name ${retriveFunName()} called")
+    override fun getStatement(): Statement = TODO("method name ${retriveFunName()} called")
 
-    override fun getRef(columnIndex: Int): Ref  = TODO("method name ${retriveFunName()} called")
+    override fun getRef(columnIndex: Int): Ref = TODO("method name ${retriveFunName()} called")
 
-    override fun getRef(columnLabel: String?): Ref  = TODO("method name ${retriveFunName()} called")
+    override fun getRef(columnLabel: String?): Ref = TODO("method name ${retriveFunName()} called")
 
-    override fun getBlob(columnIndex: Int): Blob  = TODO("method name ${retriveFunName()} called")
+    override fun getBlob(columnIndex: Int): Blob = TODO("method name ${retriveFunName()} called")
 
-    override fun getBlob(columnLabel: String?): Blob  = TODO("method name ${retriveFunName()} called")
+    override fun getBlob(columnLabel: String?): Blob = TODO("method name ${retriveFunName()} called")
 
-    override fun getClob(columnIndex: Int): Clob  = TODO("method name ${retriveFunName()} called")
+    override fun getClob(columnIndex: Int): Clob = TODO("method name ${retriveFunName()} called")
 
-    override fun getClob(columnLabel: String?): Clob  = TODO("method name ${retriveFunName()} called")
+    override fun getClob(columnLabel: String?): Clob = TODO("method name ${retriveFunName()} called")
 
     override fun getArray(columnIndex: Int): Array {
-        if (dataMode == DataMode.V2) {
-            return SvdbJdbcSqlArray((getObject(columnIndex) as ArrayList<*>).toArray())
-        }
-
-        return (getObject(columnIndex) as? SvdbJdbcArrayWrapper)?.toArray()?.let { SvdbJdbcSqlArray(it) }
-            ?: error("Could not get array with column Index $columnIndex")
+        return SvdbJdbcSqlArray((getObject(columnIndex) as ArrayList<*>).toArray())
     }
 
     override fun getArray(columnLabel: String): Array {
-        if (dataMode == DataMode.V2) {
-            return SvdbJdbcSqlArray((getObject(columnLabel) as ArrayList<*>).toArray())
-        }
-
-        return (getObject(columnLabel) as? SvdbJdbcArrayWrapper)?.toArray()?.let { SvdbJdbcSqlArray(it) }
-            ?: error("Could not get array with column Index $columnLabel")
+        return SvdbJdbcSqlArray((getObject(columnLabel) as ArrayList<*>).toArray())
     }
 
-    override fun getURL(columnIndex: Int): URL  = TODO("method name ${retriveFunName()} called")
+    override fun getURL(columnIndex: Int): URL = TODO("method name ${retriveFunName()} called")
 
-    override fun getURL(columnLabel: String?): URL {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getURL(columnLabel: String?): URL = TODO("method name ${retriveFunName()} called")
 
-    override fun updateRef(columnIndex: Int, x: Ref?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateRef(columnIndex: Int, x: Ref?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateRef(columnLabel: String?, x: Ref?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateRef(columnLabel: String?, x: Ref?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBlob(columnIndex: Int, x: Blob?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateBlob(columnIndex: Int, x: Blob?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBlob(columnLabel: String?, x: Blob?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateBlob(columnLabel: String?, x: Blob?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBlob(columnIndex: Int, inputStream: InputStream?, length: Long) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateBlob(columnIndex: Int, inputStream: InputStream?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBlob(columnLabel: String?, inputStream: InputStream?, length: Long) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateBlob(columnLabel: String?, inputStream: InputStream?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBlob(columnIndex: Int, inputStream: InputStream?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateBlob(columnIndex: Int, inputStream: InputStream?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateBlob(columnLabel: String?, inputStream: InputStream?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateBlob(columnLabel: String?, inputStream: InputStream?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateClob(columnIndex: Int, x: Clob?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateClob(columnIndex: Int, x: Clob?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateClob(columnLabel: String?, x: Clob?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateClob(columnLabel: String?, x: Clob?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateClob(columnIndex: Int, reader: Reader?, length: Long) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateClob(columnIndex: Int, reader: Reader?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateClob(columnLabel: String?, reader: Reader?, length: Long) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateClob(columnLabel: String?, reader: Reader?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateClob(columnIndex: Int, reader: Reader?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateClob(columnIndex: Int, reader: Reader?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateClob(columnLabel: String?, reader: Reader?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateClob(columnLabel: String?, reader: Reader?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateArray(columnIndex: Int, x: Array?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateArray(columnIndex: Int, x: Array?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateArray(columnLabel: String?, x: Array?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateArray(columnLabel: String?, x: Array?) = TODO("method name ${retriveFunName()} called")
 
-    override fun getRowId(columnIndex: Int): RowId {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getRowId(columnIndex: Int): RowId = TODO("method name ${retriveFunName()} called")
 
-    override fun getRowId(columnLabel: String?): RowId {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getRowId(columnLabel: String?): RowId = TODO("method name ${retriveFunName()} called")
 
-    override fun updateRowId(columnIndex: Int, x: RowId?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateRowId(columnIndex: Int, x: RowId?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateRowId(columnLabel: String?, x: RowId?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateRowId(columnLabel: String?, x: RowId?) = TODO("method name ${retriveFunName()} called")
 
-    override fun getHoldability(): Int {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getHoldability(): Int = TODO("method name ${retriveFunName()} called")
 
     override fun isClosed(): Boolean {
         return internalIsClosed
     }
 
-    override fun updateNString(columnIndex: Int, nString: String?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateNString(columnIndex: Int, nString: String?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateNString(columnLabel: String?, nString: String?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateNString(columnLabel: String?, nString: String?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateNClob(columnIndex: Int, nClob: NClob?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateNClob(columnIndex: Int, nClob: NClob?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateNClob(columnLabel: String?, nClob: NClob?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateNClob(columnLabel: String?, nClob: NClob?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateNClob(columnIndex: Int, reader: Reader?, length: Long) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateNClob(columnIndex: Int, reader: Reader?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateNClob(columnLabel: String?, reader: Reader?, length: Long) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateNClob(columnLabel: String?, reader: Reader?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateNClob(columnIndex: Int, reader: Reader?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateNClob(columnIndex: Int, reader: Reader?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateNClob(columnLabel: String?, reader: Reader?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateNClob(columnLabel: String?, reader: Reader?) = TODO("method name ${retriveFunName()} called")
 
-    override fun getNClob(columnIndex: Int): NClob {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getNClob(columnIndex: Int): NClob = TODO("method name ${retriveFunName()} called")
 
-    override fun getNClob(columnLabel: String?): NClob {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getNClob(columnLabel: String?): NClob = TODO("method name ${retriveFunName()} called")
 
-    override fun getSQLXML(columnIndex: Int): SQLXML {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getSQLXML(columnIndex: Int): SQLXML = TODO("method name ${retriveFunName()} called")
 
-    override fun getSQLXML(columnLabel: String?): SQLXML {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getSQLXML(columnLabel: String?): SQLXML = TODO("method name ${retriveFunName()} called")
 
-    override fun updateSQLXML(columnIndex: Int, xmlObject: SQLXML?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateSQLXML(columnIndex: Int, xmlObject: SQLXML?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateSQLXML(columnLabel: String?, xmlObject: SQLXML?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateSQLXML(columnLabel: String?, xmlObject: SQLXML?) = TODO("method name ${retriveFunName()} called")
 
-    override fun getNString(columnIndex: Int): String {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getNString(columnIndex: Int): String = TODO("method name ${retriveFunName()} called")
 
-    override fun getNString(columnLabel: String?): String {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getNString(columnLabel: String?): String = TODO("method name ${retriveFunName()} called")
 
-    override fun getNCharacterStream(columnIndex: Int): Reader {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getNCharacterStream(columnIndex: Int): Reader = TODO("method name ${retriveFunName()} called")
 
-    override fun getNCharacterStream(columnLabel: String?): Reader {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun getNCharacterStream(columnLabel: String?): Reader = TODO("method name ${retriveFunName()} called")
 
-    override fun updateNCharacterStream(columnIndex: Int, x: Reader?, length: Long) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateNCharacterStream(columnIndex: Int, x: Reader?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateNCharacterStream(columnLabel: String?, reader: Reader?, length: Long) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateNCharacterStream(columnLabel: String?, reader: Reader?, length: Long) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateNCharacterStream(columnIndex: Int, x: Reader?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateNCharacterStream(columnIndex: Int, x: Reader?) = TODO("method name ${retriveFunName()} called")
 
-    override fun updateNCharacterStream(columnLabel: String?, reader: Reader?) {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
-    }
+    override fun updateNCharacterStream(columnLabel: String?, reader: Reader?) = TODO("method name ${retriveFunName()} called")
 
     companion object {
         const val DECIMAL_DEFAULT_SCALE = 6

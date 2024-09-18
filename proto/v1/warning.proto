@@ -4,9 +4,9 @@ option go_package = "gitlab.spectrumdata.tech/sd3/svdb/go/model/v1";
 
 message Warning {
     // код ошибки SQL
-    int32 code = 10;
+    int32 code = 1;
     // SQLState
-    string state = 15;
+    string state = 2;
     // сообщение
-    string reason = 20;
+    string reason = 3;
   }

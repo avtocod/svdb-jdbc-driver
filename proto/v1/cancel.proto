@@ -5,11 +5,9 @@ option go_package = "gitlab.spectrumdata.tech/sd3/svdb/go/model/v1";
 
 // структура-параметр для метода закрытия сессии или курсора
 message CancelOptions {
-    reserved 1 to 9; // мало ли что
-
     // uid сессии, которую необходимо закрыть
-    string sessionUid = 10;
+    string sessionUid = 1;
 
     // uid курсора, который надо закрыть
-    string cursorUid = 20;
+    string cursorUid = 2;
 }

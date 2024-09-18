@@ -12,6 +12,7 @@ import java.math.BigDecimal
 import java.net.URL
 import java.sql.*
 import java.sql.Date
+import java.time.Instant
 import java.util.*
 
 class SvdbJdbcPreparedStatement(
@@ -194,65 +195,64 @@ class SvdbJdbcPreparedStatement(
 
     override fun setNull(parameterIndex: Int, sqlType: Int) {
         checkClosed()
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.AUTO, SvdbNull))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.STRING, SvdbNull)
     }
 
     override fun setNull(parameterIndex: Int, sqlType: Int, typeName: String?) {
         checkClosed()
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.AUTO, SvdbNull))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.STRING, SvdbNull)
     }
 
     override fun setBoolean(parameterIndex: Int, x: Boolean) {
         checkClosed()
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.BOOL, x))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.BOOL, x)
     }
 
     override fun setByte(parameterIndex: Int, x: Byte) {
         checkClosed()
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.AUTO, x))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x)
     }
 
     override fun setShort(parameterIndex: Int, x: Short) {
         checkClosed()
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.AUTO, x))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x)
     }
 
     override fun setInt(parameterIndex: Int, x: Int) {
         checkClosed()
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x)
     }
 
     override fun setLong(parameterIndex: Int, x: Long) {
         checkClosed()
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x)
     }
 
     override fun setFloat(parameterIndex: Int, x: Float) {
         checkClosed()
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.FLOAT, x))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.FLOAT, x)
     }
 
     override fun setDouble(parameterIndex: Int, x: Double) {
         checkClosed()
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.FLOAT, x))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.FLOAT, x)
     }
 
     override fun setBigDecimal(parameterIndex: Int, x: BigDecimal) {
         checkClosed()
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.DECIMAL, x))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.DECIMAL, x)
     }
 
     override fun setString(parameterIndex: Int, x: String) {
         checkClosed()
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.STRING, x))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.STRING, x)
     }
 
     override fun setBytes(parameterIndex: Int, x: ByteArray)  = TODO("method name ${retriveFunName()} called")
 
     override fun setDate(parameterIndex: Int, x: Date) {
         checkClosed()
-        // Внутри используем LocalDate
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.TIMESTAMP, x.toLocalDate()))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.TIMESTAMP, x.toLocalDate())
     }
 
     override fun setDate(parameterIndex: Int, x: Date?, cal: Calendar)  = TODO("method name ${retriveFunName()} called")
@@ -260,7 +260,7 @@ class SvdbJdbcPreparedStatement(
     override fun setTime(parameterIndex: Int, x: Time) {
         checkClosed()
         // Внутри используем long
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x.time))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.TIMESTAMP, x.time)
     }
 
     override fun setTime(parameterIndex: Int, x: Time?, cal: Calendar?)  = TODO("method name ${retriveFunName()} called")
@@ -268,7 +268,7 @@ class SvdbJdbcPreparedStatement(
     override fun setTimestamp(parameterIndex: Int, x: Timestamp) {
         checkClosed()
         // Внутри используем long
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x.time))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.TIMESTAMP, x.time)
     }
 
     override fun setTimestamp(parameterIndex: Int, x: Timestamp?, cal: Calendar?)  = TODO("method name ${retriveFunName()} called")
@@ -294,9 +294,36 @@ class SvdbJdbcPreparedStatement(
 
     override fun setObject(parameterIndex: Int, x: Any?, targetSqlType: Int)  = TODO("method name ${retriveFunName()} called")
 
-    override fun setObject(parameterIndex: Int, x: Any) {
+    override fun setObject(paramIdx: Int, x: Any) {
         checkClosed()
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.AUTO, x))
+        when (x) {
+            is Boolean -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.BOOL, x)
+
+            is Int -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x)
+            is Long -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x)
+            is Byte -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x)
+            is Short -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x)
+
+            is Instant -> parameters[paramIdx] =
+                SvdbJdbcParameter(ColumnOuterClass.DataType.TIMESTAMP, x.toEpochMilli())
+            is Time -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.TIMESTAMP, x.time)
+            is Timestamp -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.TIMESTAMP, x.time)
+            is Date -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.TIMESTAMP, x.time)
+
+            is Float -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.FLOAT, x)
+            is Double -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.FLOAT, x)
+
+            is BigDecimal -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.DECIMAL, x)
+
+            is java.sql.Array -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.ARRAY, x.array)
+            is Array<*> -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.ARRAY, x)
+            is List<*> -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.ARRAY, x.toTypedArray())
+
+            is Map<*, *> -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.OBJECT, x)
+
+            is String -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.STRING, x)
+            else -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.STRING, x.toString())
+        }
     }
 
     override fun setObject(parameterIndex: Int, x: Any?, targetSqlType: Int, scaleOrLength: Int)  = TODO("method name ${retriveFunName()} called")
@@ -323,7 +350,7 @@ class SvdbJdbcPreparedStatement(
 
     override fun setArray(parameterIndex: Int, x: java.sql.Array) {
         checkClosed()
-        parameters.put(parameterIndex, SvdbJdbcParameter(ColumnOuterClass.DataType.ARRAY, x.array))
+        parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.ARRAY, x.array)
     }
 
     override fun getMetaData(): ResultSetMetaData  = TODO("method name ${retriveFunName()} called")

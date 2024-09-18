@@ -1,6 +1,9 @@
 package codes.spectrum.svdb
 
-
+import codes.spectrum.commons.ConnectionDescriptor
+import codes.spectrum.svdb.jdbc.SvdbJdbcParameter
+import codes.spectrum.svdb.jdbc.at
+import codes.spectrum.svdb.jdbc.unmarshalByteField
 import codes.spectrum.svdb.model.v1.ColumnOuterClass
 import codes.spectrum.svdb.model.v1.Queryresult.QueryResult
 import codes.spectrum.withSvdbServer
@@ -12,8 +15,6 @@ import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.result.shouldBeFailure
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.fail
-import codes.spectrum.commons.*
-import codes.spectrum.svdb.jdbc.*
 
 class ConnectionSDKTest : FunSpec() {
     init {
@@ -155,12 +156,12 @@ class ConnectionSDKTest : FunSpec() {
                                 val literal = "kkk"
 
                                 val uid =
-                                    connection.executeQuery("prepare select \$1 $SDQL_DRIVER_PROTOCOL_V1").getOrNull()
-                                        ?.getResult()?.recordsList?.get(0)?.fieldsList?.get(0)?.value?.str
+                                    connection.executeQuery("prepare select \$1").getOrNull()
+                                        ?.getResult()?.at(0,0)
                                         ?: error("can't get uid")
 
                                 val svdbCursorResult = connection.executeQuery(
-                                    "execute '$uid' $SDQL_DRIVER_PROTOCOL_V1",
+                                    "execute '$uid'",
                                     mapOf(
                                         "1" to SvdbJdbcParameter(
                                             dataType = ColumnOuterClass.DataType.STRING,
@@ -171,7 +172,7 @@ class ConnectionSDKTest : FunSpec() {
 
                                 val cursor = svdbCursorResult.getOrNull() ?: error("can't get cursor")
 
-                                val result = cursor.getResult().recordsList?.get(0)?.fieldsList?.get(0)?.value?.str
+                                val result = cursor.getResult().at(0,0)
                                     ?: error("can't get literal")
 
                                 result shouldBe literal
@@ -189,13 +190,13 @@ class ConnectionSDKTest : FunSpec() {
 
                                 val byteItemWithUid =
                                     connection.executeQuery("prepare select \$1").getOrNull()
-                                        ?.getResult()?.byteRecordsList?.get(0)?.fieldsList?.get(0)?.item
+                                        ?.getResult()?.recordsList?.get(0)?.fieldsList?.get(0)
                                         ?: error("can't get byte item with uid")
 
                                 val uid = unmarshalByteField(byteItemWithUid, ColumnOuterClass.DataType.STRING)
 
                                 val svdbCursorResult = connection.executeQuery(
-                                    "execute '$uid' $SDQL_DRIVER_PROTOCOL_V1",
+                                    "execute '$uid'",
                                     mapOf(
                                         "1" to SvdbJdbcParameter(
                                             dataType = ColumnOuterClass.DataType.STRING,
@@ -206,7 +207,7 @@ class ConnectionSDKTest : FunSpec() {
 
                                 val cursor = svdbCursorResult.getOrNull() ?: error("can't get cursor")
 
-                                val byteItemWithRes = cursor.getResult().byteRecordsList?.get(0)?.fieldsList?.get(0)?.item
+                                val byteItemWithRes = cursor.getResult().recordsList?.get(0)?.fieldsList?.get(0)
                                     ?: error("can't get byte item with res")
 
                                 val result = unmarshalByteField(byteItemWithRes, ColumnOuterClass.DataType.STRING)

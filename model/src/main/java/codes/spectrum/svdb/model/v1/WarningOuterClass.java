@@ -34,7 +34,7 @@ public final class WarningOuterClass {
      * код ошибки SQL
      * </pre>
      *
-     * <code>int32 code = 10;</code>
+     * <code>int32 code = 1;</code>
      * @return The code.
      */
     int getCode();
@@ -44,7 +44,7 @@ public final class WarningOuterClass {
      * SQLState
      * </pre>
      *
-     * <code>string state = 15;</code>
+     * <code>string state = 2;</code>
      * @return The state.
      */
     java.lang.String getState();
@@ -53,7 +53,7 @@ public final class WarningOuterClass {
      * SQLState
      * </pre>
      *
-     * <code>string state = 15;</code>
+     * <code>string state = 2;</code>
      * @return The bytes for state.
      */
     com.google.protobuf.ByteString
@@ -64,7 +64,7 @@ public final class WarningOuterClass {
      * сообщение
      * </pre>
      *
-     * <code>string reason = 20;</code>
+     * <code>string reason = 3;</code>
      * @return The reason.
      */
     java.lang.String getReason();
@@ -73,7 +73,7 @@ public final class WarningOuterClass {
      * сообщение
      * </pre>
      *
-     * <code>string reason = 20;</code>
+     * <code>string reason = 3;</code>
      * @return The bytes for reason.
      */
     com.google.protobuf.ByteString
@@ -118,14 +118,14 @@ public final class WarningOuterClass {
               codes.spectrum.svdb.model.v1.WarningOuterClass.Warning.class, codes.spectrum.svdb.model.v1.WarningOuterClass.Warning.Builder.class);
     }
 
-    public static final int CODE_FIELD_NUMBER = 10;
+    public static final int CODE_FIELD_NUMBER = 1;
     private int code_ = 0;
     /**
      * <pre>
      * код ошибки SQL
      * </pre>
      *
-     * <code>int32 code = 10;</code>
+     * <code>int32 code = 1;</code>
      * @return The code.
      */
     @java.lang.Override
@@ -133,7 +133,7 @@ public final class WarningOuterClass {
       return code_;
     }
 
-    public static final int STATE_FIELD_NUMBER = 15;
+    public static final int STATE_FIELD_NUMBER = 2;
     @SuppressWarnings("serial")
     private volatile java.lang.Object state_ = "";
     /**
@@ -141,7 +141,7 @@ public final class WarningOuterClass {
      * SQLState
      * </pre>
      *
-     * <code>string state = 15;</code>
+     * <code>string state = 2;</code>
      * @return The state.
      */
     @java.lang.Override
@@ -162,7 +162,7 @@ public final class WarningOuterClass {
      * SQLState
      * </pre>
      *
-     * <code>string state = 15;</code>
+     * <code>string state = 2;</code>
      * @return The bytes for state.
      */
     @java.lang.Override
@@ -180,7 +180,7 @@ public final class WarningOuterClass {
       }
     }
 
-    public static final int REASON_FIELD_NUMBER = 20;
+    public static final int REASON_FIELD_NUMBER = 3;
     @SuppressWarnings("serial")
     private volatile java.lang.Object reason_ = "";
     /**
@@ -188,7 +188,7 @@ public final class WarningOuterClass {
      * сообщение
      * </pre>
      *
-     * <code>string reason = 20;</code>
+     * <code>string reason = 3;</code>
      * @return The reason.
      */
     @java.lang.Override
@@ -209,7 +209,7 @@ public final class WarningOuterClass {
      * сообщение
      * </pre>
      *
-     * <code>string reason = 20;</code>
+     * <code>string reason = 3;</code>
      * @return The bytes for reason.
      */
     @java.lang.Override
@@ -242,13 +242,13 @@ public final class WarningOuterClass {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (code_ != 0) {
-        output.writeInt32(10, code_);
+        output.writeInt32(1, code_);
       }
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(state_)) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 15, state_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, state_);
       }
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(reason_)) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 20, reason_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 3, reason_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -261,13 +261,13 @@ public final class WarningOuterClass {
       size = 0;
       if (code_ != 0) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(10, code_);
+          .computeInt32Size(1, code_);
       }
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(state_)) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(15, state_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(2, state_);
       }
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(reason_)) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(20, reason_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, reason_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -536,21 +536,21 @@ public final class WarningOuterClass {
               case 0:
                 done = true;
                 break;
-              case 80: {
+              case 8: {
                 code_ = input.readInt32();
                 bitField0_ |= 0x00000001;
                 break;
-              } // case 80
-              case 122: {
+              } // case 8
+              case 18: {
                 state_ = input.readStringRequireUtf8();
                 bitField0_ |= 0x00000002;
                 break;
-              } // case 122
-              case 162: {
+              } // case 18
+              case 26: {
                 reason_ = input.readStringRequireUtf8();
                 bitField0_ |= 0x00000004;
                 break;
-              } // case 162
+              } // case 26
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -574,7 +574,7 @@ public final class WarningOuterClass {
        * код ошибки SQL
        * </pre>
        *
-       * <code>int32 code = 10;</code>
+       * <code>int32 code = 1;</code>
        * @return The code.
        */
       @java.lang.Override
@@ -586,7 +586,7 @@ public final class WarningOuterClass {
        * код ошибки SQL
        * </pre>
        *
-       * <code>int32 code = 10;</code>
+       * <code>int32 code = 1;</code>
        * @param value The code to set.
        * @return This builder for chaining.
        */
@@ -602,7 +602,7 @@ public final class WarningOuterClass {
        * код ошибки SQL
        * </pre>
        *
-       * <code>int32 code = 10;</code>
+       * <code>int32 code = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearCode() {
@@ -618,7 +618,7 @@ public final class WarningOuterClass {
        * SQLState
        * </pre>
        *
-       * <code>string state = 15;</code>
+       * <code>string state = 2;</code>
        * @return The state.
        */
       public java.lang.String getState() {
@@ -638,7 +638,7 @@ public final class WarningOuterClass {
        * SQLState
        * </pre>
        *
-       * <code>string state = 15;</code>
+       * <code>string state = 2;</code>
        * @return The bytes for state.
        */
       public com.google.protobuf.ByteString
@@ -659,7 +659,7 @@ public final class WarningOuterClass {
        * SQLState
        * </pre>
        *
-       * <code>string state = 15;</code>
+       * <code>string state = 2;</code>
        * @param value The state to set.
        * @return This builder for chaining.
        */
@@ -676,7 +676,7 @@ public final class WarningOuterClass {
        * SQLState
        * </pre>
        *
-       * <code>string state = 15;</code>
+       * <code>string state = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearState() {
@@ -690,7 +690,7 @@ public final class WarningOuterClass {
        * SQLState
        * </pre>
        *
-       * <code>string state = 15;</code>
+       * <code>string state = 2;</code>
        * @param value The bytes for state to set.
        * @return This builder for chaining.
        */
@@ -710,7 +710,7 @@ public final class WarningOuterClass {
        * сообщение
        * </pre>
        *
-       * <code>string reason = 20;</code>
+       * <code>string reason = 3;</code>
        * @return The reason.
        */
       public java.lang.String getReason() {
@@ -730,7 +730,7 @@ public final class WarningOuterClass {
        * сообщение
        * </pre>
        *
-       * <code>string reason = 20;</code>
+       * <code>string reason = 3;</code>
        * @return The bytes for reason.
        */
       public com.google.protobuf.ByteString
@@ -751,7 +751,7 @@ public final class WarningOuterClass {
        * сообщение
        * </pre>
        *
-       * <code>string reason = 20;</code>
+       * <code>string reason = 3;</code>
        * @param value The reason to set.
        * @return This builder for chaining.
        */
@@ -768,7 +768,7 @@ public final class WarningOuterClass {
        * сообщение
        * </pre>
        *
-       * <code>string reason = 20;</code>
+       * <code>string reason = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearReason() {
@@ -782,7 +782,7 @@ public final class WarningOuterClass {
        * сообщение
        * </pre>
        *
-       * <code>string reason = 20;</code>
+       * <code>string reason = 3;</code>
        * @param value The bytes for reason to set.
        * @return This builder for chaining.
        */
@@ -862,8 +862,8 @@ public final class WarningOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\020v1/warning.proto\022\034codes.spectrum.svdb." +
-      "model.v1\"6\n\007Warning\022\014\n\004code\030\n \001(\005\022\r\n\005sta" +
-      "te\030\017 \001(\t\022\016\n\006reason\030\024 \001(\tB/Z-gitlab.spect" +
+      "model.v1\"6\n\007Warning\022\014\n\004code\030\001 \001(\005\022\r\n\005sta" +
+      "te\030\002 \001(\t\022\016\n\006reason\030\003 \001(\tB/Z-gitlab.spect" +
       "rumdata.tech/sd3/svdb/go/model/v1b\006proto" +
       "3"
     };

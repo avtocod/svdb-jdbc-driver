@@ -25,190 +25,16 @@ public final class Queryresult {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  /**
-   * Protobuf enum {@code codes.spectrum.svdb.model.v1.DataMode}
-   */
-  public enum DataMode
-      implements com.google.protobuf.ProtocolMessageEnum {
-    /**
-     * <pre>
-     * режим без метаданных, через v1.Value
-     * будет DEPRECATED в версии 2.0
-     * </pre>
-     *
-     * <code>V1 = 0;</code>
-     */
-    V1(0),
-    /**
-     * <pre>
-     * режим с метаданными и массивом байтов
-     * </pre>
-     *
-     * <code>V2 = 1;</code>
-     */
-    V2(1),
-    UNRECOGNIZED(-1),
-    ;
-
-    static {
-      com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
-        com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
-        /* major= */ 4,
-        /* minor= */ 27,
-        /* patch= */ 3,
-        /* suffix= */ "",
-        DataMode.class.getName());
-    }
-    /**
-     * <pre>
-     * режим без метаданных, через v1.Value
-     * будет DEPRECATED в версии 2.0
-     * </pre>
-     *
-     * <code>V1 = 0;</code>
-     */
-    public static final int V1_VALUE = 0;
-    /**
-     * <pre>
-     * режим с метаданными и массивом байтов
-     * </pre>
-     *
-     * <code>V2 = 1;</code>
-     */
-    public static final int V2_VALUE = 1;
-
-
-    public final int getNumber() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalArgumentException(
-            "Can't get the number of an unknown enum value.");
-      }
-      return value;
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
-    public static DataMode valueOf(int value) {
-      return forNumber(value);
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static DataMode forNumber(int value) {
-      switch (value) {
-        case 0: return V1;
-        case 1: return V2;
-        default: return null;
-      }
-    }
-
-    public static com.google.protobuf.Internal.EnumLiteMap<DataMode>
-        internalGetValueMap() {
-      return internalValueMap;
-    }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        DataMode> internalValueMap =
-          new com.google.protobuf.Internal.EnumLiteMap<DataMode>() {
-            public DataMode findValueByNumber(int number) {
-              return DataMode.forNumber(number);
-            }
-          };
-
-    public final com.google.protobuf.Descriptors.EnumValueDescriptor
-        getValueDescriptor() {
-      if (this == UNRECOGNIZED) {
-        throw new java.lang.IllegalStateException(
-            "Can't get the descriptor of an unrecognized enum value.");
-      }
-      return getDescriptor().getValues().get(ordinal());
-    }
-    public final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptorForType() {
-      return getDescriptor();
-    }
-    public static final com.google.protobuf.Descriptors.EnumDescriptor
-        getDescriptor() {
-      return codes.spectrum.svdb.model.v1.Queryresult.getDescriptor().getEnumTypes().get(0);
-    }
-
-    private static final DataMode[] VALUES = values();
-
-    public static DataMode valueOf(
-        com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-      if (desc.getType() != getDescriptor()) {
-        throw new java.lang.IllegalArgumentException(
-          "EnumValueDescriptor is not for this type.");
-      }
-      if (desc.getIndex() == -1) {
-        return UNRECOGNIZED;
-      }
-      return VALUES[desc.getIndex()];
-    }
-
-    private final int value;
-
-    private DataMode(int value) {
-      this.value = value;
-    }
-
-    // @@protoc_insertion_point(enum_scope:codes.spectrum.svdb.model.v1.DataMode)
-  }
-
   public interface QueryResultOrBuilder extends
       // @@protoc_insertion_point(interface_extends:codes.spectrum.svdb.model.v1.QueryResult)
       com.google.protobuf.MessageOrBuilder {
 
     /**
      * <pre>
-     * не используется, будет DEPRECATED в версии 2.0
-     * </pre>
-     *
-     * <code>string ver = 3;</code>
-     * @return The ver.
-     */
-    java.lang.String getVer();
-    /**
-     * <pre>
-     * не используется, будет DEPRECATED в версии 2.0
-     * </pre>
-     *
-     * <code>string ver = 3;</code>
-     * @return The bytes for ver.
-     */
-    com.google.protobuf.ByteString
-        getVerBytes();
-
-    /**
-     * <pre>
-     * режим передачи данных
-     * </pre>
-     *
-     * <code>.codes.spectrum.svdb.model.v1.DataMode dataMode = 2;</code>
-     * @return The enum numeric value on the wire for dataMode.
-     */
-    int getDataModeValue();
-    /**
-     * <pre>
-     * режим передачи данных
-     * </pre>
-     *
-     * <code>.codes.spectrum.svdb.model.v1.DataMode dataMode = 2;</code>
-     * @return The dataMode.
-     */
-    codes.spectrum.svdb.model.v1.Queryresult.DataMode getDataMode();
-
-    /**
-     * <pre>
      * метаданные, содержащие структуру ответа: имена и типы полей, опции
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
      */
     java.util.List<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column> 
         getColumnsList();
@@ -217,7 +43,7 @@ public final class Queryresult {
      * метаданные, содержащие структуру ответа: имена и типы полей, опции
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
      */
     codes.spectrum.svdb.model.v1.ColumnOuterClass.Column getColumns(int index);
     /**
@@ -225,7 +51,7 @@ public final class Queryresult {
      * метаданные, содержащие структуру ответа: имена и типы полей, опции
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
      */
     int getColumnsCount();
     /**
@@ -233,7 +59,7 @@ public final class Queryresult {
      * метаданные, содержащие структуру ответа: имена и типы полей, опции
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
      */
     java.util.List<? extends codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder> 
         getColumnsOrBuilderList();
@@ -242,7 +68,7 @@ public final class Queryresult {
      * метаданные, содержащие структуру ответа: имена и типы полей, опции
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
      */
     codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder getColumnsOrBuilder(
         int index);
@@ -252,43 +78,43 @@ public final class Queryresult {
      * данные ответа в виде массива байтов
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
      */
-    java.util.List<codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord> 
-        getByteRecordsList();
+    java.util.List<codes.spectrum.svdb.model.v1.RecordOuterClass.Record> 
+        getRecordsList();
     /**
      * <pre>
      * данные ответа в виде массива байтов
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
      */
-    codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord getByteRecords(int index);
+    codes.spectrum.svdb.model.v1.RecordOuterClass.Record getRecords(int index);
     /**
      * <pre>
      * данные ответа в виде массива байтов
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
      */
-    int getByteRecordsCount();
+    int getRecordsCount();
     /**
      * <pre>
      * данные ответа в виде массива байтов
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
      */
-    java.util.List<? extends codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecordOrBuilder> 
-        getByteRecordsOrBuilderList();
+    java.util.List<? extends codes.spectrum.svdb.model.v1.RecordOuterClass.RecordOrBuilder> 
+        getRecordsOrBuilderList();
     /**
      * <pre>
      * данные ответа в виде массива байтов
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
      */
-    codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecordOrBuilder getByteRecordsOrBuilder(
+    codes.spectrum.svdb.model.v1.RecordOuterClass.RecordOrBuilder getRecordsOrBuilder(
         int index);
 
     /**
@@ -297,7 +123,7 @@ public final class Queryresult {
      * или при нарушении ACL (403) или иных интернальных ошибках (500)
      * </pre>
      *
-     * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
+     * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
      * @return Whether the state field is set.
      */
     boolean hasState();
@@ -307,7 +133,7 @@ public final class Queryresult {
      * или при нарушении ACL (403) или иных интернальных ошибках (500)
      * </pre>
      *
-     * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
+     * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
      * @return The state.
      */
     codes.spectrum.svdb.model.v1.StateOuterClass.State getState();
@@ -317,60 +143,16 @@ public final class Queryresult {
      * или при нарушении ACL (403) или иных интернальных ошибках (500)
      * </pre>
      *
-     * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
+     * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
      */
     codes.spectrum.svdb.model.v1.StateOuterClass.StateOrBuilder getStateOrBuilder();
-
-    /**
-     * <pre>
-     * при запросе в режиме SYNC - тут будет сразу возвращены записи
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
-     */
-    java.util.List<codes.spectrum.svdb.model.v1.RecordOuterClass.Record> 
-        getRecordsList();
-    /**
-     * <pre>
-     * при запросе в режиме SYNC - тут будет сразу возвращены записи
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
-     */
-    codes.spectrum.svdb.model.v1.RecordOuterClass.Record getRecords(int index);
-    /**
-     * <pre>
-     * при запросе в режиме SYNC - тут будет сразу возвращены записи
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
-     */
-    int getRecordsCount();
-    /**
-     * <pre>
-     * при запросе в режиме SYNC - тут будет сразу возвращены записи
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
-     */
-    java.util.List<? extends codes.spectrum.svdb.model.v1.RecordOuterClass.RecordOrBuilder> 
-        getRecordsOrBuilderList();
-    /**
-     * <pre>
-     * при запросе в режиме SYNC - тут будет сразу возвращены записи
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
-     */
-    codes.spectrum.svdb.model.v1.RecordOuterClass.RecordOrBuilder getRecordsOrBuilder(
-        int index);
 
     /**
      * <pre>
      * предупреждения, для вывода в потоке текста 
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
      */
     java.util.List<codes.spectrum.svdb.model.v1.WarningOuterClass.Warning> 
         getWarningsList();
@@ -379,7 +161,7 @@ public final class Queryresult {
      * предупреждения, для вывода в потоке текста 
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
      */
     codes.spectrum.svdb.model.v1.WarningOuterClass.Warning getWarnings(int index);
     /**
@@ -387,7 +169,7 @@ public final class Queryresult {
      * предупреждения, для вывода в потоке текста 
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
      */
     int getWarningsCount();
     /**
@@ -395,7 +177,7 @@ public final class Queryresult {
      * предупреждения, для вывода в потоке текста 
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
      */
     java.util.List<? extends codes.spectrum.svdb.model.v1.WarningOuterClass.WarningOrBuilder> 
         getWarningsOrBuilderList();
@@ -404,7 +186,7 @@ public final class Queryresult {
      * предупреждения, для вывода в потоке текста 
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
      */
     codes.spectrum.svdb.model.v1.WarningOuterClass.WarningOrBuilder getWarningsOrBuilder(
         int index);
@@ -416,7 +198,7 @@ public final class Queryresult {
    * а только логический курсор над ними, соответственно
    * ошибочные статусы на этой фазы - это ошибки SdQL,
    * недостаток пермиссий и т.п., ошибки чтения самих данных
-   * будут упаковываться в RecordResult
+   * будут упаковываться в Record
    * </pre>
    *
    * Protobuf type {@code codes.spectrum.svdb.model.v1.QueryResult}
@@ -440,10 +222,7 @@ public final class Queryresult {
       super(builder);
     }
     private QueryResult() {
-      ver_ = "";
-      dataMode_ = 0;
       columns_ = java.util.Collections.emptyList();
-      byteRecords_ = java.util.Collections.emptyList();
       records_ = java.util.Collections.emptyList();
       warnings_ = java.util.Collections.emptyList();
     }
@@ -462,80 +241,7 @@ public final class Queryresult {
     }
 
     private int bitField0_;
-    public static final int VER_FIELD_NUMBER = 3;
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object ver_ = "";
-    /**
-     * <pre>
-     * не используется, будет DEPRECATED в версии 2.0
-     * </pre>
-     *
-     * <code>string ver = 3;</code>
-     * @return The ver.
-     */
-    @java.lang.Override
-    public java.lang.String getVer() {
-      java.lang.Object ref = ver_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        ver_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * не используется, будет DEPRECATED в версии 2.0
-     * </pre>
-     *
-     * <code>string ver = 3;</code>
-     * @return The bytes for ver.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getVerBytes() {
-      java.lang.Object ref = ver_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        ver_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int DATAMODE_FIELD_NUMBER = 2;
-    private int dataMode_ = 0;
-    /**
-     * <pre>
-     * режим передачи данных
-     * </pre>
-     *
-     * <code>.codes.spectrum.svdb.model.v1.DataMode dataMode = 2;</code>
-     * @return The enum numeric value on the wire for dataMode.
-     */
-    @java.lang.Override public int getDataModeValue() {
-      return dataMode_;
-    }
-    /**
-     * <pre>
-     * режим передачи данных
-     * </pre>
-     *
-     * <code>.codes.spectrum.svdb.model.v1.DataMode dataMode = 2;</code>
-     * @return The dataMode.
-     */
-    @java.lang.Override public codes.spectrum.svdb.model.v1.Queryresult.DataMode getDataMode() {
-      codes.spectrum.svdb.model.v1.Queryresult.DataMode result = codes.spectrum.svdb.model.v1.Queryresult.DataMode.forNumber(dataMode_);
-      return result == null ? codes.spectrum.svdb.model.v1.Queryresult.DataMode.UNRECOGNIZED : result;
-    }
-
-    public static final int COLUMNS_FIELD_NUMBER = 4;
+    public static final int COLUMNS_FIELD_NUMBER = 1;
     @SuppressWarnings("serial")
     private java.util.List<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column> columns_;
     /**
@@ -543,7 +249,7 @@ public final class Queryresult {
      * метаданные, содержащие структуру ответа: имена и типы полей, опции
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
      */
     @java.lang.Override
     public java.util.List<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column> getColumnsList() {
@@ -554,7 +260,7 @@ public final class Queryresult {
      * метаданные, содержащие структуру ответа: имена и типы полей, опции
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
      */
     @java.lang.Override
     public java.util.List<? extends codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder> 
@@ -566,7 +272,7 @@ public final class Queryresult {
      * метаданные, содержащие структуру ответа: имена и типы полей, опции
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
      */
     @java.lang.Override
     public int getColumnsCount() {
@@ -577,7 +283,7 @@ public final class Queryresult {
      * метаданные, содержащие структуру ответа: имена и типы полей, опции
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
      */
     @java.lang.Override
     public codes.spectrum.svdb.model.v1.ColumnOuterClass.Column getColumns(int index) {
@@ -588,7 +294,7 @@ public final class Queryresult {
      * метаданные, содержащие структуру ответа: имена и типы полей, опции
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
      */
     @java.lang.Override
     public codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder getColumnsOrBuilder(
@@ -596,68 +302,68 @@ public final class Queryresult {
       return columns_.get(index);
     }
 
-    public static final int BYTERECORDS_FIELD_NUMBER = 5;
+    public static final int RECORDS_FIELD_NUMBER = 2;
     @SuppressWarnings("serial")
-    private java.util.List<codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord> byteRecords_;
+    private java.util.List<codes.spectrum.svdb.model.v1.RecordOuterClass.Record> records_;
     /**
      * <pre>
      * данные ответа в виде массива байтов
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
      */
     @java.lang.Override
-    public java.util.List<codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord> getByteRecordsList() {
-      return byteRecords_;
+    public java.util.List<codes.spectrum.svdb.model.v1.RecordOuterClass.Record> getRecordsList() {
+      return records_;
     }
     /**
      * <pre>
      * данные ответа в виде массива байтов
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
      */
     @java.lang.Override
-    public java.util.List<? extends codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecordOrBuilder> 
-        getByteRecordsOrBuilderList() {
-      return byteRecords_;
+    public java.util.List<? extends codes.spectrum.svdb.model.v1.RecordOuterClass.RecordOrBuilder> 
+        getRecordsOrBuilderList() {
+      return records_;
     }
     /**
      * <pre>
      * данные ответа в виде массива байтов
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
      */
     @java.lang.Override
-    public int getByteRecordsCount() {
-      return byteRecords_.size();
+    public int getRecordsCount() {
+      return records_.size();
     }
     /**
      * <pre>
      * данные ответа в виде массива байтов
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
      */
     @java.lang.Override
-    public codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord getByteRecords(int index) {
-      return byteRecords_.get(index);
+    public codes.spectrum.svdb.model.v1.RecordOuterClass.Record getRecords(int index) {
+      return records_.get(index);
     }
     /**
      * <pre>
      * данные ответа в виде массива байтов
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
      */
     @java.lang.Override
-    public codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecordOrBuilder getByteRecordsOrBuilder(
+    public codes.spectrum.svdb.model.v1.RecordOuterClass.RecordOrBuilder getRecordsOrBuilder(
         int index) {
-      return byteRecords_.get(index);
+      return records_.get(index);
     }
 
-    public static final int STATE_FIELD_NUMBER = 10;
+    public static final int STATE_FIELD_NUMBER = 3;
     private codes.spectrum.svdb.model.v1.StateOuterClass.State state_;
     /**
      * <pre>
@@ -665,7 +371,7 @@ public final class Queryresult {
      * или при нарушении ACL (403) или иных интернальных ошибках (500)
      * </pre>
      *
-     * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
+     * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
      * @return Whether the state field is set.
      */
     @java.lang.Override
@@ -678,7 +384,7 @@ public final class Queryresult {
      * или при нарушении ACL (403) или иных интернальных ошибках (500)
      * </pre>
      *
-     * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
+     * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
      * @return The state.
      */
     @java.lang.Override
@@ -691,75 +397,14 @@ public final class Queryresult {
      * или при нарушении ACL (403) или иных интернальных ошибках (500)
      * </pre>
      *
-     * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
+     * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
      */
     @java.lang.Override
     public codes.spectrum.svdb.model.v1.StateOuterClass.StateOrBuilder getStateOrBuilder() {
       return state_ == null ? codes.spectrum.svdb.model.v1.StateOuterClass.State.getDefaultInstance() : state_;
     }
 
-    public static final int RECORDS_FIELD_NUMBER = 20;
-    @SuppressWarnings("serial")
-    private java.util.List<codes.spectrum.svdb.model.v1.RecordOuterClass.Record> records_;
-    /**
-     * <pre>
-     * при запросе в режиме SYNC - тут будет сразу возвращены записи
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
-     */
-    @java.lang.Override
-    public java.util.List<codes.spectrum.svdb.model.v1.RecordOuterClass.Record> getRecordsList() {
-      return records_;
-    }
-    /**
-     * <pre>
-     * при запросе в режиме SYNC - тут будет сразу возвращены записи
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
-     */
-    @java.lang.Override
-    public java.util.List<? extends codes.spectrum.svdb.model.v1.RecordOuterClass.RecordOrBuilder> 
-        getRecordsOrBuilderList() {
-      return records_;
-    }
-    /**
-     * <pre>
-     * при запросе в режиме SYNC - тут будет сразу возвращены записи
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
-     */
-    @java.lang.Override
-    public int getRecordsCount() {
-      return records_.size();
-    }
-    /**
-     * <pre>
-     * при запросе в режиме SYNC - тут будет сразу возвращены записи
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
-     */
-    @java.lang.Override
-    public codes.spectrum.svdb.model.v1.RecordOuterClass.Record getRecords(int index) {
-      return records_.get(index);
-    }
-    /**
-     * <pre>
-     * при запросе в режиме SYNC - тут будет сразу возвращены записи
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
-     */
-    @java.lang.Override
-    public codes.spectrum.svdb.model.v1.RecordOuterClass.RecordOrBuilder getRecordsOrBuilder(
-        int index) {
-      return records_.get(index);
-    }
-
-    public static final int WARNINGS_FIELD_NUMBER = 30;
+    public static final int WARNINGS_FIELD_NUMBER = 4;
     @SuppressWarnings("serial")
     private java.util.List<codes.spectrum.svdb.model.v1.WarningOuterClass.Warning> warnings_;
     /**
@@ -767,7 +412,7 @@ public final class Queryresult {
      * предупреждения, для вывода в потоке текста 
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
      */
     @java.lang.Override
     public java.util.List<codes.spectrum.svdb.model.v1.WarningOuterClass.Warning> getWarningsList() {
@@ -778,7 +423,7 @@ public final class Queryresult {
      * предупреждения, для вывода в потоке текста 
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
      */
     @java.lang.Override
     public java.util.List<? extends codes.spectrum.svdb.model.v1.WarningOuterClass.WarningOrBuilder> 
@@ -790,7 +435,7 @@ public final class Queryresult {
      * предупреждения, для вывода в потоке текста 
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
      */
     @java.lang.Override
     public int getWarningsCount() {
@@ -801,7 +446,7 @@ public final class Queryresult {
      * предупреждения, для вывода в потоке текста 
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
      */
     @java.lang.Override
     public codes.spectrum.svdb.model.v1.WarningOuterClass.Warning getWarnings(int index) {
@@ -812,7 +457,7 @@ public final class Queryresult {
      * предупреждения, для вывода в потоке текста 
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+     * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
      */
     @java.lang.Override
     public codes.spectrum.svdb.model.v1.WarningOuterClass.WarningOrBuilder getWarningsOrBuilder(
@@ -834,26 +479,17 @@ public final class Queryresult {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (dataMode_ != codes.spectrum.svdb.model.v1.Queryresult.DataMode.V1.getNumber()) {
-        output.writeEnum(2, dataMode_);
-      }
-      if (!com.google.protobuf.GeneratedMessage.isStringEmpty(ver_)) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 3, ver_);
-      }
       for (int i = 0; i < columns_.size(); i++) {
-        output.writeMessage(4, columns_.get(i));
-      }
-      for (int i = 0; i < byteRecords_.size(); i++) {
-        output.writeMessage(5, byteRecords_.get(i));
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(10, getState());
+        output.writeMessage(1, columns_.get(i));
       }
       for (int i = 0; i < records_.size(); i++) {
-        output.writeMessage(20, records_.get(i));
+        output.writeMessage(2, records_.get(i));
+      }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeMessage(3, getState());
       }
       for (int i = 0; i < warnings_.size(); i++) {
-        output.writeMessage(30, warnings_.get(i));
+        output.writeMessage(4, warnings_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -864,32 +500,21 @@ public final class Queryresult {
       if (size != -1) return size;
 
       size = 0;
-      if (dataMode_ != codes.spectrum.svdb.model.v1.Queryresult.DataMode.V1.getNumber()) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(2, dataMode_);
-      }
-      if (!com.google.protobuf.GeneratedMessage.isStringEmpty(ver_)) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, ver_);
-      }
       for (int i = 0; i < columns_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, columns_.get(i));
-      }
-      for (int i = 0; i < byteRecords_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(5, byteRecords_.get(i));
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(10, getState());
+          .computeMessageSize(1, columns_.get(i));
       }
       for (int i = 0; i < records_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(20, records_.get(i));
+          .computeMessageSize(2, records_.get(i));
+      }
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(3, getState());
       }
       for (int i = 0; i < warnings_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(30, warnings_.get(i));
+          .computeMessageSize(4, warnings_.get(i));
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -906,20 +531,15 @@ public final class Queryresult {
       }
       codes.spectrum.svdb.model.v1.Queryresult.QueryResult other = (codes.spectrum.svdb.model.v1.Queryresult.QueryResult) obj;
 
-      if (!getVer()
-          .equals(other.getVer())) return false;
-      if (dataMode_ != other.dataMode_) return false;
       if (!getColumnsList()
           .equals(other.getColumnsList())) return false;
-      if (!getByteRecordsList()
-          .equals(other.getByteRecordsList())) return false;
+      if (!getRecordsList()
+          .equals(other.getRecordsList())) return false;
       if (hasState() != other.hasState()) return false;
       if (hasState()) {
         if (!getState()
             .equals(other.getState())) return false;
       }
-      if (!getRecordsList()
-          .equals(other.getRecordsList())) return false;
       if (!getWarningsList()
           .equals(other.getWarningsList())) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -933,25 +553,17 @@ public final class Queryresult {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + VER_FIELD_NUMBER;
-      hash = (53 * hash) + getVer().hashCode();
-      hash = (37 * hash) + DATAMODE_FIELD_NUMBER;
-      hash = (53 * hash) + dataMode_;
       if (getColumnsCount() > 0) {
         hash = (37 * hash) + COLUMNS_FIELD_NUMBER;
         hash = (53 * hash) + getColumnsList().hashCode();
       }
-      if (getByteRecordsCount() > 0) {
-        hash = (37 * hash) + BYTERECORDS_FIELD_NUMBER;
-        hash = (53 * hash) + getByteRecordsList().hashCode();
+      if (getRecordsCount() > 0) {
+        hash = (37 * hash) + RECORDS_FIELD_NUMBER;
+        hash = (53 * hash) + getRecordsList().hashCode();
       }
       if (hasState()) {
         hash = (37 * hash) + STATE_FIELD_NUMBER;
         hash = (53 * hash) + getState().hashCode();
-      }
-      if (getRecordsCount() > 0) {
-        hash = (37 * hash) + RECORDS_FIELD_NUMBER;
-        hash = (53 * hash) + getRecordsList().hashCode();
       }
       if (getWarningsCount() > 0) {
         hash = (37 * hash) + WARNINGS_FIELD_NUMBER;
@@ -1061,7 +673,7 @@ public final class Queryresult {
      * а только логический курсор над ними, соответственно
      * ошибочные статусы на этой фазы - это ошибки SdQL,
      * недостаток пермиссий и т.п., ошибки чтения самих данных
-     * будут упаковываться в RecordResult
+     * будут упаковываться в Record
      * </pre>
      *
      * Protobuf type {@code codes.spectrum.svdb.model.v1.QueryResult}
@@ -1097,9 +709,8 @@ public final class Queryresult {
         if (com.google.protobuf.GeneratedMessage
                 .alwaysUseFieldBuilders) {
           getColumnsFieldBuilder();
-          getByteRecordsFieldBuilder();
-          getStateFieldBuilder();
           getRecordsFieldBuilder();
+          getStateFieldBuilder();
           getWarningsFieldBuilder();
         }
       }
@@ -1107,41 +718,32 @@ public final class Queryresult {
       public Builder clear() {
         super.clear();
         bitField0_ = 0;
-        ver_ = "";
-        dataMode_ = 0;
         if (columnsBuilder_ == null) {
           columns_ = java.util.Collections.emptyList();
         } else {
           columns_ = null;
           columnsBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000004);
-        if (byteRecordsBuilder_ == null) {
-          byteRecords_ = java.util.Collections.emptyList();
-        } else {
-          byteRecords_ = null;
-          byteRecordsBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000008);
-        state_ = null;
-        if (stateBuilder_ != null) {
-          stateBuilder_.dispose();
-          stateBuilder_ = null;
-        }
+        bitField0_ = (bitField0_ & ~0x00000001);
         if (recordsBuilder_ == null) {
           records_ = java.util.Collections.emptyList();
         } else {
           records_ = null;
           recordsBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000020);
+        bitField0_ = (bitField0_ & ~0x00000002);
+        state_ = null;
+        if (stateBuilder_ != null) {
+          stateBuilder_.dispose();
+          stateBuilder_ = null;
+        }
         if (warningsBuilder_ == null) {
           warnings_ = java.util.Collections.emptyList();
         } else {
           warnings_ = null;
           warningsBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000040);
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -1176,36 +778,27 @@ public final class Queryresult {
 
       private void buildPartialRepeatedFields(codes.spectrum.svdb.model.v1.Queryresult.QueryResult result) {
         if (columnsBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) != 0)) {
+          if (((bitField0_ & 0x00000001) != 0)) {
             columns_ = java.util.Collections.unmodifiableList(columns_);
-            bitField0_ = (bitField0_ & ~0x00000004);
+            bitField0_ = (bitField0_ & ~0x00000001);
           }
           result.columns_ = columns_;
         } else {
           result.columns_ = columnsBuilder_.build();
         }
-        if (byteRecordsBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) != 0)) {
-            byteRecords_ = java.util.Collections.unmodifiableList(byteRecords_);
-            bitField0_ = (bitField0_ & ~0x00000008);
-          }
-          result.byteRecords_ = byteRecords_;
-        } else {
-          result.byteRecords_ = byteRecordsBuilder_.build();
-        }
         if (recordsBuilder_ == null) {
-          if (((bitField0_ & 0x00000020) != 0)) {
+          if (((bitField0_ & 0x00000002) != 0)) {
             records_ = java.util.Collections.unmodifiableList(records_);
-            bitField0_ = (bitField0_ & ~0x00000020);
+            bitField0_ = (bitField0_ & ~0x00000002);
           }
           result.records_ = records_;
         } else {
           result.records_ = recordsBuilder_.build();
         }
         if (warningsBuilder_ == null) {
-          if (((bitField0_ & 0x00000040) != 0)) {
+          if (((bitField0_ & 0x00000008) != 0)) {
             warnings_ = java.util.Collections.unmodifiableList(warnings_);
-            bitField0_ = (bitField0_ & ~0x00000040);
+            bitField0_ = (bitField0_ & ~0x00000008);
           }
           result.warnings_ = warnings_;
         } else {
@@ -1215,14 +808,8 @@ public final class Queryresult {
 
       private void buildPartial0(codes.spectrum.svdb.model.v1.Queryresult.QueryResult result) {
         int from_bitField0_ = bitField0_;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.ver_ = ver_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.dataMode_ = dataMode_;
-        }
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000010) != 0)) {
+        if (((from_bitField0_ & 0x00000004) != 0)) {
           result.state_ = stateBuilder_ == null
               ? state_
               : stateBuilder_.build();
@@ -1243,19 +830,11 @@ public final class Queryresult {
 
       public Builder mergeFrom(codes.spectrum.svdb.model.v1.Queryresult.QueryResult other) {
         if (other == codes.spectrum.svdb.model.v1.Queryresult.QueryResult.getDefaultInstance()) return this;
-        if (!other.getVer().isEmpty()) {
-          ver_ = other.ver_;
-          bitField0_ |= 0x00000001;
-          onChanged();
-        }
-        if (other.dataMode_ != 0) {
-          setDataModeValue(other.getDataModeValue());
-        }
         if (columnsBuilder_ == null) {
           if (!other.columns_.isEmpty()) {
             if (columns_.isEmpty()) {
               columns_ = other.columns_;
-              bitField0_ = (bitField0_ & ~0x00000004);
+              bitField0_ = (bitField0_ & ~0x00000001);
             } else {
               ensureColumnsIsMutable();
               columns_.addAll(other.columns_);
@@ -1268,7 +847,7 @@ public final class Queryresult {
               columnsBuilder_.dispose();
               columnsBuilder_ = null;
               columns_ = other.columns_;
-              bitField0_ = (bitField0_ & ~0x00000004);
+              bitField0_ = (bitField0_ & ~0x00000001);
               columnsBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getColumnsFieldBuilder() : null;
@@ -1277,40 +856,11 @@ public final class Queryresult {
             }
           }
         }
-        if (byteRecordsBuilder_ == null) {
-          if (!other.byteRecords_.isEmpty()) {
-            if (byteRecords_.isEmpty()) {
-              byteRecords_ = other.byteRecords_;
-              bitField0_ = (bitField0_ & ~0x00000008);
-            } else {
-              ensureByteRecordsIsMutable();
-              byteRecords_.addAll(other.byteRecords_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.byteRecords_.isEmpty()) {
-            if (byteRecordsBuilder_.isEmpty()) {
-              byteRecordsBuilder_.dispose();
-              byteRecordsBuilder_ = null;
-              byteRecords_ = other.byteRecords_;
-              bitField0_ = (bitField0_ & ~0x00000008);
-              byteRecordsBuilder_ = 
-                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                   getByteRecordsFieldBuilder() : null;
-            } else {
-              byteRecordsBuilder_.addAllMessages(other.byteRecords_);
-            }
-          }
-        }
-        if (other.hasState()) {
-          mergeState(other.getState());
-        }
         if (recordsBuilder_ == null) {
           if (!other.records_.isEmpty()) {
             if (records_.isEmpty()) {
               records_ = other.records_;
-              bitField0_ = (bitField0_ & ~0x00000020);
+              bitField0_ = (bitField0_ & ~0x00000002);
             } else {
               ensureRecordsIsMutable();
               records_.addAll(other.records_);
@@ -1323,7 +873,7 @@ public final class Queryresult {
               recordsBuilder_.dispose();
               recordsBuilder_ = null;
               records_ = other.records_;
-              bitField0_ = (bitField0_ & ~0x00000020);
+              bitField0_ = (bitField0_ & ~0x00000002);
               recordsBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getRecordsFieldBuilder() : null;
@@ -1332,11 +882,14 @@ public final class Queryresult {
             }
           }
         }
+        if (other.hasState()) {
+          mergeState(other.getState());
+        }
         if (warningsBuilder_ == null) {
           if (!other.warnings_.isEmpty()) {
             if (warnings_.isEmpty()) {
               warnings_ = other.warnings_;
-              bitField0_ = (bitField0_ & ~0x00000040);
+              bitField0_ = (bitField0_ & ~0x00000008);
             } else {
               ensureWarningsIsMutable();
               warnings_.addAll(other.warnings_);
@@ -1349,7 +902,7 @@ public final class Queryresult {
               warningsBuilder_.dispose();
               warningsBuilder_ = null;
               warnings_ = other.warnings_;
-              bitField0_ = (bitField0_ & ~0x00000040);
+              bitField0_ = (bitField0_ & ~0x00000008);
               warningsBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getWarningsFieldBuilder() : null;
@@ -1384,17 +937,7 @@ public final class Queryresult {
               case 0:
                 done = true;
                 break;
-              case 16: {
-                dataMode_ = input.readEnum();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 16
-              case 26: {
-                ver_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
-                break;
-              } // case 26
-              case 34: {
+              case 10: {
                 codes.spectrum.svdb.model.v1.ColumnOuterClass.Column m =
                     input.readMessage(
                         codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.parser(),
@@ -1406,28 +949,8 @@ public final class Queryresult {
                   columnsBuilder_.addMessage(m);
                 }
                 break;
-              } // case 34
-              case 42: {
-                codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord m =
-                    input.readMessage(
-                        codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord.parser(),
-                        extensionRegistry);
-                if (byteRecordsBuilder_ == null) {
-                  ensureByteRecordsIsMutable();
-                  byteRecords_.add(m);
-                } else {
-                  byteRecordsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 42
-              case 82: {
-                input.readMessage(
-                    getStateFieldBuilder().getBuilder(),
-                    extensionRegistry);
-                bitField0_ |= 0x00000010;
-                break;
-              } // case 82
-              case 162: {
+              } // case 10
+              case 18: {
                 codes.spectrum.svdb.model.v1.RecordOuterClass.Record m =
                     input.readMessage(
                         codes.spectrum.svdb.model.v1.RecordOuterClass.Record.parser(),
@@ -1439,8 +962,15 @@ public final class Queryresult {
                   recordsBuilder_.addMessage(m);
                 }
                 break;
-              } // case 162
-              case 242: {
+              } // case 18
+              case 26: {
+                input.readMessage(
+                    getStateFieldBuilder().getBuilder(),
+                    extensionRegistry);
+                bitField0_ |= 0x00000004;
+                break;
+              } // case 26
+              case 34: {
                 codes.spectrum.svdb.model.v1.WarningOuterClass.Warning m =
                     input.readMessage(
                         codes.spectrum.svdb.model.v1.WarningOuterClass.Warning.parser(),
@@ -1452,7 +982,7 @@ public final class Queryresult {
                   warningsBuilder_.addMessage(m);
                 }
                 break;
-              } // case 242
+              } // case 34
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -1470,177 +1000,12 @@ public final class Queryresult {
       }
       private int bitField0_;
 
-      private java.lang.Object ver_ = "";
-      /**
-       * <pre>
-       * не используется, будет DEPRECATED в версии 2.0
-       * </pre>
-       *
-       * <code>string ver = 3;</code>
-       * @return The ver.
-       */
-      public java.lang.String getVer() {
-        java.lang.Object ref = ver_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          ver_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <pre>
-       * не используется, будет DEPRECATED в версии 2.0
-       * </pre>
-       *
-       * <code>string ver = 3;</code>
-       * @return The bytes for ver.
-       */
-      public com.google.protobuf.ByteString
-          getVerBytes() {
-        java.lang.Object ref = ver_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          ver_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * не используется, будет DEPRECATED в версии 2.0
-       * </pre>
-       *
-       * <code>string ver = 3;</code>
-       * @param value The ver to set.
-       * @return This builder for chaining.
-       */
-      public Builder setVer(
-          java.lang.String value) {
-        if (value == null) { throw new NullPointerException(); }
-        ver_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * не используется, будет DEPRECATED в версии 2.0
-       * </pre>
-       *
-       * <code>string ver = 3;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearVer() {
-        ver_ = getDefaultInstance().getVer();
-        bitField0_ = (bitField0_ & ~0x00000001);
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * не используется, будет DEPRECATED в версии 2.0
-       * </pre>
-       *
-       * <code>string ver = 3;</code>
-       * @param value The bytes for ver to set.
-       * @return This builder for chaining.
-       */
-      public Builder setVerBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) { throw new NullPointerException(); }
-        checkByteStringIsUtf8(value);
-        ver_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-
-      private int dataMode_ = 0;
-      /**
-       * <pre>
-       * режим передачи данных
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.DataMode dataMode = 2;</code>
-       * @return The enum numeric value on the wire for dataMode.
-       */
-      @java.lang.Override public int getDataModeValue() {
-        return dataMode_;
-      }
-      /**
-       * <pre>
-       * режим передачи данных
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.DataMode dataMode = 2;</code>
-       * @param value The enum numeric value on the wire for dataMode to set.
-       * @return This builder for chaining.
-       */
-      public Builder setDataModeValue(int value) {
-        dataMode_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * режим передачи данных
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.DataMode dataMode = 2;</code>
-       * @return The dataMode.
-       */
-      @java.lang.Override
-      public codes.spectrum.svdb.model.v1.Queryresult.DataMode getDataMode() {
-        codes.spectrum.svdb.model.v1.Queryresult.DataMode result = codes.spectrum.svdb.model.v1.Queryresult.DataMode.forNumber(dataMode_);
-        return result == null ? codes.spectrum.svdb.model.v1.Queryresult.DataMode.UNRECOGNIZED : result;
-      }
-      /**
-       * <pre>
-       * режим передачи данных
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.DataMode dataMode = 2;</code>
-       * @param value The dataMode to set.
-       * @return This builder for chaining.
-       */
-      public Builder setDataMode(codes.spectrum.svdb.model.v1.Queryresult.DataMode value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000002;
-        dataMode_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * режим передачи данных
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.DataMode dataMode = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearDataMode() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        dataMode_ = 0;
-        onChanged();
-        return this;
-      }
-
       private java.util.List<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column> columns_ =
         java.util.Collections.emptyList();
       private void ensureColumnsIsMutable() {
-        if (!((bitField0_ & 0x00000004) != 0)) {
+        if (!((bitField0_ & 0x00000001) != 0)) {
           columns_ = new java.util.ArrayList<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column>(columns_);
-          bitField0_ |= 0x00000004;
+          bitField0_ |= 0x00000001;
          }
       }
 
@@ -1652,7 +1017,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public java.util.List<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column> getColumnsList() {
         if (columnsBuilder_ == null) {
@@ -1666,7 +1031,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public int getColumnsCount() {
         if (columnsBuilder_ == null) {
@@ -1680,7 +1045,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public codes.spectrum.svdb.model.v1.ColumnOuterClass.Column getColumns(int index) {
         if (columnsBuilder_ == null) {
@@ -1694,7 +1059,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public Builder setColumns(
           int index, codes.spectrum.svdb.model.v1.ColumnOuterClass.Column value) {
@@ -1715,7 +1080,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public Builder setColumns(
           int index, codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder builderForValue) {
@@ -1733,7 +1098,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public Builder addColumns(codes.spectrum.svdb.model.v1.ColumnOuterClass.Column value) {
         if (columnsBuilder_ == null) {
@@ -1753,7 +1118,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public Builder addColumns(
           int index, codes.spectrum.svdb.model.v1.ColumnOuterClass.Column value) {
@@ -1774,7 +1139,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public Builder addColumns(
           codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder builderForValue) {
@@ -1792,7 +1157,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public Builder addColumns(
           int index, codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder builderForValue) {
@@ -1810,7 +1175,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public Builder addAllColumns(
           java.lang.Iterable<? extends codes.spectrum.svdb.model.v1.ColumnOuterClass.Column> values) {
@@ -1829,12 +1194,12 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public Builder clearColumns() {
         if (columnsBuilder_ == null) {
           columns_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
+          bitField0_ = (bitField0_ & ~0x00000001);
           onChanged();
         } else {
           columnsBuilder_.clear();
@@ -1846,7 +1211,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public Builder removeColumns(int index) {
         if (columnsBuilder_ == null) {
@@ -1863,7 +1228,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder getColumnsBuilder(
           int index) {
@@ -1874,7 +1239,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder getColumnsOrBuilder(
           int index) {
@@ -1888,7 +1253,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public java.util.List<? extends codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder> 
            getColumnsOrBuilderList() {
@@ -1903,7 +1268,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder addColumnsBuilder() {
         return getColumnsFieldBuilder().addBuilder(
@@ -1914,7 +1279,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder addColumnsBuilder(
           int index) {
@@ -1926,7 +1291,7 @@ public final class Queryresult {
        * метаданные, содержащие структуру ответа: имена и типы полей, опции
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 4;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column columns = 1;</code>
        */
       public java.util.List<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder> 
            getColumnsBuilderList() {
@@ -1939,7 +1304,7 @@ public final class Queryresult {
           columnsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               codes.spectrum.svdb.model.v1.ColumnOuterClass.Column, codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder, codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder>(
                   columns_,
-                  ((bitField0_ & 0x00000004) != 0),
+                  ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
                   isClean());
           columns_ = null;
@@ -1947,490 +1312,12 @@ public final class Queryresult {
         return columnsBuilder_;
       }
 
-      private java.util.List<codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord> byteRecords_ =
-        java.util.Collections.emptyList();
-      private void ensureByteRecordsIsMutable() {
-        if (!((bitField0_ & 0x00000008) != 0)) {
-          byteRecords_ = new java.util.ArrayList<codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord>(byteRecords_);
-          bitField0_ |= 0x00000008;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilder<
-          codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord, codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord.Builder, codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecordOrBuilder> byteRecordsBuilder_;
-
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public java.util.List<codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord> getByteRecordsList() {
-        if (byteRecordsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(byteRecords_);
-        } else {
-          return byteRecordsBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public int getByteRecordsCount() {
-        if (byteRecordsBuilder_ == null) {
-          return byteRecords_.size();
-        } else {
-          return byteRecordsBuilder_.getCount();
-        }
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord getByteRecords(int index) {
-        if (byteRecordsBuilder_ == null) {
-          return byteRecords_.get(index);
-        } else {
-          return byteRecordsBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public Builder setByteRecords(
-          int index, codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord value) {
-        if (byteRecordsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureByteRecordsIsMutable();
-          byteRecords_.set(index, value);
-          onChanged();
-        } else {
-          byteRecordsBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public Builder setByteRecords(
-          int index, codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord.Builder builderForValue) {
-        if (byteRecordsBuilder_ == null) {
-          ensureByteRecordsIsMutable();
-          byteRecords_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          byteRecordsBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public Builder addByteRecords(codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord value) {
-        if (byteRecordsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureByteRecordsIsMutable();
-          byteRecords_.add(value);
-          onChanged();
-        } else {
-          byteRecordsBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public Builder addByteRecords(
-          int index, codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord value) {
-        if (byteRecordsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureByteRecordsIsMutable();
-          byteRecords_.add(index, value);
-          onChanged();
-        } else {
-          byteRecordsBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public Builder addByteRecords(
-          codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord.Builder builderForValue) {
-        if (byteRecordsBuilder_ == null) {
-          ensureByteRecordsIsMutable();
-          byteRecords_.add(builderForValue.build());
-          onChanged();
-        } else {
-          byteRecordsBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public Builder addByteRecords(
-          int index, codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord.Builder builderForValue) {
-        if (byteRecordsBuilder_ == null) {
-          ensureByteRecordsIsMutable();
-          byteRecords_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          byteRecordsBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public Builder addAllByteRecords(
-          java.lang.Iterable<? extends codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord> values) {
-        if (byteRecordsBuilder_ == null) {
-          ensureByteRecordsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, byteRecords_);
-          onChanged();
-        } else {
-          byteRecordsBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public Builder clearByteRecords() {
-        if (byteRecordsBuilder_ == null) {
-          byteRecords_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
-          onChanged();
-        } else {
-          byteRecordsBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public Builder removeByteRecords(int index) {
-        if (byteRecordsBuilder_ == null) {
-          ensureByteRecordsIsMutable();
-          byteRecords_.remove(index);
-          onChanged();
-        } else {
-          byteRecordsBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord.Builder getByteRecordsBuilder(
-          int index) {
-        return getByteRecordsFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecordOrBuilder getByteRecordsOrBuilder(
-          int index) {
-        if (byteRecordsBuilder_ == null) {
-          return byteRecords_.get(index);  } else {
-          return byteRecordsBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public java.util.List<? extends codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecordOrBuilder> 
-           getByteRecordsOrBuilderList() {
-        if (byteRecordsBuilder_ != null) {
-          return byteRecordsBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(byteRecords_);
-        }
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord.Builder addByteRecordsBuilder() {
-        return getByteRecordsFieldBuilder().addBuilder(
-            codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord.Builder addByteRecordsBuilder(
-          int index) {
-        return getByteRecordsFieldBuilder().addBuilder(
-            index, codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * данные ответа в виде массива байтов
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.ByteRecord byteRecords = 5;</code>
-       */
-      public java.util.List<codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord.Builder> 
-           getByteRecordsBuilderList() {
-        return getByteRecordsFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilder<
-          codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord, codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord.Builder, codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecordOrBuilder> 
-          getByteRecordsFieldBuilder() {
-        if (byteRecordsBuilder_ == null) {
-          byteRecordsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord, codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecord.Builder, codes.spectrum.svdb.model.v1.ByteRecordOuterClass.ByteRecordOrBuilder>(
-                  byteRecords_,
-                  ((bitField0_ & 0x00000008) != 0),
-                  getParentForChildren(),
-                  isClean());
-          byteRecords_ = null;
-        }
-        return byteRecordsBuilder_;
-      }
-
-      private codes.spectrum.svdb.model.v1.StateOuterClass.State state_;
-      private com.google.protobuf.SingleFieldBuilder<
-          codes.spectrum.svdb.model.v1.StateOuterClass.State, codes.spectrum.svdb.model.v1.StateOuterClass.State.Builder, codes.spectrum.svdb.model.v1.StateOuterClass.StateOrBuilder> stateBuilder_;
-      /**
-       * <pre>
-       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
-       * или при нарушении ACL (403) или иных интернальных ошибках (500)
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
-       * @return Whether the state field is set.
-       */
-      public boolean hasState() {
-        return ((bitField0_ & 0x00000010) != 0);
-      }
-      /**
-       * <pre>
-       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
-       * или при нарушении ACL (403) или иных интернальных ошибках (500)
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
-       * @return The state.
-       */
-      public codes.spectrum.svdb.model.v1.StateOuterClass.State getState() {
-        if (stateBuilder_ == null) {
-          return state_ == null ? codes.spectrum.svdb.model.v1.StateOuterClass.State.getDefaultInstance() : state_;
-        } else {
-          return stateBuilder_.getMessage();
-        }
-      }
-      /**
-       * <pre>
-       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
-       * или при нарушении ACL (403) или иных интернальных ошибках (500)
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
-       */
-      public Builder setState(codes.spectrum.svdb.model.v1.StateOuterClass.State value) {
-        if (stateBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          state_ = value;
-        } else {
-          stateBuilder_.setMessage(value);
-        }
-        bitField0_ |= 0x00000010;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
-       * или при нарушении ACL (403) или иных интернальных ошибках (500)
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
-       */
-      public Builder setState(
-          codes.spectrum.svdb.model.v1.StateOuterClass.State.Builder builderForValue) {
-        if (stateBuilder_ == null) {
-          state_ = builderForValue.build();
-        } else {
-          stateBuilder_.setMessage(builderForValue.build());
-        }
-        bitField0_ |= 0x00000010;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
-       * или при нарушении ACL (403) или иных интернальных ошибках (500)
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
-       */
-      public Builder mergeState(codes.spectrum.svdb.model.v1.StateOuterClass.State value) {
-        if (stateBuilder_ == null) {
-          if (((bitField0_ & 0x00000010) != 0) &&
-            state_ != null &&
-            state_ != codes.spectrum.svdb.model.v1.StateOuterClass.State.getDefaultInstance()) {
-            getStateBuilder().mergeFrom(value);
-          } else {
-            state_ = value;
-          }
-        } else {
-          stateBuilder_.mergeFrom(value);
-        }
-        if (state_ != null) {
-          bitField0_ |= 0x00000010;
-          onChanged();
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
-       * или при нарушении ACL (403) или иных интернальных ошибках (500)
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
-       */
-      public Builder clearState() {
-        bitField0_ = (bitField0_ & ~0x00000010);
-        state_ = null;
-        if (stateBuilder_ != null) {
-          stateBuilder_.dispose();
-          stateBuilder_ = null;
-        }
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
-       * или при нарушении ACL (403) или иных интернальных ошибках (500)
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
-       */
-      public codes.spectrum.svdb.model.v1.StateOuterClass.State.Builder getStateBuilder() {
-        bitField0_ |= 0x00000010;
-        onChanged();
-        return getStateFieldBuilder().getBuilder();
-      }
-      /**
-       * <pre>
-       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
-       * или при нарушении ACL (403) или иных интернальных ошибках (500)
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
-       */
-      public codes.spectrum.svdb.model.v1.StateOuterClass.StateOrBuilder getStateOrBuilder() {
-        if (stateBuilder_ != null) {
-          return stateBuilder_.getMessageOrBuilder();
-        } else {
-          return state_ == null ?
-              codes.spectrum.svdb.model.v1.StateOuterClass.State.getDefaultInstance() : state_;
-        }
-      }
-      /**
-       * <pre>
-       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
-       * или при нарушении ACL (403) или иных интернальных ошибках (500)
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.State state = 10;</code>
-       */
-      private com.google.protobuf.SingleFieldBuilder<
-          codes.spectrum.svdb.model.v1.StateOuterClass.State, codes.spectrum.svdb.model.v1.StateOuterClass.State.Builder, codes.spectrum.svdb.model.v1.StateOuterClass.StateOrBuilder> 
-          getStateFieldBuilder() {
-        if (stateBuilder_ == null) {
-          stateBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-              codes.spectrum.svdb.model.v1.StateOuterClass.State, codes.spectrum.svdb.model.v1.StateOuterClass.State.Builder, codes.spectrum.svdb.model.v1.StateOuterClass.StateOrBuilder>(
-                  getState(),
-                  getParentForChildren(),
-                  isClean());
-          state_ = null;
-        }
-        return stateBuilder_;
-      }
-
       private java.util.List<codes.spectrum.svdb.model.v1.RecordOuterClass.Record> records_ =
         java.util.Collections.emptyList();
       private void ensureRecordsIsMutable() {
-        if (!((bitField0_ & 0x00000020) != 0)) {
+        if (!((bitField0_ & 0x00000002) != 0)) {
           records_ = new java.util.ArrayList<codes.spectrum.svdb.model.v1.RecordOuterClass.Record>(records_);
-          bitField0_ |= 0x00000020;
+          bitField0_ |= 0x00000002;
          }
       }
 
@@ -2439,10 +1326,10 @@ public final class Queryresult {
 
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public java.util.List<codes.spectrum.svdb.model.v1.RecordOuterClass.Record> getRecordsList() {
         if (recordsBuilder_ == null) {
@@ -2453,10 +1340,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public int getRecordsCount() {
         if (recordsBuilder_ == null) {
@@ -2467,10 +1354,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public codes.spectrum.svdb.model.v1.RecordOuterClass.Record getRecords(int index) {
         if (recordsBuilder_ == null) {
@@ -2481,10 +1368,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public Builder setRecords(
           int index, codes.spectrum.svdb.model.v1.RecordOuterClass.Record value) {
@@ -2502,10 +1389,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public Builder setRecords(
           int index, codes.spectrum.svdb.model.v1.RecordOuterClass.Record.Builder builderForValue) {
@@ -2520,10 +1407,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public Builder addRecords(codes.spectrum.svdb.model.v1.RecordOuterClass.Record value) {
         if (recordsBuilder_ == null) {
@@ -2540,10 +1427,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public Builder addRecords(
           int index, codes.spectrum.svdb.model.v1.RecordOuterClass.Record value) {
@@ -2561,10 +1448,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public Builder addRecords(
           codes.spectrum.svdb.model.v1.RecordOuterClass.Record.Builder builderForValue) {
@@ -2579,10 +1466,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public Builder addRecords(
           int index, codes.spectrum.svdb.model.v1.RecordOuterClass.Record.Builder builderForValue) {
@@ -2597,10 +1484,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public Builder addAllRecords(
           java.lang.Iterable<? extends codes.spectrum.svdb.model.v1.RecordOuterClass.Record> values) {
@@ -2616,15 +1503,15 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public Builder clearRecords() {
         if (recordsBuilder_ == null) {
           records_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000020);
+          bitField0_ = (bitField0_ & ~0x00000002);
           onChanged();
         } else {
           recordsBuilder_.clear();
@@ -2633,10 +1520,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public Builder removeRecords(int index) {
         if (recordsBuilder_ == null) {
@@ -2650,10 +1537,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public codes.spectrum.svdb.model.v1.RecordOuterClass.Record.Builder getRecordsBuilder(
           int index) {
@@ -2661,10 +1548,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public codes.spectrum.svdb.model.v1.RecordOuterClass.RecordOrBuilder getRecordsOrBuilder(
           int index) {
@@ -2675,10 +1562,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public java.util.List<? extends codes.spectrum.svdb.model.v1.RecordOuterClass.RecordOrBuilder> 
            getRecordsOrBuilderList() {
@@ -2690,10 +1577,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public codes.spectrum.svdb.model.v1.RecordOuterClass.Record.Builder addRecordsBuilder() {
         return getRecordsFieldBuilder().addBuilder(
@@ -2701,10 +1588,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public codes.spectrum.svdb.model.v1.RecordOuterClass.Record.Builder addRecordsBuilder(
           int index) {
@@ -2713,10 +1600,10 @@ public final class Queryresult {
       }
       /**
        * <pre>
-       * при запросе в режиме SYNC - тут будет сразу возвращены записи
+       * данные ответа в виде массива байтов
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 20;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Record records = 2;</code>
        */
       public java.util.List<codes.spectrum.svdb.model.v1.RecordOuterClass.Record.Builder> 
            getRecordsBuilderList() {
@@ -2729,7 +1616,7 @@ public final class Queryresult {
           recordsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               codes.spectrum.svdb.model.v1.RecordOuterClass.Record, codes.spectrum.svdb.model.v1.RecordOuterClass.Record.Builder, codes.spectrum.svdb.model.v1.RecordOuterClass.RecordOrBuilder>(
                   records_,
-                  ((bitField0_ & 0x00000020) != 0),
+                  ((bitField0_ & 0x00000002) != 0),
                   getParentForChildren(),
                   isClean());
           records_ = null;
@@ -2737,12 +1624,178 @@ public final class Queryresult {
         return recordsBuilder_;
       }
 
+      private codes.spectrum.svdb.model.v1.StateOuterClass.State state_;
+      private com.google.protobuf.SingleFieldBuilder<
+          codes.spectrum.svdb.model.v1.StateOuterClass.State, codes.spectrum.svdb.model.v1.StateOuterClass.State.Builder, codes.spectrum.svdb.model.v1.StateOuterClass.StateOrBuilder> stateBuilder_;
+      /**
+       * <pre>
+       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
+       * или при нарушении ACL (403) или иных интернальных ошибках (500)
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
+       * @return Whether the state field is set.
+       */
+      public boolean hasState() {
+        return ((bitField0_ & 0x00000004) != 0);
+      }
+      /**
+       * <pre>
+       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
+       * или при нарушении ACL (403) или иных интернальных ошибках (500)
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
+       * @return The state.
+       */
+      public codes.spectrum.svdb.model.v1.StateOuterClass.State getState() {
+        if (stateBuilder_ == null) {
+          return state_ == null ? codes.spectrum.svdb.model.v1.StateOuterClass.State.getDefaultInstance() : state_;
+        } else {
+          return stateBuilder_.getMessage();
+        }
+      }
+      /**
+       * <pre>
+       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
+       * или при нарушении ACL (403) или иных интернальных ошибках (500)
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
+       */
+      public Builder setState(codes.spectrum.svdb.model.v1.StateOuterClass.State value) {
+        if (stateBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          state_ = value;
+        } else {
+          stateBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
+       * или при нарушении ACL (403) или иных интернальных ошибках (500)
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
+       */
+      public Builder setState(
+          codes.spectrum.svdb.model.v1.StateOuterClass.State.Builder builderForValue) {
+        if (stateBuilder_ == null) {
+          state_ = builderForValue.build();
+        } else {
+          stateBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
+       * или при нарушении ACL (403) или иных интернальных ошибках (500)
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
+       */
+      public Builder mergeState(codes.spectrum.svdb.model.v1.StateOuterClass.State value) {
+        if (stateBuilder_ == null) {
+          if (((bitField0_ & 0x00000004) != 0) &&
+            state_ != null &&
+            state_ != codes.spectrum.svdb.model.v1.StateOuterClass.State.getDefaultInstance()) {
+            getStateBuilder().mergeFrom(value);
+          } else {
+            state_ = value;
+          }
+        } else {
+          stateBuilder_.mergeFrom(value);
+        }
+        if (state_ != null) {
+          bitField0_ |= 0x00000004;
+          onChanged();
+        }
+        return this;
+      }
+      /**
+       * <pre>
+       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
+       * или при нарушении ACL (403) или иных интернальных ошибках (500)
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
+       */
+      public Builder clearState() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        state_ = null;
+        if (stateBuilder_ != null) {
+          stateBuilder_.dispose();
+          stateBuilder_ = null;
+        }
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
+       * или при нарушении ACL (403) или иных интернальных ошибках (500)
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
+       */
+      public codes.spectrum.svdb.model.v1.StateOuterClass.State.Builder getStateBuilder() {
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return getStateFieldBuilder().getBuilder();
+      }
+      /**
+       * <pre>
+       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
+       * или при нарушении ACL (403) или иных интернальных ошибках (500)
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
+       */
+      public codes.spectrum.svdb.model.v1.StateOuterClass.StateOrBuilder getStateOrBuilder() {
+        if (stateBuilder_ != null) {
+          return stateBuilder_.getMessageOrBuilder();
+        } else {
+          return state_ == null ?
+              codes.spectrum.svdb.model.v1.StateOuterClass.State.getDefaultInstance() : state_;
+        }
+      }
+      /**
+       * <pre>
+       * статус запроса - OK при успешном формировании плана запроса,  в случае ошибок SdQL (400)
+       * или при нарушении ACL (403) или иных интернальных ошибках (500)
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.State state = 3;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          codes.spectrum.svdb.model.v1.StateOuterClass.State, codes.spectrum.svdb.model.v1.StateOuterClass.State.Builder, codes.spectrum.svdb.model.v1.StateOuterClass.StateOrBuilder> 
+          getStateFieldBuilder() {
+        if (stateBuilder_ == null) {
+          stateBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              codes.spectrum.svdb.model.v1.StateOuterClass.State, codes.spectrum.svdb.model.v1.StateOuterClass.State.Builder, codes.spectrum.svdb.model.v1.StateOuterClass.StateOrBuilder>(
+                  getState(),
+                  getParentForChildren(),
+                  isClean());
+          state_ = null;
+        }
+        return stateBuilder_;
+      }
+
       private java.util.List<codes.spectrum.svdb.model.v1.WarningOuterClass.Warning> warnings_ =
         java.util.Collections.emptyList();
       private void ensureWarningsIsMutable() {
-        if (!((bitField0_ & 0x00000040) != 0)) {
+        if (!((bitField0_ & 0x00000008) != 0)) {
           warnings_ = new java.util.ArrayList<codes.spectrum.svdb.model.v1.WarningOuterClass.Warning>(warnings_);
-          bitField0_ |= 0x00000040;
+          bitField0_ |= 0x00000008;
          }
       }
 
@@ -2754,7 +1807,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public java.util.List<codes.spectrum.svdb.model.v1.WarningOuterClass.Warning> getWarningsList() {
         if (warningsBuilder_ == null) {
@@ -2768,7 +1821,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public int getWarningsCount() {
         if (warningsBuilder_ == null) {
@@ -2782,7 +1835,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public codes.spectrum.svdb.model.v1.WarningOuterClass.Warning getWarnings(int index) {
         if (warningsBuilder_ == null) {
@@ -2796,7 +1849,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public Builder setWarnings(
           int index, codes.spectrum.svdb.model.v1.WarningOuterClass.Warning value) {
@@ -2817,7 +1870,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public Builder setWarnings(
           int index, codes.spectrum.svdb.model.v1.WarningOuterClass.Warning.Builder builderForValue) {
@@ -2835,7 +1888,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public Builder addWarnings(codes.spectrum.svdb.model.v1.WarningOuterClass.Warning value) {
         if (warningsBuilder_ == null) {
@@ -2855,7 +1908,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public Builder addWarnings(
           int index, codes.spectrum.svdb.model.v1.WarningOuterClass.Warning value) {
@@ -2876,7 +1929,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public Builder addWarnings(
           codes.spectrum.svdb.model.v1.WarningOuterClass.Warning.Builder builderForValue) {
@@ -2894,7 +1947,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public Builder addWarnings(
           int index, codes.spectrum.svdb.model.v1.WarningOuterClass.Warning.Builder builderForValue) {
@@ -2912,7 +1965,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public Builder addAllWarnings(
           java.lang.Iterable<? extends codes.spectrum.svdb.model.v1.WarningOuterClass.Warning> values) {
@@ -2931,12 +1984,12 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public Builder clearWarnings() {
         if (warningsBuilder_ == null) {
           warnings_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000040);
+          bitField0_ = (bitField0_ & ~0x00000008);
           onChanged();
         } else {
           warningsBuilder_.clear();
@@ -2948,7 +2001,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public Builder removeWarnings(int index) {
         if (warningsBuilder_ == null) {
@@ -2965,7 +2018,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public codes.spectrum.svdb.model.v1.WarningOuterClass.Warning.Builder getWarningsBuilder(
           int index) {
@@ -2976,7 +2029,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public codes.spectrum.svdb.model.v1.WarningOuterClass.WarningOrBuilder getWarningsOrBuilder(
           int index) {
@@ -2990,7 +2043,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public java.util.List<? extends codes.spectrum.svdb.model.v1.WarningOuterClass.WarningOrBuilder> 
            getWarningsOrBuilderList() {
@@ -3005,7 +2058,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public codes.spectrum.svdb.model.v1.WarningOuterClass.Warning.Builder addWarningsBuilder() {
         return getWarningsFieldBuilder().addBuilder(
@@ -3016,7 +2069,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public codes.spectrum.svdb.model.v1.WarningOuterClass.Warning.Builder addWarningsBuilder(
           int index) {
@@ -3028,7 +2081,7 @@ public final class Queryresult {
        * предупреждения, для вывода в потоке текста 
        * </pre>
        *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 30;</code>
+       * <code>repeated .codes.spectrum.svdb.model.v1.Warning warnings = 4;</code>
        */
       public java.util.List<codes.spectrum.svdb.model.v1.WarningOuterClass.Warning.Builder> 
            getWarningsBuilderList() {
@@ -3041,7 +2094,7 @@ public final class Queryresult {
           warningsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               codes.spectrum.svdb.model.v1.WarningOuterClass.Warning, codes.spectrum.svdb.model.v1.WarningOuterClass.Warning.Builder, codes.spectrum.svdb.model.v1.WarningOuterClass.WarningOrBuilder>(
                   warnings_,
-                  ((bitField0_ & 0x00000040) != 0),
+                  ((bitField0_ & 0x00000008) != 0),
                   getParentForChildren(),
                   isClean());
           warnings_ = null;
@@ -3116,42 +2169,35 @@ public final class Queryresult {
     java.lang.String[] descriptorData = {
       "\n\024v1/queryresult.proto\022\034codes.spectrum.s" +
       "vdb.model.v1\032\016v1/state.proto\032\020v1/warning" +
-      ".proto\032\017v1/record.proto\032\017v1/column.proto" +
-      "\032\024v1/byte_record.proto\"\364\002\n\013QueryResult\022\013" +
-      "\n\003ver\030\003 \001(\t\0228\n\010dataMode\030\002 \001(\0162&.codes.sp" +
-      "ectrum.svdb.model.v1.DataMode\0225\n\007columns" +
-      "\030\004 \003(\0132$.codes.spectrum.svdb.model.v1.Co" +
-      "lumn\022=\n\013byteRecords\030\005 \003(\0132(.codes.spectr" +
-      "um.svdb.model.v1.ByteRecord\0222\n\005state\030\n \001" +
-      "(\0132#.codes.spectrum.svdb.model.v1.State\022" +
-      "5\n\007records\030\024 \003(\0132$.codes.spectrum.svdb.m" +
-      "odel.v1.Record\0227\n\010warnings\030\036 \003(\0132%.codes" +
-      ".spectrum.svdb.model.v1.WarningJ\004\010\001\020\002*\032\n" +
-      "\010DataMode\022\006\n\002V1\020\000\022\006\n\002V2\020\001B/Z-gitlab.spec" +
-      "trumdata.tech/sd3/svdb/go/model/v1b\006prot" +
-      "o3"
+      ".proto\032\017v1/column.proto\032\017v1/record.proto" +
+      "\"\350\001\n\013QueryResult\0225\n\007columns\030\001 \003(\0132$.code" +
+      "s.spectrum.svdb.model.v1.Column\0225\n\007recor" +
+      "ds\030\002 \003(\0132$.codes.spectrum.svdb.model.v1." +
+      "Record\0222\n\005state\030\003 \001(\0132#.codes.spectrum.s" +
+      "vdb.model.v1.State\0227\n\010warnings\030\004 \003(\0132%.c" +
+      "odes.spectrum.svdb.model.v1.WarningB/Z-g" +
+      "itlab.spectrumdata.tech/sd3/svdb/go/mode" +
+      "l/v1b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           codes.spectrum.svdb.model.v1.StateOuterClass.getDescriptor(),
           codes.spectrum.svdb.model.v1.WarningOuterClass.getDescriptor(),
-          codes.spectrum.svdb.model.v1.RecordOuterClass.getDescriptor(),
           codes.spectrum.svdb.model.v1.ColumnOuterClass.getDescriptor(),
-          codes.spectrum.svdb.model.v1.ByteRecordOuterClass.getDescriptor(),
+          codes.spectrum.svdb.model.v1.RecordOuterClass.getDescriptor(),
         });
     internal_static_codes_spectrum_svdb_model_v1_QueryResult_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_codes_spectrum_svdb_model_v1_QueryResult_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_codes_spectrum_svdb_model_v1_QueryResult_descriptor,
-        new java.lang.String[] { "Ver", "DataMode", "Columns", "ByteRecords", "State", "Records", "Warnings", });
+        new java.lang.String[] { "Columns", "Records", "State", "Warnings", });
     descriptor.resolveAllFeaturesImmutable();
     codes.spectrum.svdb.model.v1.StateOuterClass.getDescriptor();
     codes.spectrum.svdb.model.v1.WarningOuterClass.getDescriptor();
-    codes.spectrum.svdb.model.v1.RecordOuterClass.getDescriptor();
     codes.spectrum.svdb.model.v1.ColumnOuterClass.getDescriptor();
-    codes.spectrum.svdb.model.v1.ByteRecordOuterClass.getDescriptor();
+    codes.spectrum.svdb.model.v1.RecordOuterClass.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

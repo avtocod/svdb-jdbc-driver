@@ -31,29 +31,10 @@ public final class Fetch {
 
     /**
      * <pre>
-     * режим выполнения запроса
-     * </pre>
-     *
-     * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 10;</code>
-     * @return The enum numeric value on the wire for mode.
-     */
-    int getModeValue();
-    /**
-     * <pre>
-     * режим выполнения запроса
-     * </pre>
-     *
-     * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 10;</code>
-     * @return The mode.
-     */
-    codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode getMode();
-
-    /**
-     * <pre>
      * uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
      * </pre>
      *
-     * <code>string cursorUid = 20;</code>
+     * <code>string cursorUid = 1;</code>
      * @return The cursorUid.
      */
     java.lang.String getCursorUid();
@@ -62,11 +43,30 @@ public final class Fetch {
      * uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
      * </pre>
      *
-     * <code>string cursorUid = 20;</code>
+     * <code>string cursorUid = 1;</code>
      * @return The bytes for cursorUid.
      */
     com.google.protobuf.ByteString
         getCursorUidBytes();
+
+    /**
+     * <pre>
+     * режим выполнения запроса
+     * </pre>
+     *
+     * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 2;</code>
+     * @return The enum numeric value on the wire for mode.
+     */
+    int getModeValue();
+    /**
+     * <pre>
+     * режим выполнения запроса
+     * </pre>
+     *
+     * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 2;</code>
+     * @return The mode.
+     */
+    codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode getMode();
   }
   /**
    * <pre>
@@ -98,8 +98,8 @@ public final class Fetch {
       super(builder);
     }
     private FetchOptions() {
-      mode_ = 0;
       cursorUid_ = "";
+      mode_ = 0;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor
@@ -137,9 +137,9 @@ public final class Fetch {
        * все записи - режим для fetchAll
        * </pre>
        *
-       * <code>ALL = 10;</code>
+       * <code>ALL = 1;</code>
        */
-      ALL(10),
+      ALL(1),
       UNRECOGNIZED(-1),
       ;
 
@@ -165,9 +165,9 @@ public final class Fetch {
        * все записи - режим для fetchAll
        * </pre>
        *
-       * <code>ALL = 10;</code>
+       * <code>ALL = 1;</code>
        */
-      public static final int ALL_VALUE = 10;
+      public static final int ALL_VALUE = 1;
 
 
       public final int getNumber() {
@@ -195,7 +195,7 @@ public final class Fetch {
       public static Mode forNumber(int value) {
         switch (value) {
           case 0: return ONE;
-          case 10: return ALL;
+          case 1: return ALL;
           default: return null;
         }
       }
@@ -252,33 +252,7 @@ public final class Fetch {
       // @@protoc_insertion_point(enum_scope:codes.spectrum.svdb.model.v1.FetchOptions.Mode)
     }
 
-    public static final int MODE_FIELD_NUMBER = 10;
-    private int mode_ = 0;
-    /**
-     * <pre>
-     * режим выполнения запроса
-     * </pre>
-     *
-     * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 10;</code>
-     * @return The enum numeric value on the wire for mode.
-     */
-    @java.lang.Override public int getModeValue() {
-      return mode_;
-    }
-    /**
-     * <pre>
-     * режим выполнения запроса
-     * </pre>
-     *
-     * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 10;</code>
-     * @return The mode.
-     */
-    @java.lang.Override public codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode getMode() {
-      codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode result = codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode.forNumber(mode_);
-      return result == null ? codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode.UNRECOGNIZED : result;
-    }
-
-    public static final int CURSORUID_FIELD_NUMBER = 20;
+    public static final int CURSORUID_FIELD_NUMBER = 1;
     @SuppressWarnings("serial")
     private volatile java.lang.Object cursorUid_ = "";
     /**
@@ -286,7 +260,7 @@ public final class Fetch {
      * uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
      * </pre>
      *
-     * <code>string cursorUid = 20;</code>
+     * <code>string cursorUid = 1;</code>
      * @return The cursorUid.
      */
     @java.lang.Override
@@ -307,7 +281,7 @@ public final class Fetch {
      * uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
      * </pre>
      *
-     * <code>string cursorUid = 20;</code>
+     * <code>string cursorUid = 1;</code>
      * @return The bytes for cursorUid.
      */
     @java.lang.Override
@@ -325,6 +299,32 @@ public final class Fetch {
       }
     }
 
+    public static final int MODE_FIELD_NUMBER = 2;
+    private int mode_ = 0;
+    /**
+     * <pre>
+     * режим выполнения запроса
+     * </pre>
+     *
+     * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 2;</code>
+     * @return The enum numeric value on the wire for mode.
+     */
+    @java.lang.Override public int getModeValue() {
+      return mode_;
+    }
+    /**
+     * <pre>
+     * режим выполнения запроса
+     * </pre>
+     *
+     * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 2;</code>
+     * @return The mode.
+     */
+    @java.lang.Override public codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode getMode() {
+      codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode result = codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode.forNumber(mode_);
+      return result == null ? codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode.UNRECOGNIZED : result;
+    }
+
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -339,11 +339,11 @@ public final class Fetch {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (mode_ != codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode.ONE.getNumber()) {
-        output.writeEnum(10, mode_);
-      }
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(cursorUid_)) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 20, cursorUid_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, cursorUid_);
+      }
+      if (mode_ != codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode.ONE.getNumber()) {
+        output.writeEnum(2, mode_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -354,12 +354,12 @@ public final class Fetch {
       if (size != -1) return size;
 
       size = 0;
+      if (!com.google.protobuf.GeneratedMessage.isStringEmpty(cursorUid_)) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, cursorUid_);
+      }
       if (mode_ != codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode.ONE.getNumber()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(10, mode_);
-      }
-      if (!com.google.protobuf.GeneratedMessage.isStringEmpty(cursorUid_)) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(20, cursorUid_);
+          .computeEnumSize(2, mode_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -376,9 +376,9 @@ public final class Fetch {
       }
       codes.spectrum.svdb.model.v1.Fetch.FetchOptions other = (codes.spectrum.svdb.model.v1.Fetch.FetchOptions) obj;
 
-      if (mode_ != other.mode_) return false;
       if (!getCursorUid()
           .equals(other.getCursorUid())) return false;
+      if (mode_ != other.mode_) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -390,10 +390,10 @@ public final class Fetch {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + MODE_FIELD_NUMBER;
-      hash = (53 * hash) + mode_;
       hash = (37 * hash) + CURSORUID_FIELD_NUMBER;
       hash = (53 * hash) + getCursorUid().hashCode();
+      hash = (37 * hash) + MODE_FIELD_NUMBER;
+      hash = (53 * hash) + mode_;
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -533,8 +533,8 @@ public final class Fetch {
       public Builder clear() {
         super.clear();
         bitField0_ = 0;
-        mode_ = 0;
         cursorUid_ = "";
+        mode_ = 0;
         return this;
       }
 
@@ -569,10 +569,10 @@ public final class Fetch {
       private void buildPartial0(codes.spectrum.svdb.model.v1.Fetch.FetchOptions result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.mode_ = mode_;
+          result.cursorUid_ = cursorUid_;
         }
         if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.cursorUid_ = cursorUid_;
+          result.mode_ = mode_;
         }
       }
 
@@ -588,13 +588,13 @@ public final class Fetch {
 
       public Builder mergeFrom(codes.spectrum.svdb.model.v1.Fetch.FetchOptions other) {
         if (other == codes.spectrum.svdb.model.v1.Fetch.FetchOptions.getDefaultInstance()) return this;
-        if (other.mode_ != 0) {
-          setModeValue(other.getModeValue());
-        }
         if (!other.getCursorUid().isEmpty()) {
           cursorUid_ = other.cursorUid_;
-          bitField0_ |= 0x00000002;
+          bitField0_ |= 0x00000001;
           onChanged();
+        }
+        if (other.mode_ != 0) {
+          setModeValue(other.getModeValue());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
@@ -622,16 +622,16 @@ public final class Fetch {
               case 0:
                 done = true;
                 break;
-              case 80: {
-                mode_ = input.readEnum();
+              case 10: {
+                cursorUid_ = input.readStringRequireUtf8();
                 bitField0_ |= 0x00000001;
                 break;
-              } // case 80
-              case 162: {
-                cursorUid_ = input.readStringRequireUtf8();
+              } // case 10
+              case 16: {
+                mode_ = input.readEnum();
                 bitField0_ |= 0x00000002;
                 break;
-              } // case 162
+              } // case 16
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -649,86 +649,13 @@ public final class Fetch {
       }
       private int bitField0_;
 
-      private int mode_ = 0;
-      /**
-       * <pre>
-       * режим выполнения запроса
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 10;</code>
-       * @return The enum numeric value on the wire for mode.
-       */
-      @java.lang.Override public int getModeValue() {
-        return mode_;
-      }
-      /**
-       * <pre>
-       * режим выполнения запроса
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 10;</code>
-       * @param value The enum numeric value on the wire for mode to set.
-       * @return This builder for chaining.
-       */
-      public Builder setModeValue(int value) {
-        mode_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * режим выполнения запроса
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 10;</code>
-       * @return The mode.
-       */
-      @java.lang.Override
-      public codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode getMode() {
-        codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode result = codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode.forNumber(mode_);
-        return result == null ? codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode.UNRECOGNIZED : result;
-      }
-      /**
-       * <pre>
-       * режим выполнения запроса
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 10;</code>
-       * @param value The mode to set.
-       * @return This builder for chaining.
-       */
-      public Builder setMode(codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000001;
-        mode_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * режим выполнения запроса
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 10;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearMode() {
-        bitField0_ = (bitField0_ & ~0x00000001);
-        mode_ = 0;
-        onChanged();
-        return this;
-      }
-
       private java.lang.Object cursorUid_ = "";
       /**
        * <pre>
        * uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
        * </pre>
        *
-       * <code>string cursorUid = 20;</code>
+       * <code>string cursorUid = 1;</code>
        * @return The cursorUid.
        */
       public java.lang.String getCursorUid() {
@@ -748,7 +675,7 @@ public final class Fetch {
        * uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
        * </pre>
        *
-       * <code>string cursorUid = 20;</code>
+       * <code>string cursorUid = 1;</code>
        * @return The bytes for cursorUid.
        */
       public com.google.protobuf.ByteString
@@ -769,7 +696,7 @@ public final class Fetch {
        * uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
        * </pre>
        *
-       * <code>string cursorUid = 20;</code>
+       * <code>string cursorUid = 1;</code>
        * @param value The cursorUid to set.
        * @return This builder for chaining.
        */
@@ -777,7 +704,7 @@ public final class Fetch {
           java.lang.String value) {
         if (value == null) { throw new NullPointerException(); }
         cursorUid_ = value;
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -786,12 +713,12 @@ public final class Fetch {
        * uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
        * </pre>
        *
-       * <code>string cursorUid = 20;</code>
+       * <code>string cursorUid = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearCursorUid() {
         cursorUid_ = getDefaultInstance().getCursorUid();
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
@@ -800,7 +727,7 @@ public final class Fetch {
        * uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
        * </pre>
        *
-       * <code>string cursorUid = 20;</code>
+       * <code>string cursorUid = 1;</code>
        * @param value The bytes for cursorUid to set.
        * @return This builder for chaining.
        */
@@ -809,7 +736,80 @@ public final class Fetch {
         if (value == null) { throw new NullPointerException(); }
         checkByteStringIsUtf8(value);
         cursorUid_ = value;
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+
+      private int mode_ = 0;
+      /**
+       * <pre>
+       * режим выполнения запроса
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 2;</code>
+       * @return The enum numeric value on the wire for mode.
+       */
+      @java.lang.Override public int getModeValue() {
+        return mode_;
+      }
+      /**
+       * <pre>
+       * режим выполнения запроса
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 2;</code>
+       * @param value The enum numeric value on the wire for mode to set.
+       * @return This builder for chaining.
+       */
+      public Builder setModeValue(int value) {
+        mode_ = value;
         bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * режим выполнения запроса
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 2;</code>
+       * @return The mode.
+       */
+      @java.lang.Override
+      public codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode getMode() {
+        codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode result = codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode.forNumber(mode_);
+        return result == null ? codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode.UNRECOGNIZED : result;
+      }
+      /**
+       * <pre>
+       * режим выполнения запроса
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 2;</code>
+       * @param value The mode to set.
+       * @return This builder for chaining.
+       */
+      public Builder setMode(codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode value) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        bitField0_ |= 0x00000002;
+        mode_ = value.getNumber();
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * режим выполнения запроса
+       * </pre>
+       *
+       * <code>.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 2;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearMode() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        mode_ = 0;
         onChanged();
         return this;
       }
@@ -880,11 +880,11 @@ public final class Fetch {
   static {
     java.lang.String[] descriptorData = {
       "\n\016v1/fetch.proto\022\034codes.spectrum.svdb.mo" +
-      "del.v1\"\200\001\n\014FetchOptions\022=\n\004mode\030\n \001(\0162/." +
-      "codes.spectrum.svdb.model.v1.FetchOption" +
-      "s.Mode\022\021\n\tcursorUid\030\024 \001(\t\"\030\n\004Mode\022\007\n\003ONE" +
-      "\020\000\022\007\n\003ALL\020\nJ\004\010\001\020\nB/Z-gitlab.spectrumdata" +
-      ".tech/sd3/svdb/go/model/v1b\006proto3"
+      "del.v1\"z\n\014FetchOptions\022\021\n\tcursorUid\030\001 \001(" +
+      "\t\022=\n\004mode\030\002 \001(\0162/.codes.spectrum.svdb.mo" +
+      "del.v1.FetchOptions.Mode\"\030\n\004Mode\022\007\n\003ONE\020" +
+      "\000\022\007\n\003ALL\020\001B/Z-gitlab.spectrumdata.tech/s" +
+      "d3/svdb/go/model/v1b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -895,7 +895,7 @@ public final class Fetch {
     internal_static_codes_spectrum_svdb_model_v1_FetchOptions_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_codes_spectrum_svdb_model_v1_FetchOptions_descriptor,
-        new java.lang.String[] { "Mode", "CursorUid", });
+        new java.lang.String[] { "CursorUid", "Mode", });
     descriptor.resolveAllFeaturesImmutable();
   }
 

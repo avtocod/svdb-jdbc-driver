@@ -102,57 +102,34 @@ class SvdbJdbcStaticStringResultSet(
 
     @Throws(SQLException::class)
     override fun getDate(i: Int): Date {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i")
+        TODO("method name ${retriveFunName()} called with parameters $i")
     }
 
     @Throws(SQLException::class)
     override fun getTime(i: Int): Time {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i")
+        TODO("method name ${retriveFunName()} called with parameters $i")
     }
 
     @Throws(SQLException::class)
     override fun getTimestamp(i: Int): Timestamp {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i")
+        TODO("method name ${retriveFunName()} called with parameters $i")
     }
 
     @Throws(SQLException::class)
     override fun getAsciiStream(i: Int): InputStream {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i")
+        TODO("method name ${retriveFunName()} called with parameters $i")
     }
 
     @Deprecated("Deprecated in Java")
     @Throws(SQLException::class)
     override fun getUnicodeStream(i: Int): InputStream {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i")
+        TODO("method name ${retriveFunName()} called with parameters $i")
     }
 
     @Throws(SQLException::class)
     override fun getBinaryStream(i: Int): InputStream {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i")
+
+        TODO("method name ${retriveFunName()} called with parameters $i")
     }
 
     @Throws(SQLException::class)
@@ -187,29 +164,17 @@ class SvdbJdbcStaticStringResultSet(
 
     @Throws(SQLException::class)
     override fun getFloat(s: String): Float {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
     override fun getDouble(s: String): Double {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
     override fun getBigDecimal(s: String, i: Int): BigDecimal {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
@@ -219,67 +184,39 @@ class SvdbJdbcStaticStringResultSet(
 
     @Throws(SQLException::class)
     override fun getDate(s: String): Date {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
     override fun getTime(s: String): Time {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
     override fun getTimestamp(s: String): Timestamp {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
     override fun getAsciiStream(s: String): InputStream {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
     override fun getUnicodeStream(s: String): InputStream {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
     override fun getBinaryStream(s: String): InputStream {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
     override fun getWarnings(): SQLWarning? {
         return null // пока же нет ничего
-        /* 
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called")
+        /*
+        TODO("method name ${retriveFunName()} called")
         */
     }
 
@@ -317,27 +254,23 @@ class SvdbJdbcStaticStringResultSet(
     }
 
     @Throws(SQLException::class)
-    override fun getCharacterStream(i: Int): Reader  = TODO("method name ${retriveFunName()} called")
-
-    @Throws(SQLException::class)
-    override fun getCharacterStream(s: String): Reader {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+    override fun getCharacterStream(i: Int): Reader {
+        TODO("method name ${retriveFunName()} called")
     }
 
     @Throws(SQLException::class)
-    override fun getBigDecimal(i: Int): BigDecimal  = TODO("method name ${retriveFunName()} called")
+    override fun getCharacterStream(s: String): Reader {
+        TODO("method name ${retriveFunName()} called with parameters $s")
+    }
+
+    @Throws(SQLException::class)
+    override fun getBigDecimal(i: Int): BigDecimal {
+        TODO("method name ${retriveFunName()} called")
+    }
 
     @Throws(SQLException::class)
     override fun getBigDecimal(s: String): BigDecimal {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
@@ -622,127 +555,88 @@ class SvdbJdbcStaticStringResultSet(
     }
 
     @Throws(SQLException::class)
-    override fun getStatement(): Statement  = TODO("method name ${retriveFunName()} called")
+    override fun getStatement(): Statement {
+        TODO("method name ${retriveFunName()} called")
+    }
 
     @Throws(SQLException::class)
-    override fun getObject(i: Int, map: Map<String?, Class<*>?>?): Any  = TODO("method name ${retriveFunName()} called")
+    override fun getObject(i: Int, map: Map<String?, Class<*>?>?): Any {
+        TODO("method name ${retriveFunName()} called")
+    }
 
     @Throws(SQLException::class)
-    override fun getRef(i: Int): Ref  = TODO("method name ${retriveFunName()} called")
+    override fun getRef(i: Int): Ref {
+        TODO("method name ${retriveFunName()} called")
+    }
 
     @Throws(SQLException::class)
-    override fun getBlob(i: Int): Blob  = TODO("method name ${retriveFunName()} called")
+    override fun getBlob(i: Int): Blob {
+        TODO("method name ${retriveFunName()} called")
+    }
 
     @Throws(SQLException::class)
-    override fun getClob(i: Int): Clob  = TODO("method name ${retriveFunName()} called")
+    override fun getClob(i: Int): Clob {
+        TODO("method name ${retriveFunName()} called")
+    }
 
     @Throws(SQLException::class)
-    override fun getArray(i: Int): Array  = TODO("method name ${retriveFunName()} called")
+    override fun getArray(i: Int): Array {
+        TODO("method name ${retriveFunName()} called")
+    }
 
     @Throws(SQLException::class)
     override fun getObject(s: String, map: Map<String?, Class<*>?>?): Any {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
     override fun getRef(s: String): Ref {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
     override fun getBlob(s: String): Blob {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
     override fun getClob(s: String): Clob {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
     override fun getArray(s: String): Array {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+        TODO("method name ${retriveFunName()} called with parameters $s")
     }
 
     @Throws(SQLException::class)
-    override fun getDate(i: Int, calendar: Calendar): Date  = TODO("method name ${retriveFunName()} called")
-
-    @Throws(SQLException::class)
-    override fun getDate(s: String, calendar: Calendar): Date {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
+    override fun getDate(i: Int, calendar: Calendar): Date {
+        TODO("method name ${retriveFunName()} called")
     }
 
     @Throws(SQLException::class)
-    override fun getTime(i: Int, calendar: Calendar): Time  = TODO("method name ${retriveFunName()} called")
+    override fun getDate(s: String, calendar: Calendar): Date =TODO("method name ${retriveFunName()} called with parameters $s")
 
     @Throws(SQLException::class)
-    override fun getTime(s: String, calendar: Calendar): Time {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
-    }
+    override fun getTime(i: Int, calendar: Calendar): Time = TODO("method name ${retriveFunName()} called")
 
     @Throws(SQLException::class)
-    override fun getTimestamp(i: Int, calendar: Calendar): Timestamp {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i, $calendar")
-    }
+    override fun getTime(s: String, calendar: Calendar): Time = TODO("method name  ${retriveFunName()} called with parameters $s")
 
     @Throws(SQLException::class)
-    override fun getTimestamp(s: String, calendar: Calendar): Timestamp {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
-    }
+    override fun getTimestamp(i: Int, calendar: Calendar): Timestamp = TODO("method name ${retriveFunName()} called with parameters $i, $calendar")
 
     @Throws(SQLException::class)
-    override fun getURL(i: Int): URL {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i")
-    }
+    override fun getTimestamp(s: String, calendar: Calendar): Timestamp = TODO("method name ${retriveFunName()} called with parameters $s")
+
 
     @Throws(SQLException::class)
-    override fun getURL(s: String): URL {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
-    }
+    override fun getURL(i: Int): URL = TODO("method name ${retriveFunName()} called with parameters $i")
+
+
+    @Throws(SQLException::class)
+    override fun getURL(s: String): URL= TODO("method name ${retriveFunName()} called with parameters $s")
+
 
     @Throws(SQLException::class)
     override fun updateRef(i: Int, ref: Ref) {
@@ -777,22 +671,11 @@ class SvdbJdbcStaticStringResultSet(
     }
 
     @Throws(SQLException::class)
-    override fun getRowId(i: Int): RowId {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i")
-    }
+    override fun getRowId(i: Int): RowId = TODO("method name ${retriveFunName()} called with parameters $i")
+
 
     @Throws(SQLException::class)
-    override fun getRowId(s: String): RowId {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
-    }
+    override fun getRowId(s: String): RowId = TODO("method name ${retriveFunName()} called with parameters $s")
 
     @Throws(SQLException::class)
     override fun updateRowId(i: Int, rowId: RowId) {
@@ -829,40 +712,19 @@ class SvdbJdbcStaticStringResultSet(
     }
 
     @Throws(SQLException::class)
-    override fun getNClob(i: Int): NClob {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i")
-    }
+    override fun getNClob(i: Int): NClob = TODO("method name ${retriveFunName()} called with parameters $i")
+
 
     @Throws(SQLException::class)
-    override fun getNClob(s: String): NClob {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
-    }
+    override fun getNClob(s: String): NClob = TODO("method name ${retriveFunName()} called with parameters $s")
+
 
     @Throws(SQLException::class)
-    override fun getSQLXML(i: Int): SQLXML {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i")
-    }
+    override fun getSQLXML(i: Int): SQLXML = TODO("method name ${retriveFunName()} called with parameters $i")
 
     @Throws(SQLException::class)
-    override fun getSQLXML(s: String): SQLXML {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
-    }
+    override fun getSQLXML(s: String): SQLXML = TODO("method name ${retriveFunName()} called with parameters $s")
+
 
     @Throws(SQLException::class)
     override fun updateSQLXML(i: Int, sqlxml: SQLXML) {
@@ -873,40 +735,19 @@ class SvdbJdbcStaticStringResultSet(
     }
 
     @Throws(SQLException::class)
-    override fun getNString(i: Int): String {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i")
-    }
+    override fun getNString(i: Int): String = TODO("method name ${retriveFunName()} called with parameters $i")
 
     @Throws(SQLException::class)
-    override fun getNString(s: String): String {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
-    }
+    override fun getNString(s: String): String = TODO("method name ${retriveFunName()} called with parameters $s")
 
     @Throws(SQLException::class)
-    override fun getNCharacterStream(i: Int): Reader {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i")
-    }
+    override fun getNCharacterStream(i: Int): Reader = TODO("method name ${retriveFunName()} called with parameters $i")
+
 
     @Throws(SQLException::class)
-    override fun getNCharacterStream(s: String): Reader {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s")
-    }
+    override fun getNCharacterStream(s: String): Reader =
+        TODO("method name ${retriveFunName()} called with parameters $s")
+
 
     @Throws(SQLException::class)
     override fun updateNCharacterStream(i: Int, reader: Reader, l: Long) {
@@ -1021,31 +862,17 @@ class SvdbJdbcStaticStringResultSet(
     }
 
     @Throws(SQLException::class)
-    override fun <T> getObject(i: Int, aClass: Class<T>): T {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $i, $aClass")
-    }
+    override fun <T> getObject(i: Int, aClass: Class<T>): T =
+        TODO("method name ${retriveFunName()} called with parameters $i, $aClass")
 
     @Throws(SQLException::class)
-    override fun <T> getObject(s: String, aClass: Class<T>): T {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $s, $aClass")
-    }
+    override fun <T> getObject(s: String, aClass: Class<T>): T =
+        TODO("method name ${retriveFunName()} called with parameters $s, $aClass")
+
 
     @Throws(SQLException::class)
-    override fun <T> unwrap(aClass: Class<T>): T {
-        val methodName = object : Any() {}
-            .javaClass
-            .enclosingMethod
-            .name
-        TODO("method name $methodName called with parameters $aClass")
-    }
+    override fun <T> unwrap(aClass: Class<T>): T =
+        TODO("method name ${retriveFunName()} called with parameters $aClass")
 
     @Throws(SQLException::class)
     override fun isWrapperFor(aClass: Class<*>?): Boolean {

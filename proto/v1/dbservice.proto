@@ -44,17 +44,4 @@ service SvdbService {
     // как ее зачистит внутренний сборщик мусора svdb
     // передача uid сессии при закрытии курсора обязательна!!
     rpc Cancel(CancelOptions) returns (State);
-
-    //@FUTURE: 0.3.0 // DECLINED BY KISS/YAGNI
-    // для паралелльно открытых курсоров - выбрать запись из любого
-    // rpc FetchResult(Query.Token) returns (RecordResult)
-
-    //@FUTURE: 0.3.0 // DECLINED BY KISS/YAGNI
-    // вариант для push отправки сервером батча (стрима рекордов)
-    // [count] за раз и может выдать меньше при 
-    // EOF или скажем таймаутах, соответственно будет
-    // для этого еще и статус EOL
-    // самая полная форма, по факту [FetchCurrentResult]
-    // это [FetchResultStrum(current.token, 1).firstOrEof()]
-    //rpc FetchResultStream(Query.Token, int32) returns (stream RecordResult)
 }

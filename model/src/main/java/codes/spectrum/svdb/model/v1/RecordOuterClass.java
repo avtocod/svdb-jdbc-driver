@@ -31,122 +31,36 @@ public final class RecordOuterClass {
 
     /**
      * <pre>
-     * описатель происхождения кортежа, пока формат неопределен
-     * например это может быть имя таблицы или номер запроса
-     * или все вместе, пока считаем что это некая полуструктурированная
-     * reference - строка
+     * поля в виде байтов
      * </pre>
      *
-     * <code>string from = 10;</code>
-     * @return The from.
+     * <code>repeated bytes fields = 1;</code>
+     * @return A list containing the fields.
      */
-    java.lang.String getFrom();
+    java.util.List<com.google.protobuf.ByteString> getFieldsList();
     /**
      * <pre>
-     * описатель происхождения кортежа, пока формат неопределен
-     * например это может быть имя таблицы или номер запроса
-     * или все вместе, пока считаем что это некая полуструктурированная
-     * reference - строка
+     * поля в виде байтов
      * </pre>
      *
-     * <code>string from = 10;</code>
-     * @return The bytes for from.
-     */
-    com.google.protobuf.ByteString
-        getFromBytes();
-
-    /**
-     * <pre>
-     * порядковый номер в курсоре
-     * </pre>
-     *
-     * <code>int64 number = 11;</code>
-     * @return The number.
-     */
-    long getNumber();
-
-    /**
-     * <pre>
-     * сами данные кортежа, карта между строкой и любым типом
-     * используем документационную, а не реляционную модель по умолчанию,
-     * так как класс данных тяготеет к разнородности в одном запросе
-     * и к гетерогенным схемам
-     * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-     * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-     * с упаковкой любых типов в string, но посмотрм сначала как себя
-     * поведет ANY
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-     */
-    java.util.List<codes.spectrum.svdb.model.v1.FieldOuterClass.Field> 
-        getFieldsList();
-    /**
-     * <pre>
-     * сами данные кортежа, карта между строкой и любым типом
-     * используем документационную, а не реляционную модель по умолчанию,
-     * так как класс данных тяготеет к разнородности в одном запросе
-     * и к гетерогенным схемам
-     * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-     * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-     * с упаковкой любых типов в string, но посмотрм сначала как себя
-     * поведет ANY
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-     */
-    codes.spectrum.svdb.model.v1.FieldOuterClass.Field getFields(int index);
-    /**
-     * <pre>
-     * сами данные кортежа, карта между строкой и любым типом
-     * используем документационную, а не реляционную модель по умолчанию,
-     * так как класс данных тяготеет к разнородности в одном запросе
-     * и к гетерогенным схемам
-     * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-     * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-     * с упаковкой любых типов в string, но посмотрм сначала как себя
-     * поведет ANY
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
+     * <code>repeated bytes fields = 1;</code>
+     * @return The count of fields.
      */
     int getFieldsCount();
     /**
      * <pre>
-     * сами данные кортежа, карта между строкой и любым типом
-     * используем документационную, а не реляционную модель по умолчанию,
-     * так как класс данных тяготеет к разнородности в одном запросе
-     * и к гетерогенным схемам
-     * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-     * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-     * с упаковкой любых типов в string, но посмотрм сначала как себя
-     * поведет ANY
+     * поля в виде байтов
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
+     * <code>repeated bytes fields = 1;</code>
+     * @param index The index of the element to return.
+     * @return The fields at the given index.
      */
-    java.util.List<? extends codes.spectrum.svdb.model.v1.FieldOuterClass.FieldOrBuilder> 
-        getFieldsOrBuilderList();
-    /**
-     * <pre>
-     * сами данные кортежа, карта между строкой и любым типом
-     * используем документационную, а не реляционную модель по умолчанию,
-     * так как класс данных тяготеет к разнородности в одном запросе
-     * и к гетерогенным схемам
-     * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-     * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-     * с упаковкой любых типов в string, но посмотрм сначала как себя
-     * поведет ANY
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-     */
-    codes.spectrum.svdb.model.v1.FieldOuterClass.FieldOrBuilder getFieldsOrBuilder(
-        int index);
+    com.google.protobuf.ByteString getFields(int index);
   }
   /**
    * <pre>
-   * Описатель кортежа данных, под развитие
+   * запись с полями в виде байтов
    * </pre>
    *
    * Protobuf type {@code codes.spectrum.svdb.model.v1.Record}
@@ -170,8 +84,7 @@ public final class RecordOuterClass {
       super(builder);
     }
     private Record() {
-      from_ = "";
-      fields_ = java.util.Collections.emptyList();
+      fields_ = emptyList(com.google.protobuf.ByteString.class);
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor
@@ -187,167 +100,44 @@ public final class RecordOuterClass {
               codes.spectrum.svdb.model.v1.RecordOuterClass.Record.class, codes.spectrum.svdb.model.v1.RecordOuterClass.Record.Builder.class);
     }
 
-    public static final int FROM_FIELD_NUMBER = 10;
+    public static final int FIELDS_FIELD_NUMBER = 1;
     @SuppressWarnings("serial")
-    private volatile java.lang.Object from_ = "";
+    private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.ByteString> fields_ =
+        emptyList(com.google.protobuf.ByteString.class);
     /**
      * <pre>
-     * описатель происхождения кортежа, пока формат неопределен
-     * например это может быть имя таблицы или номер запроса
-     * или все вместе, пока считаем что это некая полуструктурированная
-     * reference - строка
+     * поля в виде байтов
      * </pre>
      *
-     * <code>string from = 10;</code>
-     * @return The from.
+     * <code>repeated bytes fields = 1;</code>
+     * @return A list containing the fields.
      */
     @java.lang.Override
-    public java.lang.String getFrom() {
-      java.lang.Object ref = from_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        from_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * описатель происхождения кортежа, пока формат неопределен
-     * например это может быть имя таблицы или номер запроса
-     * или все вместе, пока считаем что это некая полуструктурированная
-     * reference - строка
-     * </pre>
-     *
-     * <code>string from = 10;</code>
-     * @return The bytes for from.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getFromBytes() {
-      java.lang.Object ref = from_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        from_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int NUMBER_FIELD_NUMBER = 11;
-    private long number_ = 0L;
-    /**
-     * <pre>
-     * порядковый номер в курсоре
-     * </pre>
-     *
-     * <code>int64 number = 11;</code>
-     * @return The number.
-     */
-    @java.lang.Override
-    public long getNumber() {
-      return number_;
-    }
-
-    public static final int FIELDS_FIELD_NUMBER = 20;
-    @SuppressWarnings("serial")
-    private java.util.List<codes.spectrum.svdb.model.v1.FieldOuterClass.Field> fields_;
-    /**
-     * <pre>
-     * сами данные кортежа, карта между строкой и любым типом
-     * используем документационную, а не реляционную модель по умолчанию,
-     * так как класс данных тяготеет к разнородности в одном запросе
-     * и к гетерогенным схемам
-     * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-     * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-     * с упаковкой любых типов в string, но посмотрм сначала как себя
-     * поведет ANY
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-     */
-    @java.lang.Override
-    public java.util.List<codes.spectrum.svdb.model.v1.FieldOuterClass.Field> getFieldsList() {
+    public java.util.List<com.google.protobuf.ByteString>
+        getFieldsList() {
       return fields_;
     }
     /**
      * <pre>
-     * сами данные кортежа, карта между строкой и любым типом
-     * используем документационную, а не реляционную модель по умолчанию,
-     * так как класс данных тяготеет к разнородности в одном запросе
-     * и к гетерогенным схемам
-     * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-     * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-     * с упаковкой любых типов в string, но посмотрм сначала как себя
-     * поведет ANY
+     * поля в виде байтов
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
+     * <code>repeated bytes fields = 1;</code>
+     * @return The count of fields.
      */
-    @java.lang.Override
-    public java.util.List<? extends codes.spectrum.svdb.model.v1.FieldOuterClass.FieldOrBuilder> 
-        getFieldsOrBuilderList() {
-      return fields_;
-    }
-    /**
-     * <pre>
-     * сами данные кортежа, карта между строкой и любым типом
-     * используем документационную, а не реляционную модель по умолчанию,
-     * так как класс данных тяготеет к разнородности в одном запросе
-     * и к гетерогенным схемам
-     * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-     * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-     * с упаковкой любых типов в string, но посмотрм сначала как себя
-     * поведет ANY
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-     */
-    @java.lang.Override
     public int getFieldsCount() {
       return fields_.size();
     }
     /**
      * <pre>
-     * сами данные кортежа, карта между строкой и любым типом
-     * используем документационную, а не реляционную модель по умолчанию,
-     * так как класс данных тяготеет к разнородности в одном запросе
-     * и к гетерогенным схемам
-     * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-     * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-     * с упаковкой любых типов в string, но посмотрм сначала как себя
-     * поведет ANY
+     * поля в виде байтов
      * </pre>
      *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
+     * <code>repeated bytes fields = 1;</code>
+     * @param index The index of the element to return.
+     * @return The fields at the given index.
      */
-    @java.lang.Override
-    public codes.spectrum.svdb.model.v1.FieldOuterClass.Field getFields(int index) {
-      return fields_.get(index);
-    }
-    /**
-     * <pre>
-     * сами данные кортежа, карта между строкой и любым типом
-     * используем документационную, а не реляционную модель по умолчанию,
-     * так как класс данных тяготеет к разнородности в одном запросе
-     * и к гетерогенным схемам
-     * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-     * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-     * с упаковкой любых типов в string, но посмотрм сначала как себя
-     * поведет ANY
-     * </pre>
-     *
-     * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-     */
-    @java.lang.Override
-    public codes.spectrum.svdb.model.v1.FieldOuterClass.FieldOrBuilder getFieldsOrBuilder(
-        int index) {
+    public com.google.protobuf.ByteString getFields(int index) {
       return fields_.get(index);
     }
 
@@ -365,14 +155,8 @@ public final class RecordOuterClass {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (!com.google.protobuf.GeneratedMessage.isStringEmpty(from_)) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 10, from_);
-      }
-      if (number_ != 0L) {
-        output.writeInt64(11, number_);
-      }
       for (int i = 0; i < fields_.size(); i++) {
-        output.writeMessage(20, fields_.get(i));
+        output.writeBytes(1, fields_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -383,16 +167,14 @@ public final class RecordOuterClass {
       if (size != -1) return size;
 
       size = 0;
-      if (!com.google.protobuf.GeneratedMessage.isStringEmpty(from_)) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(10, from_);
-      }
-      if (number_ != 0L) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt64Size(11, number_);
-      }
-      for (int i = 0; i < fields_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(20, fields_.get(i));
+      {
+        int dataSize = 0;
+        for (int i = 0; i < fields_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeBytesSizeNoTag(fields_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getFieldsList().size();
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -409,10 +191,6 @@ public final class RecordOuterClass {
       }
       codes.spectrum.svdb.model.v1.RecordOuterClass.Record other = (codes.spectrum.svdb.model.v1.RecordOuterClass.Record) obj;
 
-      if (!getFrom()
-          .equals(other.getFrom())) return false;
-      if (getNumber()
-          != other.getNumber()) return false;
       if (!getFieldsList()
           .equals(other.getFieldsList())) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -426,11 +204,6 @@ public final class RecordOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + FROM_FIELD_NUMBER;
-      hash = (53 * hash) + getFrom().hashCode();
-      hash = (37 * hash) + NUMBER_FIELD_NUMBER;
-      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-          getNumber());
       if (getFieldsCount() > 0) {
         hash = (37 * hash) + FIELDS_FIELD_NUMBER;
         hash = (53 * hash) + getFieldsList().hashCode();
@@ -534,7 +307,7 @@ public final class RecordOuterClass {
     }
     /**
      * <pre>
-     * Описатель кортежа данных, под развитие
+     * запись с полями в виде байтов
      * </pre>
      *
      * Protobuf type {@code codes.spectrum.svdb.model.v1.Record}
@@ -570,15 +343,7 @@ public final class RecordOuterClass {
       public Builder clear() {
         super.clear();
         bitField0_ = 0;
-        from_ = "";
-        number_ = 0L;
-        if (fieldsBuilder_ == null) {
-          fields_ = java.util.Collections.emptyList();
-        } else {
-          fields_ = null;
-          fieldsBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000004);
+        fields_ = emptyList(com.google.protobuf.ByteString.class);
         return this;
       }
 
@@ -605,31 +370,16 @@ public final class RecordOuterClass {
       @java.lang.Override
       public codes.spectrum.svdb.model.v1.RecordOuterClass.Record buildPartial() {
         codes.spectrum.svdb.model.v1.RecordOuterClass.Record result = new codes.spectrum.svdb.model.v1.RecordOuterClass.Record(this);
-        buildPartialRepeatedFields(result);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartialRepeatedFields(codes.spectrum.svdb.model.v1.RecordOuterClass.Record result) {
-        if (fieldsBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) != 0)) {
-            fields_ = java.util.Collections.unmodifiableList(fields_);
-            bitField0_ = (bitField0_ & ~0x00000004);
-          }
-          result.fields_ = fields_;
-        } else {
-          result.fields_ = fieldsBuilder_.build();
-        }
-      }
-
       private void buildPartial0(codes.spectrum.svdb.model.v1.RecordOuterClass.Record result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.from_ = from_;
-        }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.number_ = number_;
+          fields_.makeImmutable();
+          result.fields_ = fields_;
         }
       }
 
@@ -645,39 +395,16 @@ public final class RecordOuterClass {
 
       public Builder mergeFrom(codes.spectrum.svdb.model.v1.RecordOuterClass.Record other) {
         if (other == codes.spectrum.svdb.model.v1.RecordOuterClass.Record.getDefaultInstance()) return this;
-        if (!other.getFrom().isEmpty()) {
-          from_ = other.from_;
-          bitField0_ |= 0x00000001;
+        if (!other.fields_.isEmpty()) {
+          if (fields_.isEmpty()) {
+            fields_ = other.fields_;
+            fields_.makeImmutable();
+            bitField0_ |= 0x00000001;
+          } else {
+            ensureFieldsIsMutable();
+            fields_.addAll(other.fields_);
+          }
           onChanged();
-        }
-        if (other.getNumber() != 0L) {
-          setNumber(other.getNumber());
-        }
-        if (fieldsBuilder_ == null) {
-          if (!other.fields_.isEmpty()) {
-            if (fields_.isEmpty()) {
-              fields_ = other.fields_;
-              bitField0_ = (bitField0_ & ~0x00000004);
-            } else {
-              ensureFieldsIsMutable();
-              fields_.addAll(other.fields_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.fields_.isEmpty()) {
-            if (fieldsBuilder_.isEmpty()) {
-              fieldsBuilder_.dispose();
-              fieldsBuilder_ = null;
-              fields_ = other.fields_;
-              bitField0_ = (bitField0_ & ~0x00000004);
-              fieldsBuilder_ = 
-                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                   getFieldsFieldBuilder() : null;
-            } else {
-              fieldsBuilder_.addAllMessages(other.fields_);
-            }
-          }
         }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
@@ -705,29 +432,12 @@ public final class RecordOuterClass {
               case 0:
                 done = true;
                 break;
-              case 82: {
-                from_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000001;
+              case 10: {
+                com.google.protobuf.ByteString v = input.readBytes();
+                ensureFieldsIsMutable();
+                fields_.add(v);
                 break;
-              } // case 82
-              case 88: {
-                number_ = input.readInt64();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 88
-              case 162: {
-                codes.spectrum.svdb.model.v1.FieldOuterClass.Field m =
-                    input.readMessage(
-                        codes.spectrum.svdb.model.v1.FieldOuterClass.Field.parser(),
-                        extensionRegistry);
-                if (fieldsBuilder_ == null) {
-                  ensureFieldsIsMutable();
-                  fields_.add(m);
-                } else {
-                  fieldsBuilder_.addMessage(m);
-                }
-                break;
-              } // case 162
+              } // case 10
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -745,593 +455,116 @@ public final class RecordOuterClass {
       }
       private int bitField0_;
 
-      private java.lang.Object from_ = "";
-      /**
-       * <pre>
-       * описатель происхождения кортежа, пока формат неопределен
-       * например это может быть имя таблицы или номер запроса
-       * или все вместе, пока считаем что это некая полуструктурированная
-       * reference - строка
-       * </pre>
-       *
-       * <code>string from = 10;</code>
-       * @return The from.
-       */
-      public java.lang.String getFrom() {
-        java.lang.Object ref = from_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          from_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
+      private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.ByteString> fields_ = emptyList(com.google.protobuf.ByteString.class);
+      private void ensureFieldsIsMutable() {
+        if (!fields_.isModifiable()) {
+          fields_ = makeMutableCopy(fields_);
         }
+        bitField0_ |= 0x00000001;
       }
       /**
        * <pre>
-       * описатель происхождения кортежа, пока формат неопределен
-       * например это может быть имя таблицы или номер запроса
-       * или все вместе, пока считаем что это некая полуструктурированная
-       * reference - строка
+       * поля в виде байтов
        * </pre>
        *
-       * <code>string from = 10;</code>
-       * @return The bytes for from.
+       * <code>repeated bytes fields = 1;</code>
+       * @return A list containing the fields.
        */
-      public com.google.protobuf.ByteString
-          getFromBytes() {
-        java.lang.Object ref = from_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          from_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
+      public java.util.List<com.google.protobuf.ByteString>
+          getFieldsList() {
+        fields_.makeImmutable();
+        return fields_;
       }
       /**
        * <pre>
-       * описатель происхождения кортежа, пока формат неопределен
-       * например это может быть имя таблицы или номер запроса
-       * или все вместе, пока считаем что это некая полуструктурированная
-       * reference - строка
+       * поля в виде байтов
        * </pre>
        *
-       * <code>string from = 10;</code>
-       * @param value The from to set.
+       * <code>repeated bytes fields = 1;</code>
+       * @return The count of fields.
+       */
+      public int getFieldsCount() {
+        return fields_.size();
+      }
+      /**
+       * <pre>
+       * поля в виде байтов
+       * </pre>
+       *
+       * <code>repeated bytes fields = 1;</code>
+       * @param index The index of the element to return.
+       * @return The fields at the given index.
+       */
+      public com.google.protobuf.ByteString getFields(int index) {
+        return fields_.get(index);
+      }
+      /**
+       * <pre>
+       * поля в виде байтов
+       * </pre>
+       *
+       * <code>repeated bytes fields = 1;</code>
+       * @param index The index to set the value at.
+       * @param value The fields to set.
        * @return This builder for chaining.
        */
-      public Builder setFrom(
-          java.lang.String value) {
+      public Builder setFields(
+          int index, com.google.protobuf.ByteString value) {
         if (value == null) { throw new NullPointerException(); }
-        from_ = value;
+        ensureFieldsIsMutable();
+        fields_.set(index, value);
         bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
       /**
        * <pre>
-       * описатель происхождения кортежа, пока формат неопределен
-       * например это может быть имя таблицы или номер запроса
-       * или все вместе, пока считаем что это некая полуструктурированная
-       * reference - строка
+       * поля в виде байтов
        * </pre>
        *
-       * <code>string from = 10;</code>
+       * <code>repeated bytes fields = 1;</code>
+       * @param value The fields to add.
        * @return This builder for chaining.
        */
-      public Builder clearFrom() {
-        from_ = getDefaultInstance().getFrom();
+      public Builder addFields(com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        ensureFieldsIsMutable();
+        fields_.add(value);
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * поля в виде байтов
+       * </pre>
+       *
+       * <code>repeated bytes fields = 1;</code>
+       * @param values The fields to add.
+       * @return This builder for chaining.
+       */
+      public Builder addAllFields(
+          java.lang.Iterable<? extends com.google.protobuf.ByteString> values) {
+        ensureFieldsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, fields_);
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * поля в виде байтов
+       * </pre>
+       *
+       * <code>repeated bytes fields = 1;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearFields() {
+        fields_ = emptyList(com.google.protobuf.ByteString.class);
         bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
-      }
-      /**
-       * <pre>
-       * описатель происхождения кортежа, пока формат неопределен
-       * например это может быть имя таблицы или номер запроса
-       * или все вместе, пока считаем что это некая полуструктурированная
-       * reference - строка
-       * </pre>
-       *
-       * <code>string from = 10;</code>
-       * @param value The bytes for from to set.
-       * @return This builder for chaining.
-       */
-      public Builder setFromBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) { throw new NullPointerException(); }
-        checkByteStringIsUtf8(value);
-        from_ = value;
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-
-      private long number_ ;
-      /**
-       * <pre>
-       * порядковый номер в курсоре
-       * </pre>
-       *
-       * <code>int64 number = 11;</code>
-       * @return The number.
-       */
-      @java.lang.Override
-      public long getNumber() {
-        return number_;
-      }
-      /**
-       * <pre>
-       * порядковый номер в курсоре
-       * </pre>
-       *
-       * <code>int64 number = 11;</code>
-       * @param value The number to set.
-       * @return This builder for chaining.
-       */
-      public Builder setNumber(long value) {
-
-        number_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * порядковый номер в курсоре
-       * </pre>
-       *
-       * <code>int64 number = 11;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearNumber() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        number_ = 0L;
-        onChanged();
-        return this;
-      }
-
-      private java.util.List<codes.spectrum.svdb.model.v1.FieldOuterClass.Field> fields_ =
-        java.util.Collections.emptyList();
-      private void ensureFieldsIsMutable() {
-        if (!((bitField0_ & 0x00000004) != 0)) {
-          fields_ = new java.util.ArrayList<codes.spectrum.svdb.model.v1.FieldOuterClass.Field>(fields_);
-          bitField0_ |= 0x00000004;
-         }
-      }
-
-      private com.google.protobuf.RepeatedFieldBuilder<
-          codes.spectrum.svdb.model.v1.FieldOuterClass.Field, codes.spectrum.svdb.model.v1.FieldOuterClass.Field.Builder, codes.spectrum.svdb.model.v1.FieldOuterClass.FieldOrBuilder> fieldsBuilder_;
-
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public java.util.List<codes.spectrum.svdb.model.v1.FieldOuterClass.Field> getFieldsList() {
-        if (fieldsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(fields_);
-        } else {
-          return fieldsBuilder_.getMessageList();
-        }
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public int getFieldsCount() {
-        if (fieldsBuilder_ == null) {
-          return fields_.size();
-        } else {
-          return fieldsBuilder_.getCount();
-        }
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public codes.spectrum.svdb.model.v1.FieldOuterClass.Field getFields(int index) {
-        if (fieldsBuilder_ == null) {
-          return fields_.get(index);
-        } else {
-          return fieldsBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public Builder setFields(
-          int index, codes.spectrum.svdb.model.v1.FieldOuterClass.Field value) {
-        if (fieldsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureFieldsIsMutable();
-          fields_.set(index, value);
-          onChanged();
-        } else {
-          fieldsBuilder_.setMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public Builder setFields(
-          int index, codes.spectrum.svdb.model.v1.FieldOuterClass.Field.Builder builderForValue) {
-        if (fieldsBuilder_ == null) {
-          ensureFieldsIsMutable();
-          fields_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          fieldsBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public Builder addFields(codes.spectrum.svdb.model.v1.FieldOuterClass.Field value) {
-        if (fieldsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureFieldsIsMutable();
-          fields_.add(value);
-          onChanged();
-        } else {
-          fieldsBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public Builder addFields(
-          int index, codes.spectrum.svdb.model.v1.FieldOuterClass.Field value) {
-        if (fieldsBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureFieldsIsMutable();
-          fields_.add(index, value);
-          onChanged();
-        } else {
-          fieldsBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public Builder addFields(
-          codes.spectrum.svdb.model.v1.FieldOuterClass.Field.Builder builderForValue) {
-        if (fieldsBuilder_ == null) {
-          ensureFieldsIsMutable();
-          fields_.add(builderForValue.build());
-          onChanged();
-        } else {
-          fieldsBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public Builder addFields(
-          int index, codes.spectrum.svdb.model.v1.FieldOuterClass.Field.Builder builderForValue) {
-        if (fieldsBuilder_ == null) {
-          ensureFieldsIsMutable();
-          fields_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          fieldsBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public Builder addAllFields(
-          java.lang.Iterable<? extends codes.spectrum.svdb.model.v1.FieldOuterClass.Field> values) {
-        if (fieldsBuilder_ == null) {
-          ensureFieldsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, fields_);
-          onChanged();
-        } else {
-          fieldsBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public Builder clearFields() {
-        if (fieldsBuilder_ == null) {
-          fields_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
-          onChanged();
-        } else {
-          fieldsBuilder_.clear();
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public Builder removeFields(int index) {
-        if (fieldsBuilder_ == null) {
-          ensureFieldsIsMutable();
-          fields_.remove(index);
-          onChanged();
-        } else {
-          fieldsBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public codes.spectrum.svdb.model.v1.FieldOuterClass.Field.Builder getFieldsBuilder(
-          int index) {
-        return getFieldsFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public codes.spectrum.svdb.model.v1.FieldOuterClass.FieldOrBuilder getFieldsOrBuilder(
-          int index) {
-        if (fieldsBuilder_ == null) {
-          return fields_.get(index);  } else {
-          return fieldsBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public java.util.List<? extends codes.spectrum.svdb.model.v1.FieldOuterClass.FieldOrBuilder> 
-           getFieldsOrBuilderList() {
-        if (fieldsBuilder_ != null) {
-          return fieldsBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(fields_);
-        }
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public codes.spectrum.svdb.model.v1.FieldOuterClass.Field.Builder addFieldsBuilder() {
-        return getFieldsFieldBuilder().addBuilder(
-            codes.spectrum.svdb.model.v1.FieldOuterClass.Field.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public codes.spectrum.svdb.model.v1.FieldOuterClass.Field.Builder addFieldsBuilder(
-          int index) {
-        return getFieldsFieldBuilder().addBuilder(
-            index, codes.spectrum.svdb.model.v1.FieldOuterClass.Field.getDefaultInstance());
-      }
-      /**
-       * <pre>
-       * сами данные кортежа, карта между строкой и любым типом
-       * используем документационную, а не реляционную модель по умолчанию,
-       * так как класс данных тяготеет к разнородности в одном запросе
-       * и к гетерогенным схемам
-       * NOTE: возможно потом будут какие-то вариации, но пока именно полный формат
-       * NOTE: как вариант конечно можно рассмотреть map&lt;string, string&gt; 
-       * с упаковкой любых типов в string, но посмотрм сначала как себя
-       * поведет ANY
-       * </pre>
-       *
-       * <code>repeated .codes.spectrum.svdb.model.v1.Field fields = 20;</code>
-       */
-      public java.util.List<codes.spectrum.svdb.model.v1.FieldOuterClass.Field.Builder> 
-           getFieldsBuilderList() {
-        return getFieldsFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilder<
-          codes.spectrum.svdb.model.v1.FieldOuterClass.Field, codes.spectrum.svdb.model.v1.FieldOuterClass.Field.Builder, codes.spectrum.svdb.model.v1.FieldOuterClass.FieldOrBuilder> 
-          getFieldsFieldBuilder() {
-        if (fieldsBuilder_ == null) {
-          fieldsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              codes.spectrum.svdb.model.v1.FieldOuterClass.Field, codes.spectrum.svdb.model.v1.FieldOuterClass.Field.Builder, codes.spectrum.svdb.model.v1.FieldOuterClass.FieldOrBuilder>(
-                  fields_,
-                  ((bitField0_ & 0x00000004) != 0),
-                  getParentForChildren(),
-                  isClean());
-          fields_ = null;
-        }
-        return fieldsBuilder_;
       }
 
       // @@protoc_insertion_point(builder_scope:codes.spectrum.svdb.model.v1.Record)
@@ -1400,25 +633,21 @@ public final class RecordOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\017v1/record.proto\022\034codes.spectrum.svdb.m" +
-      "odel.v1\032\016v1/field.proto\"g\n\006Record\022\014\n\004fro" +
-      "m\030\n \001(\t\022\016\n\006number\030\013 \001(\003\0223\n\006fields\030\024 \003(\0132" +
-      "#.codes.spectrum.svdb.model.v1.FieldJ\004\010\001" +
-      "\020\nJ\004\010\014\020\024B/Z-gitlab.spectrumdata.tech/sd3" +
-      "/svdb/go/model/v1b\006proto3"
+      "odel.v1\"\030\n\006Record\022\016\n\006fields\030\001 \003(\014B/Z-git" +
+      "lab.spectrumdata.tech/sd3/svdb/go/model/" +
+      "v1b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          codes.spectrum.svdb.model.v1.FieldOuterClass.getDescriptor(),
         });
     internal_static_codes_spectrum_svdb_model_v1_Record_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_codes_spectrum_svdb_model_v1_Record_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_codes_spectrum_svdb_model_v1_Record_descriptor,
-        new java.lang.String[] { "From", "Number", "Fields", });
+        new java.lang.String[] { "Fields", });
     descriptor.resolveAllFeaturesImmutable();
-    codes.spectrum.svdb.model.v1.FieldOuterClass.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

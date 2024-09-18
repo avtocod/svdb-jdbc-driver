@@ -34,7 +34,7 @@ public final class Cancel {
      * uid сессии, которую необходимо закрыть
      * </pre>
      *
-     * <code>string sessionUid = 10;</code>
+     * <code>string sessionUid = 1;</code>
      * @return The sessionUid.
      */
     java.lang.String getSessionUid();
@@ -43,7 +43,7 @@ public final class Cancel {
      * uid сессии, которую необходимо закрыть
      * </pre>
      *
-     * <code>string sessionUid = 10;</code>
+     * <code>string sessionUid = 1;</code>
      * @return The bytes for sessionUid.
      */
     com.google.protobuf.ByteString
@@ -54,7 +54,7 @@ public final class Cancel {
      * uid курсора, который надо закрыть
      * </pre>
      *
-     * <code>string cursorUid = 20;</code>
+     * <code>string cursorUid = 2;</code>
      * @return The cursorUid.
      */
     java.lang.String getCursorUid();
@@ -63,7 +63,7 @@ public final class Cancel {
      * uid курсора, который надо закрыть
      * </pre>
      *
-     * <code>string cursorUid = 20;</code>
+     * <code>string cursorUid = 2;</code>
      * @return The bytes for cursorUid.
      */
     com.google.protobuf.ByteString
@@ -112,7 +112,7 @@ public final class Cancel {
               codes.spectrum.svdb.model.v1.Cancel.CancelOptions.class, codes.spectrum.svdb.model.v1.Cancel.CancelOptions.Builder.class);
     }
 
-    public static final int SESSIONUID_FIELD_NUMBER = 10;
+    public static final int SESSIONUID_FIELD_NUMBER = 1;
     @SuppressWarnings("serial")
     private volatile java.lang.Object sessionUid_ = "";
     /**
@@ -120,7 +120,7 @@ public final class Cancel {
      * uid сессии, которую необходимо закрыть
      * </pre>
      *
-     * <code>string sessionUid = 10;</code>
+     * <code>string sessionUid = 1;</code>
      * @return The sessionUid.
      */
     @java.lang.Override
@@ -141,7 +141,7 @@ public final class Cancel {
      * uid сессии, которую необходимо закрыть
      * </pre>
      *
-     * <code>string sessionUid = 10;</code>
+     * <code>string sessionUid = 1;</code>
      * @return The bytes for sessionUid.
      */
     @java.lang.Override
@@ -159,7 +159,7 @@ public final class Cancel {
       }
     }
 
-    public static final int CURSORUID_FIELD_NUMBER = 20;
+    public static final int CURSORUID_FIELD_NUMBER = 2;
     @SuppressWarnings("serial")
     private volatile java.lang.Object cursorUid_ = "";
     /**
@@ -167,7 +167,7 @@ public final class Cancel {
      * uid курсора, который надо закрыть
      * </pre>
      *
-     * <code>string cursorUid = 20;</code>
+     * <code>string cursorUid = 2;</code>
      * @return The cursorUid.
      */
     @java.lang.Override
@@ -188,7 +188,7 @@ public final class Cancel {
      * uid курсора, который надо закрыть
      * </pre>
      *
-     * <code>string cursorUid = 20;</code>
+     * <code>string cursorUid = 2;</code>
      * @return The bytes for cursorUid.
      */
     @java.lang.Override
@@ -221,10 +221,10 @@ public final class Cancel {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(sessionUid_)) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 10, sessionUid_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, sessionUid_);
       }
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(cursorUid_)) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 20, cursorUid_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, cursorUid_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -236,10 +236,10 @@ public final class Cancel {
 
       size = 0;
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(sessionUid_)) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(10, sessionUid_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, sessionUid_);
       }
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(cursorUid_)) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(20, cursorUid_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(2, cursorUid_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -501,16 +501,16 @@ public final class Cancel {
               case 0:
                 done = true;
                 break;
-              case 82: {
+              case 10: {
                 sessionUid_ = input.readStringRequireUtf8();
                 bitField0_ |= 0x00000001;
                 break;
-              } // case 82
-              case 162: {
+              } // case 10
+              case 18: {
                 cursorUid_ = input.readStringRequireUtf8();
                 bitField0_ |= 0x00000002;
                 break;
-              } // case 162
+              } // case 18
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -534,7 +534,7 @@ public final class Cancel {
        * uid сессии, которую необходимо закрыть
        * </pre>
        *
-       * <code>string sessionUid = 10;</code>
+       * <code>string sessionUid = 1;</code>
        * @return The sessionUid.
        */
       public java.lang.String getSessionUid() {
@@ -554,7 +554,7 @@ public final class Cancel {
        * uid сессии, которую необходимо закрыть
        * </pre>
        *
-       * <code>string sessionUid = 10;</code>
+       * <code>string sessionUid = 1;</code>
        * @return The bytes for sessionUid.
        */
       public com.google.protobuf.ByteString
@@ -575,7 +575,7 @@ public final class Cancel {
        * uid сессии, которую необходимо закрыть
        * </pre>
        *
-       * <code>string sessionUid = 10;</code>
+       * <code>string sessionUid = 1;</code>
        * @param value The sessionUid to set.
        * @return This builder for chaining.
        */
@@ -592,7 +592,7 @@ public final class Cancel {
        * uid сессии, которую необходимо закрыть
        * </pre>
        *
-       * <code>string sessionUid = 10;</code>
+       * <code>string sessionUid = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearSessionUid() {
@@ -606,7 +606,7 @@ public final class Cancel {
        * uid сессии, которую необходимо закрыть
        * </pre>
        *
-       * <code>string sessionUid = 10;</code>
+       * <code>string sessionUid = 1;</code>
        * @param value The bytes for sessionUid to set.
        * @return This builder for chaining.
        */
@@ -626,7 +626,7 @@ public final class Cancel {
        * uid курсора, который надо закрыть
        * </pre>
        *
-       * <code>string cursorUid = 20;</code>
+       * <code>string cursorUid = 2;</code>
        * @return The cursorUid.
        */
       public java.lang.String getCursorUid() {
@@ -646,7 +646,7 @@ public final class Cancel {
        * uid курсора, который надо закрыть
        * </pre>
        *
-       * <code>string cursorUid = 20;</code>
+       * <code>string cursorUid = 2;</code>
        * @return The bytes for cursorUid.
        */
       public com.google.protobuf.ByteString
@@ -667,7 +667,7 @@ public final class Cancel {
        * uid курсора, который надо закрыть
        * </pre>
        *
-       * <code>string cursorUid = 20;</code>
+       * <code>string cursorUid = 2;</code>
        * @param value The cursorUid to set.
        * @return This builder for chaining.
        */
@@ -684,7 +684,7 @@ public final class Cancel {
        * uid курсора, который надо закрыть
        * </pre>
        *
-       * <code>string cursorUid = 20;</code>
+       * <code>string cursorUid = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearCursorUid() {
@@ -698,7 +698,7 @@ public final class Cancel {
        * uid курсора, который надо закрыть
        * </pre>
        *
-       * <code>string cursorUid = 20;</code>
+       * <code>string cursorUid = 2;</code>
        * @param value The bytes for cursorUid to set.
        * @return This builder for chaining.
        */
@@ -778,10 +778,9 @@ public final class Cancel {
   static {
     java.lang.String[] descriptorData = {
       "\n\017v1/cancel.proto\022\034codes.spectrum.svdb.m" +
-      "odel.v1\"<\n\rCancelOptions\022\022\n\nsessionUid\030\n" +
-      " \001(\t\022\021\n\tcursorUid\030\024 \001(\tJ\004\010\001\020\nB/Z-gitlab." +
-      "spectrumdata.tech/sd3/svdb/go/model/v1b\006" +
-      "proto3"
+      "odel.v1\"6\n\rCancelOptions\022\022\n\nsessionUid\030\001" +
+      " \001(\t\022\021\n\tcursorUid\030\002 \001(\tB/Z-gitlab.spectr" +
+      "umdata.tech/sd3/svdb/go/model/v1b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
