@@ -202,5 +202,5 @@ inline fun <reified R : Any> IEffective.cast(source: Any?, strict: Boolean = tru
 inline fun <reified R : Any> IEffective.castOrNull(source: Any?) =
     this.transformToOrNull(source, R::class, true)
 
-fun IEffective.int(source: Any?, strict: Boolean = true) = transformTo(source, Int::class,
+fun IEffective.toInt(source: Any?, strict: Boolean = true) = transformTo(source, Int::class,
     strict)

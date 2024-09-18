@@ -13,8 +13,10 @@ import io.kotest.matchers.shouldBe
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.sql.*
+import java.time.Instant
 import java.time.LocalDate
 import java.util.*
+import java.util.Date
 
 class SvdbDriverTest : FunSpec() {
     init {

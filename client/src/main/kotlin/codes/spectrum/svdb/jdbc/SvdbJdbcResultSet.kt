@@ -1,7 +1,7 @@
 package codes.spectrum.svdb.jdbc
 
-import codes.spectrum.*
 import codes.spectrum.commons.Effective
+import codes.spectrum.commons.toInt
 import codes.spectrum.svdb.ISvdbCursor
 import codes.spectrum.svdb.SvdbStateCodes
 import codes.spectrum.svdb.model.v1.*
@@ -151,12 +151,12 @@ class SvdbJdbcResultSet(
 
     override fun getInt(columnIndex: Int): Int {
         checkIsClosed()
-        return getObject(columnIndex).let { Effective.int(it) }
+        return getObject(columnIndex).let { Effective.toInt(it) }
     }
 
     override fun getInt(columnLabel: String): Int {
         checkIsClosed()
-        return getObject(columnLabel).let { Effective.int(it) }
+        return getObject(columnLabel).let { Effective.toInt(it) }
     }
 
     override fun getLong(columnIndex: Int): Long {
