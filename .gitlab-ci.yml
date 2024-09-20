@@ -32,12 +32,12 @@ kt-test:
     - ./gradlew test
 
 
-#kt-publish:
-#  image: $KT_IMAGE
-#  stage: publish
-#  needs: [ kt-test ]
-#  rules:
-#    - *run_on_dev
-#    - *run_on_master
-#  script:
-#    - ./gradlew publishFatJar
+kt-publish:
+  image: $KT_IMAGE
+  stage: publish
+  needs: [ kt-test ]
+  rules:
+    - *run_on_dev
+    - *run_on_master
+  script:
+    - ./gradlew publishFatJar
