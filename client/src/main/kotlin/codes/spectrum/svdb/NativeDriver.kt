@@ -167,6 +167,7 @@ class NativeDriver {
             sslContext.init(null, arrayOf(customTrustManager), null)
 
             OkHttpChannelBuilder.forAddress(resolvedHost, port).useTransportSecurity()
+                .maxInboundMessageSize(41943040)
                 .sslSocketFactory(sslContext.socketFactory).build()
         } else OkHttpChannelBuilder.forAddress(resolvedHost, port).usePlaintext().build()
 
