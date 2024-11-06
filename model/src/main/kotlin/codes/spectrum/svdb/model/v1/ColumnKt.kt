@@ -11,7 +11,7 @@ public inline fun column(block: codes.spectrum.svdb.model.v1.ColumnKt.Dsl.() -> 
   codes.spectrum.svdb.model.v1.ColumnKt.Dsl._create(codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.newBuilder()).apply { block() }._build()
 /**
  * ```
- * метаданные
+ * Определение поля
  * ```
  *
  * Protobuf type `codes.spectrum.svdb.model.v1.Column`
@@ -90,37 +90,6 @@ public object ColumnKt {
     }
 
     /**
-     * ```
-     * в текущей реализации НЕ используется.
-     * в дальнейшем можно будет использовать
-     * для типизированных массивов, сохраняя
-     * в dataType тип элементов массива
-     * ```
-     *
-     * `bool isArray = 3;`
-     */
-    public var isArray: kotlin.Boolean
-      @JvmName("getIsArray")
-      get() = _builder.getIsArray()
-      @JvmName("setIsArray")
-      set(value) {
-        _builder.setIsArray(value)
-      }
-    /**
-     * ```
-     * в текущей реализации НЕ используется.
-     * в дальнейшем можно будет использовать
-     * для типизированных массивов, сохраняя
-     * в dataType тип элементов массива
-     * ```
-     *
-     * `bool isArray = 3;`
-     */
-    public fun clearIsArray() {
-      _builder.clearIsArray()
-    }
-
-    /**
      * An uninstantiable, behaviorless type to represent the field in
      * generics.
      */
@@ -131,7 +100,7 @@ public object ColumnKt {
      * опции
      * ```
      *
-     * `map<string, string> options = 4;`
+     * `map<string, string> options = 3;`
      */
      public val options: com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, OptionsProxy>
       @kotlin.jvm.JvmSynthetic
@@ -144,7 +113,7 @@ public object ColumnKt {
      * опции
      * ```
      *
-     * `map<string, string> options = 4;`
+     * `map<string, string> options = 3;`
      */
     @JvmName("putOptions")
     public fun com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, OptionsProxy>
@@ -156,7 +125,7 @@ public object ColumnKt {
      * опции
      * ```
      *
-     * `map<string, string> options = 4;`
+     * `map<string, string> options = 3;`
      */
     @kotlin.jvm.JvmSynthetic
     @JvmName("setOptions")
@@ -170,7 +139,7 @@ public object ColumnKt {
      * опции
      * ```
      *
-     * `map<string, string> options = 4;`
+     * `map<string, string> options = 3;`
      */
     @kotlin.jvm.JvmSynthetic
     @JvmName("removeOptions")
@@ -183,7 +152,7 @@ public object ColumnKt {
      * опции
      * ```
      *
-     * `map<string, string> options = 4;`
+     * `map<string, string> options = 3;`
      */
     @kotlin.jvm.JvmSynthetic
     @JvmName("putAllOptions")
@@ -196,7 +165,7 @@ public object ColumnKt {
      * опции
      * ```
      *
-     * `map<string, string> options = 4;`
+     * `map<string, string> options = 3;`
      */
     @kotlin.jvm.JvmSynthetic
     @JvmName("clearOptions")

@@ -35,6 +35,7 @@ public final class StateOuterClass {
      * уже известные коды
      * 200 - OK
      * 204 - EOF
+     * 206 - EOS
      * 400 - BAD_REQUEST  - ошибки во входных данных
      * 401 - UNAUTHORIZED - проблемы авторизации
      * 403 - FORBIDDEN    -  нарушение ACL
@@ -54,7 +55,7 @@ public final class StateOuterClass {
      * известный тип - "EOF"
      * </pre>
      *
-     * <code>string type = 10;</code>
+     * <code>string type = 2;</code>
      * @return The type.
      */
     java.lang.String getType();
@@ -65,7 +66,7 @@ public final class StateOuterClass {
      * известный тип - "EOF"
      * </pre>
      *
-     * <code>string type = 10;</code>
+     * <code>string type = 2;</code>
      * @return The bytes for type.
      */
     com.google.protobuf.ByteString
@@ -76,7 +77,7 @@ public final class StateOuterClass {
      * сообщение, связанное со статусом
      * </pre>
      *
-     * <code>string message = 20;</code>
+     * <code>string message = 3;</code>
      * @return The message.
      */
     java.lang.String getMessage();
@@ -85,7 +86,7 @@ public final class StateOuterClass {
      * сообщение, связанное со статусом
      * </pre>
      *
-     * <code>string message = 20;</code>
+     * <code>string message = 3;</code>
      * @return The bytes for message.
      */
     com.google.protobuf.ByteString
@@ -144,6 +145,7 @@ public final class StateOuterClass {
      * уже известные коды
      * 200 - OK
      * 204 - EOF
+     * 206 - EOS
      * 400 - BAD_REQUEST  - ошибки во входных данных
      * 401 - UNAUTHORIZED - проблемы авторизации
      * 403 - FORBIDDEN    -  нарушение ACL
@@ -159,7 +161,7 @@ public final class StateOuterClass {
       return code_;
     }
 
-    public static final int TYPE_FIELD_NUMBER = 10;
+    public static final int TYPE_FIELD_NUMBER = 2;
     @SuppressWarnings("serial")
     private volatile java.lang.Object type_ = "";
     /**
@@ -169,7 +171,7 @@ public final class StateOuterClass {
      * известный тип - "EOF"
      * </pre>
      *
-     * <code>string type = 10;</code>
+     * <code>string type = 2;</code>
      * @return The type.
      */
     @java.lang.Override
@@ -192,7 +194,7 @@ public final class StateOuterClass {
      * известный тип - "EOF"
      * </pre>
      *
-     * <code>string type = 10;</code>
+     * <code>string type = 2;</code>
      * @return The bytes for type.
      */
     @java.lang.Override
@@ -210,7 +212,7 @@ public final class StateOuterClass {
       }
     }
 
-    public static final int MESSAGE_FIELD_NUMBER = 20;
+    public static final int MESSAGE_FIELD_NUMBER = 3;
     @SuppressWarnings("serial")
     private volatile java.lang.Object message_ = "";
     /**
@@ -218,7 +220,7 @@ public final class StateOuterClass {
      * сообщение, связанное со статусом
      * </pre>
      *
-     * <code>string message = 20;</code>
+     * <code>string message = 3;</code>
      * @return The message.
      */
     @java.lang.Override
@@ -239,7 +241,7 @@ public final class StateOuterClass {
      * сообщение, связанное со статусом
      * </pre>
      *
-     * <code>string message = 20;</code>
+     * <code>string message = 3;</code>
      * @return The bytes for message.
      */
     @java.lang.Override
@@ -275,10 +277,10 @@ public final class StateOuterClass {
         output.writeInt32(1, code_);
       }
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(type_)) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 10, type_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, type_);
       }
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(message_)) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 20, message_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 3, message_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -294,10 +296,10 @@ public final class StateOuterClass {
           .computeInt32Size(1, code_);
       }
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(type_)) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(10, type_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(2, type_);
       }
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(message_)) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(20, message_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(3, message_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -577,16 +579,16 @@ public final class StateOuterClass {
                 bitField0_ |= 0x00000001;
                 break;
               } // case 8
-              case 82: {
+              case 18: {
                 type_ = input.readStringRequireUtf8();
                 bitField0_ |= 0x00000002;
                 break;
-              } // case 82
-              case 162: {
+              } // case 18
+              case 26: {
                 message_ = input.readStringRequireUtf8();
                 bitField0_ |= 0x00000004;
                 break;
-              } // case 162
+              } // case 26
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -611,6 +613,7 @@ public final class StateOuterClass {
        * уже известные коды
        * 200 - OK
        * 204 - EOF
+       * 206 - EOS
        * 400 - BAD_REQUEST  - ошибки во входных данных
        * 401 - UNAUTHORIZED - проблемы авторизации
        * 403 - FORBIDDEN    -  нарушение ACL
@@ -631,6 +634,7 @@ public final class StateOuterClass {
        * уже известные коды
        * 200 - OK
        * 204 - EOF
+       * 206 - EOS
        * 400 - BAD_REQUEST  - ошибки во входных данных
        * 401 - UNAUTHORIZED - проблемы авторизации
        * 403 - FORBIDDEN    -  нарушение ACL
@@ -655,6 +659,7 @@ public final class StateOuterClass {
        * уже известные коды
        * 200 - OK
        * 204 - EOF
+       * 206 - EOS
        * 400 - BAD_REQUEST  - ошибки во входных данных
        * 401 - UNAUTHORIZED - проблемы авторизации
        * 403 - FORBIDDEN    -  нарушение ACL
@@ -680,7 +685,7 @@ public final class StateOuterClass {
        * известный тип - "EOF"
        * </pre>
        *
-       * <code>string type = 10;</code>
+       * <code>string type = 2;</code>
        * @return The type.
        */
       public java.lang.String getType() {
@@ -702,7 +707,7 @@ public final class StateOuterClass {
        * известный тип - "EOF"
        * </pre>
        *
-       * <code>string type = 10;</code>
+       * <code>string type = 2;</code>
        * @return The bytes for type.
        */
       public com.google.protobuf.ByteString
@@ -725,7 +730,7 @@ public final class StateOuterClass {
        * известный тип - "EOF"
        * </pre>
        *
-       * <code>string type = 10;</code>
+       * <code>string type = 2;</code>
        * @param value The type to set.
        * @return This builder for chaining.
        */
@@ -744,7 +749,7 @@ public final class StateOuterClass {
        * известный тип - "EOF"
        * </pre>
        *
-       * <code>string type = 10;</code>
+       * <code>string type = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearType() {
@@ -760,7 +765,7 @@ public final class StateOuterClass {
        * известный тип - "EOF"
        * </pre>
        *
-       * <code>string type = 10;</code>
+       * <code>string type = 2;</code>
        * @param value The bytes for type to set.
        * @return This builder for chaining.
        */
@@ -780,7 +785,7 @@ public final class StateOuterClass {
        * сообщение, связанное со статусом
        * </pre>
        *
-       * <code>string message = 20;</code>
+       * <code>string message = 3;</code>
        * @return The message.
        */
       public java.lang.String getMessage() {
@@ -800,7 +805,7 @@ public final class StateOuterClass {
        * сообщение, связанное со статусом
        * </pre>
        *
-       * <code>string message = 20;</code>
+       * <code>string message = 3;</code>
        * @return The bytes for message.
        */
       public com.google.protobuf.ByteString
@@ -821,7 +826,7 @@ public final class StateOuterClass {
        * сообщение, связанное со статусом
        * </pre>
        *
-       * <code>string message = 20;</code>
+       * <code>string message = 3;</code>
        * @param value The message to set.
        * @return This builder for chaining.
        */
@@ -838,7 +843,7 @@ public final class StateOuterClass {
        * сообщение, связанное со статусом
        * </pre>
        *
-       * <code>string message = 20;</code>
+       * <code>string message = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearMessage() {
@@ -852,7 +857,7 @@ public final class StateOuterClass {
        * сообщение, связанное со статусом
        * </pre>
        *
-       * <code>string message = 20;</code>
+       * <code>string message = 3;</code>
        * @param value The bytes for message to set.
        * @return This builder for chaining.
        */
@@ -932,8 +937,8 @@ public final class StateOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\016v1/state.proto\022\034codes.spectrum.svdb.mo" +
-      "del.v1\"4\n\005State\022\014\n\004code\030\001 \001(\005\022\014\n\004type\030\n " +
-      "\001(\t\022\017\n\007message\030\024 \001(\tB/Z-gitlab.spectrumd" +
+      "del.v1\"4\n\005State\022\014\n\004code\030\001 \001(\005\022\014\n\004type\030\002 " +
+      "\001(\t\022\017\n\007message\030\003 \001(\tB/Z-gitlab.spectrumd" +
       "ata.tech/sd3/svdb/go/model/v1b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor

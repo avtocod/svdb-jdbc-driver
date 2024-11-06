@@ -9,18 +9,16 @@ option go_package = "gitlab.spectrumdata.tech/sd3/svdb/go/model/v1";
 // NOTE: структура - чтобы не было простых типов в API,
 // под расширение
 message FetchOptions {
-    reserved 1 to 9; // мало ли что
+
+    // uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
+    string cursorUid = 1;
 
     // режим выполнения запроса
     enum Mode {
         ONE = 0; // один фетч батч размера от 1 до N
-        ALL = 10; // все записи - режим для fetchAll
+        ALL = 1; // все записи - режим для fetchAll
     }
 
     // режим выполнения запроса
-    Mode mode = 10;
-
-    // uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
-    string cursorUid = 20;
+    Mode mode = 2;
 }
- 

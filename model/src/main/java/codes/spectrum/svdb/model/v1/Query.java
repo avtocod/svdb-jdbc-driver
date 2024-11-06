@@ -34,7 +34,7 @@ public final class Query {
      * текст запроса в формате SdQL
      * </pre>
      *
-     * <code>string text = 10;</code>
+     * <code>string text = 1;</code>
      * @return The text.
      */
     java.lang.String getText();
@@ -43,7 +43,7 @@ public final class Query {
      * текст запроса в формате SdQL
      * </pre>
      *
-     * <code>string text = 10;</code>
+     * <code>string text = 1;</code>
      * @return The bytes for text.
      */
     com.google.protobuf.ByteString
@@ -51,54 +51,83 @@ public final class Query {
 
     /**
      * <pre>
-     * режим выполнения запроса
+     * column описание аргумента
      * </pre>
      *
-     * <code>.codes.spectrum.svdb.model.v1.QueryOptions.Mode mode = 20;</code>
-     * @return The enum numeric value on the wire for mode.
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
      */
-    int getModeValue();
+    java.util.List<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column> 
+        getArgHeadsList();
     /**
      * <pre>
-     * режим выполнения запроса
+     * column описание аргумента
      * </pre>
      *
-     * <code>.codes.spectrum.svdb.model.v1.QueryOptions.Mode mode = 20;</code>
-     * @return The mode.
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
      */
-    codes.spectrum.svdb.model.v1.Query.QueryOptions.Mode getMode();
+    codes.spectrum.svdb.model.v1.ColumnOuterClass.Column getArgHeads(int index);
+    /**
+     * <pre>
+     * column описание аргумента
+     * </pre>
+     *
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
+     */
+    int getArgHeadsCount();
+    /**
+     * <pre>
+     * column описание аргумента
+     * </pre>
+     *
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
+     */
+    java.util.List<? extends codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder> 
+        getArgHeadsOrBuilderList();
+    /**
+     * <pre>
+     * column описание аргумента
+     * </pre>
+     *
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
+     */
+    codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder getArgHeadsOrBuilder(
+        int index);
 
     /**
-     * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+     * <pre>
+     * byteRecord - значение аргумента
+     * </pre>
+     *
+     * <code>repeated bytes argValues = 3;</code>
+     * @return A list containing the argValues.
      */
-    java.util.List<codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg> 
-        getArgsList();
+    java.util.List<com.google.protobuf.ByteString> getArgValuesList();
     /**
-     * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+     * <pre>
+     * byteRecord - значение аргумента
+     * </pre>
+     *
+     * <code>repeated bytes argValues = 3;</code>
+     * @return The count of argValues.
      */
-    codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg getArgs(int index);
+    int getArgValuesCount();
     /**
-     * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+     * <pre>
+     * byteRecord - значение аргумента
+     * </pre>
+     *
+     * <code>repeated bytes argValues = 3;</code>
+     * @param index The index of the element to return.
+     * @return The argValues at the given index.
      */
-    int getArgsCount();
-    /**
-     * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
-     */
-    java.util.List<? extends codes.spectrum.svdb.model.v1.Query.QueryOptions.ArgOrBuilder> 
-        getArgsOrBuilderList();
-    /**
-     * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
-     */
-    codes.spectrum.svdb.model.v1.Query.QueryOptions.ArgOrBuilder getArgsOrBuilder(
-        int index);
+    com.google.protobuf.ByteString getArgValues(int index);
   }
   /**
    * <pre>
    * клиентский запрос для SVDB
-   * пока это просто обертка над строкой в формате 
+   * обертка над строкой в формате
    * встроенного языка SdQL
-   * NOTE: структура - чтобы не было простых типов в API,
-   * под расширение
+   * с поддержкой дополнительных параметров
    * </pre>
    *
    * Protobuf type {@code codes.spectrum.svdb.model.v1.QueryOptions}
@@ -123,8 +152,8 @@ public final class Query {
     }
     private QueryOptions() {
       text_ = "";
-      mode_ = 0;
-      args_ = java.util.Collections.emptyList();
+      argHeads_ = java.util.Collections.emptyList();
+      argValues_ = emptyList(com.google.protobuf.ByteString.class);
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor
@@ -140,967 +169,7 @@ public final class Query {
               codes.spectrum.svdb.model.v1.Query.QueryOptions.class, codes.spectrum.svdb.model.v1.Query.QueryOptions.Builder.class);
     }
 
-    /**
-     * <pre>
-     * режим выполнения запроса
-     * </pre>
-     *
-     * Protobuf enum {@code codes.spectrum.svdb.model.v1.QueryOptions.Mode}
-     */
-    public enum Mode
-        implements com.google.protobuf.ProtocolMessageEnum {
-      /**
-       * <pre>
-       * асинхронный - режим по умолчанию
-       * </pre>
-       *
-       * <code>ASYNC = 0;</code>
-       */
-      ASYNC(0),
-      /**
-       * <pre>
-       * запрос должен сразу вернуть все результаты, синхронны режим
-       * </pre>
-       *
-       * <code>SYNC = 10;</code>
-       */
-      SYNC(10),
-      UNRECOGNIZED(-1),
-      ;
-
-      static {
-        com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
-          com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
-          /* major= */ 4,
-          /* minor= */ 27,
-          /* patch= */ 3,
-          /* suffix= */ "",
-          Mode.class.getName());
-      }
-      /**
-       * <pre>
-       * асинхронный - режим по умолчанию
-       * </pre>
-       *
-       * <code>ASYNC = 0;</code>
-       */
-      public static final int ASYNC_VALUE = 0;
-      /**
-       * <pre>
-       * запрос должен сразу вернуть все результаты, синхронны режим
-       * </pre>
-       *
-       * <code>SYNC = 10;</code>
-       */
-      public static final int SYNC_VALUE = 10;
-
-
-      public final int getNumber() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalArgumentException(
-              "Can't get the number of an unknown enum value.");
-        }
-        return value;
-      }
-
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
-      public static Mode valueOf(int value) {
-        return forNumber(value);
-      }
-
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
-      public static Mode forNumber(int value) {
-        switch (value) {
-          case 0: return ASYNC;
-          case 10: return SYNC;
-          default: return null;
-        }
-      }
-
-      public static com.google.protobuf.Internal.EnumLiteMap<Mode>
-          internalGetValueMap() {
-        return internalValueMap;
-      }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          Mode> internalValueMap =
-            new com.google.protobuf.Internal.EnumLiteMap<Mode>() {
-              public Mode findValueByNumber(int number) {
-                return Mode.forNumber(number);
-              }
-            };
-
-      public final com.google.protobuf.Descriptors.EnumValueDescriptor
-          getValueDescriptor() {
-        if (this == UNRECOGNIZED) {
-          throw new java.lang.IllegalStateException(
-              "Can't get the descriptor of an unrecognized enum value.");
-        }
-        return getDescriptor().getValues().get(ordinal());
-      }
-      public final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptorForType() {
-        return getDescriptor();
-      }
-      public static final com.google.protobuf.Descriptors.EnumDescriptor
-          getDescriptor() {
-        return codes.spectrum.svdb.model.v1.Query.QueryOptions.getDescriptor().getEnumTypes().get(0);
-      }
-
-      private static final Mode[] VALUES = values();
-
-      public static Mode valueOf(
-          com.google.protobuf.Descriptors.EnumValueDescriptor desc) {
-        if (desc.getType() != getDescriptor()) {
-          throw new java.lang.IllegalArgumentException(
-            "EnumValueDescriptor is not for this type.");
-        }
-        if (desc.getIndex() == -1) {
-          return UNRECOGNIZED;
-        }
-        return VALUES[desc.getIndex()];
-      }
-
-      private final int value;
-
-      private Mode(int value) {
-        this.value = value;
-      }
-
-      // @@protoc_insertion_point(enum_scope:codes.spectrum.svdb.model.v1.QueryOptions.Mode)
-    }
-
-    public interface ArgOrBuilder extends
-        // @@protoc_insertion_point(interface_extends:codes.spectrum.svdb.model.v1.QueryOptions.Arg)
-        com.google.protobuf.MessageOrBuilder {
-
-      /**
-       * <code>.codes.spectrum.svdb.model.v1.DataType dataType = 5;</code>
-       * @return The enum numeric value on the wire for dataType.
-       */
-      int getDataTypeValue();
-      /**
-       * <code>.codes.spectrum.svdb.model.v1.DataType dataType = 5;</code>
-       * @return The dataType.
-       */
-      codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType getDataType();
-
-      /**
-       * <code>string name = 10;</code>
-       * @return The name.
-       */
-      java.lang.String getName();
-      /**
-       * <code>string name = 10;</code>
-       * @return The bytes for name.
-       */
-      com.google.protobuf.ByteString
-          getNameBytes();
-
-      /**
-       * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-       * @return Whether the value field is set.
-       */
-      boolean hasValue();
-      /**
-       * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-       * @return The value.
-       */
-      codes.spectrum.svdb.model.v1.ValueOuterClass.Value getValue();
-      /**
-       * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-       */
-      codes.spectrum.svdb.model.v1.ValueOuterClass.ValueOrBuilder getValueOrBuilder();
-    }
-    /**
-     * Protobuf type {@code codes.spectrum.svdb.model.v1.QueryOptions.Arg}
-     */
-    public static final class Arg extends
-        com.google.protobuf.GeneratedMessage implements
-        // @@protoc_insertion_point(message_implements:codes.spectrum.svdb.model.v1.QueryOptions.Arg)
-        ArgOrBuilder {
-    private static final long serialVersionUID = 0L;
-      static {
-        com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
-          com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
-          /* major= */ 4,
-          /* minor= */ 27,
-          /* patch= */ 3,
-          /* suffix= */ "",
-          Arg.class.getName());
-      }
-      // Use Arg.newBuilder() to construct.
-      private Arg(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
-        super(builder);
-      }
-      private Arg() {
-        dataType_ = 0;
-        name_ = "";
-      }
-
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return codes.spectrum.svdb.model.v1.Query.internal_static_codes_spectrum_svdb_model_v1_QueryOptions_Arg_descriptor;
-      }
-
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return codes.spectrum.svdb.model.v1.Query.internal_static_codes_spectrum_svdb_model_v1_QueryOptions_Arg_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.class, codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.Builder.class);
-      }
-
-      private int bitField0_;
-      public static final int DATATYPE_FIELD_NUMBER = 5;
-      private int dataType_ = 0;
-      /**
-       * <code>.codes.spectrum.svdb.model.v1.DataType dataType = 5;</code>
-       * @return The enum numeric value on the wire for dataType.
-       */
-      @java.lang.Override public int getDataTypeValue() {
-        return dataType_;
-      }
-      /**
-       * <code>.codes.spectrum.svdb.model.v1.DataType dataType = 5;</code>
-       * @return The dataType.
-       */
-      @java.lang.Override public codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType getDataType() {
-        codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType result = codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType.forNumber(dataType_);
-        return result == null ? codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType.UNRECOGNIZED : result;
-      }
-
-      public static final int NAME_FIELD_NUMBER = 10;
-      @SuppressWarnings("serial")
-      private volatile java.lang.Object name_ = "";
-      /**
-       * <code>string name = 10;</code>
-       * @return The name.
-       */
-      @java.lang.Override
-      public java.lang.String getName() {
-        java.lang.Object ref = name_;
-        if (ref instanceof java.lang.String) {
-          return (java.lang.String) ref;
-        } else {
-          com.google.protobuf.ByteString bs = 
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          name_ = s;
-          return s;
-        }
-      }
-      /**
-       * <code>string name = 10;</code>
-       * @return The bytes for name.
-       */
-      @java.lang.Override
-      public com.google.protobuf.ByteString
-          getNameBytes() {
-        java.lang.Object ref = name_;
-        if (ref instanceof java.lang.String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          name_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-
-      public static final int VALUE_FIELD_NUMBER = 20;
-      private codes.spectrum.svdb.model.v1.ValueOuterClass.Value value_;
-      /**
-       * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-       * @return Whether the value field is set.
-       */
-      @java.lang.Override
-      public boolean hasValue() {
-        return ((bitField0_ & 0x00000001) != 0);
-      }
-      /**
-       * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-       * @return The value.
-       */
-      @java.lang.Override
-      public codes.spectrum.svdb.model.v1.ValueOuterClass.Value getValue() {
-        return value_ == null ? codes.spectrum.svdb.model.v1.ValueOuterClass.Value.getDefaultInstance() : value_;
-      }
-      /**
-       * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-       */
-      @java.lang.Override
-      public codes.spectrum.svdb.model.v1.ValueOuterClass.ValueOrBuilder getValueOrBuilder() {
-        return value_ == null ? codes.spectrum.svdb.model.v1.ValueOuterClass.Value.getDefaultInstance() : value_;
-      }
-
-      private byte memoizedIsInitialized = -1;
-      @java.lang.Override
-      public final boolean isInitialized() {
-        byte isInitialized = memoizedIsInitialized;
-        if (isInitialized == 1) return true;
-        if (isInitialized == 0) return false;
-
-        memoizedIsInitialized = 1;
-        return true;
-      }
-
-      @java.lang.Override
-      public void writeTo(com.google.protobuf.CodedOutputStream output)
-                          throws java.io.IOException {
-        if (dataType_ != codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType.AUTO.getNumber()) {
-          output.writeEnum(5, dataType_);
-        }
-        if (!com.google.protobuf.GeneratedMessage.isStringEmpty(name_)) {
-          com.google.protobuf.GeneratedMessage.writeString(output, 10, name_);
-        }
-        if (((bitField0_ & 0x00000001) != 0)) {
-          output.writeMessage(20, getValue());
-        }
-        getUnknownFields().writeTo(output);
-      }
-
-      @java.lang.Override
-      public int getSerializedSize() {
-        int size = memoizedSize;
-        if (size != -1) return size;
-
-        size = 0;
-        if (dataType_ != codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType.AUTO.getNumber()) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeEnumSize(5, dataType_);
-        }
-        if (!com.google.protobuf.GeneratedMessage.isStringEmpty(name_)) {
-          size += com.google.protobuf.GeneratedMessage.computeStringSize(10, name_);
-        }
-        if (((bitField0_ & 0x00000001) != 0)) {
-          size += com.google.protobuf.CodedOutputStream
-            .computeMessageSize(20, getValue());
-        }
-        size += getUnknownFields().getSerializedSize();
-        memoizedSize = size;
-        return size;
-      }
-
-      @java.lang.Override
-      public boolean equals(final java.lang.Object obj) {
-        if (obj == this) {
-         return true;
-        }
-        if (!(obj instanceof codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg)) {
-          return super.equals(obj);
-        }
-        codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg other = (codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg) obj;
-
-        if (dataType_ != other.dataType_) return false;
-        if (!getName()
-            .equals(other.getName())) return false;
-        if (hasValue() != other.hasValue()) return false;
-        if (hasValue()) {
-          if (!getValue()
-              .equals(other.getValue())) return false;
-        }
-        if (!getUnknownFields().equals(other.getUnknownFields())) return false;
-        return true;
-      }
-
-      @java.lang.Override
-      public int hashCode() {
-        if (memoizedHashCode != 0) {
-          return memoizedHashCode;
-        }
-        int hash = 41;
-        hash = (19 * hash) + getDescriptor().hashCode();
-        hash = (37 * hash) + DATATYPE_FIELD_NUMBER;
-        hash = (53 * hash) + dataType_;
-        hash = (37 * hash) + NAME_FIELD_NUMBER;
-        hash = (53 * hash) + getName().hashCode();
-        if (hasValue()) {
-          hash = (37 * hash) + VALUE_FIELD_NUMBER;
-          hash = (53 * hash) + getValue().hashCode();
-        }
-        hash = (29 * hash) + getUnknownFields().hashCode();
-        memoizedHashCode = hash;
-        return hash;
-      }
-
-      public static codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg parseFrom(
-          java.nio.ByteBuffer data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg parseFrom(
-          java.nio.ByteBuffer data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg parseFrom(
-          com.google.protobuf.ByteString data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg parseFrom(
-          com.google.protobuf.ByteString data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg parseFrom(byte[] data)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data);
-      }
-      public static codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg parseFrom(
-          byte[] data,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return PARSER.parseFrom(data, extensionRegistry);
-      }
-      public static codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg parseFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-            .parseWithIOException(PARSER, input);
-      }
-      public static codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg parseFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-            .parseWithIOException(PARSER, input, extensionRegistry);
-      }
-
-      public static codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg parseDelimitedFrom(java.io.InputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-            .parseDelimitedWithIOException(PARSER, input);
-      }
-
-      public static codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg parseDelimitedFrom(
-          java.io.InputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-            .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-      }
-      public static codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg parseFrom(
-          com.google.protobuf.CodedInputStream input)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-            .parseWithIOException(PARSER, input);
-      }
-      public static codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg parseFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        return com.google.protobuf.GeneratedMessage
-            .parseWithIOException(PARSER, input, extensionRegistry);
-      }
-
-      @java.lang.Override
-      public Builder newBuilderForType() { return newBuilder(); }
-      public static Builder newBuilder() {
-        return DEFAULT_INSTANCE.toBuilder();
-      }
-      public static Builder newBuilder(codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg prototype) {
-        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-      }
-      @java.lang.Override
-      public Builder toBuilder() {
-        return this == DEFAULT_INSTANCE
-            ? new Builder() : new Builder().mergeFrom(this);
-      }
-
-      @java.lang.Override
-      protected Builder newBuilderForType(
-          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-        Builder builder = new Builder(parent);
-        return builder;
-      }
-      /**
-       * Protobuf type {@code codes.spectrum.svdb.model.v1.QueryOptions.Arg}
-       */
-      public static final class Builder extends
-          com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-          // @@protoc_insertion_point(builder_implements:codes.spectrum.svdb.model.v1.QueryOptions.Arg)
-          codes.spectrum.svdb.model.v1.Query.QueryOptions.ArgOrBuilder {
-        public static final com.google.protobuf.Descriptors.Descriptor
-            getDescriptor() {
-          return codes.spectrum.svdb.model.v1.Query.internal_static_codes_spectrum_svdb_model_v1_QueryOptions_Arg_descriptor;
-        }
-
-        @java.lang.Override
-        protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
-            internalGetFieldAccessorTable() {
-          return codes.spectrum.svdb.model.v1.Query.internal_static_codes_spectrum_svdb_model_v1_QueryOptions_Arg_fieldAccessorTable
-              .ensureFieldAccessorsInitialized(
-                  codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.class, codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.Builder.class);
-        }
-
-        // Construct using codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.newBuilder()
-        private Builder() {
-          maybeForceBuilderInitialization();
-        }
-
-        private Builder(
-            com.google.protobuf.GeneratedMessage.BuilderParent parent) {
-          super(parent);
-          maybeForceBuilderInitialization();
-        }
-        private void maybeForceBuilderInitialization() {
-          if (com.google.protobuf.GeneratedMessage
-                  .alwaysUseFieldBuilders) {
-            getValueFieldBuilder();
-          }
-        }
-        @java.lang.Override
-        public Builder clear() {
-          super.clear();
-          bitField0_ = 0;
-          dataType_ = 0;
-          name_ = "";
-          value_ = null;
-          if (valueBuilder_ != null) {
-            valueBuilder_.dispose();
-            valueBuilder_ = null;
-          }
-          return this;
-        }
-
-        @java.lang.Override
-        public com.google.protobuf.Descriptors.Descriptor
-            getDescriptorForType() {
-          return codes.spectrum.svdb.model.v1.Query.internal_static_codes_spectrum_svdb_model_v1_QueryOptions_Arg_descriptor;
-        }
-
-        @java.lang.Override
-        public codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg getDefaultInstanceForType() {
-          return codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.getDefaultInstance();
-        }
-
-        @java.lang.Override
-        public codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg build() {
-          codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg result = buildPartial();
-          if (!result.isInitialized()) {
-            throw newUninitializedMessageException(result);
-          }
-          return result;
-        }
-
-        @java.lang.Override
-        public codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg buildPartial() {
-          codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg result = new codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg(this);
-          if (bitField0_ != 0) { buildPartial0(result); }
-          onBuilt();
-          return result;
-        }
-
-        private void buildPartial0(codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg result) {
-          int from_bitField0_ = bitField0_;
-          if (((from_bitField0_ & 0x00000001) != 0)) {
-            result.dataType_ = dataType_;
-          }
-          if (((from_bitField0_ & 0x00000002) != 0)) {
-            result.name_ = name_;
-          }
-          int to_bitField0_ = 0;
-          if (((from_bitField0_ & 0x00000004) != 0)) {
-            result.value_ = valueBuilder_ == null
-                ? value_
-                : valueBuilder_.build();
-            to_bitField0_ |= 0x00000001;
-          }
-          result.bitField0_ |= to_bitField0_;
-        }
-
-        @java.lang.Override
-        public Builder mergeFrom(com.google.protobuf.Message other) {
-          if (other instanceof codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg) {
-            return mergeFrom((codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg)other);
-          } else {
-            super.mergeFrom(other);
-            return this;
-          }
-        }
-
-        public Builder mergeFrom(codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg other) {
-          if (other == codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.getDefaultInstance()) return this;
-          if (other.dataType_ != 0) {
-            setDataTypeValue(other.getDataTypeValue());
-          }
-          if (!other.getName().isEmpty()) {
-            name_ = other.name_;
-            bitField0_ |= 0x00000002;
-            onChanged();
-          }
-          if (other.hasValue()) {
-            mergeValue(other.getValue());
-          }
-          this.mergeUnknownFields(other.getUnknownFields());
-          onChanged();
-          return this;
-        }
-
-        @java.lang.Override
-        public final boolean isInitialized() {
-          return true;
-        }
-
-        @java.lang.Override
-        public Builder mergeFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws java.io.IOException {
-          if (extensionRegistry == null) {
-            throw new java.lang.NullPointerException();
-          }
-          try {
-            boolean done = false;
-            while (!done) {
-              int tag = input.readTag();
-              switch (tag) {
-                case 0:
-                  done = true;
-                  break;
-                case 40: {
-                  dataType_ = input.readEnum();
-                  bitField0_ |= 0x00000001;
-                  break;
-                } // case 40
-                case 82: {
-                  name_ = input.readStringRequireUtf8();
-                  bitField0_ |= 0x00000002;
-                  break;
-                } // case 82
-                case 162: {
-                  input.readMessage(
-                      getValueFieldBuilder().getBuilder(),
-                      extensionRegistry);
-                  bitField0_ |= 0x00000004;
-                  break;
-                } // case 162
-                default: {
-                  if (!super.parseUnknownField(input, extensionRegistry, tag)) {
-                    done = true; // was an endgroup tag
-                  }
-                  break;
-                } // default:
-              } // switch (tag)
-            } // while (!done)
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.unwrapIOException();
-          } finally {
-            onChanged();
-          } // finally
-          return this;
-        }
-        private int bitField0_;
-
-        private int dataType_ = 0;
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.DataType dataType = 5;</code>
-         * @return The enum numeric value on the wire for dataType.
-         */
-        @java.lang.Override public int getDataTypeValue() {
-          return dataType_;
-        }
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.DataType dataType = 5;</code>
-         * @param value The enum numeric value on the wire for dataType to set.
-         * @return This builder for chaining.
-         */
-        public Builder setDataTypeValue(int value) {
-          dataType_ = value;
-          bitField0_ |= 0x00000001;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.DataType dataType = 5;</code>
-         * @return The dataType.
-         */
-        @java.lang.Override
-        public codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType getDataType() {
-          codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType result = codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType.forNumber(dataType_);
-          return result == null ? codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType.UNRECOGNIZED : result;
-        }
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.DataType dataType = 5;</code>
-         * @param value The dataType to set.
-         * @return This builder for chaining.
-         */
-        public Builder setDataType(codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType value) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          bitField0_ |= 0x00000001;
-          dataType_ = value.getNumber();
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.DataType dataType = 5;</code>
-         * @return This builder for chaining.
-         */
-        public Builder clearDataType() {
-          bitField0_ = (bitField0_ & ~0x00000001);
-          dataType_ = 0;
-          onChanged();
-          return this;
-        }
-
-        private java.lang.Object name_ = "";
-        /**
-         * <code>string name = 10;</code>
-         * @return The name.
-         */
-        public java.lang.String getName() {
-          java.lang.Object ref = name_;
-          if (!(ref instanceof java.lang.String)) {
-            com.google.protobuf.ByteString bs =
-                (com.google.protobuf.ByteString) ref;
-            java.lang.String s = bs.toStringUtf8();
-            name_ = s;
-            return s;
-          } else {
-            return (java.lang.String) ref;
-          }
-        }
-        /**
-         * <code>string name = 10;</code>
-         * @return The bytes for name.
-         */
-        public com.google.protobuf.ByteString
-            getNameBytes() {
-          java.lang.Object ref = name_;
-          if (ref instanceof String) {
-            com.google.protobuf.ByteString b = 
-                com.google.protobuf.ByteString.copyFromUtf8(
-                    (java.lang.String) ref);
-            name_ = b;
-            return b;
-          } else {
-            return (com.google.protobuf.ByteString) ref;
-          }
-        }
-        /**
-         * <code>string name = 10;</code>
-         * @param value The name to set.
-         * @return This builder for chaining.
-         */
-        public Builder setName(
-            java.lang.String value) {
-          if (value == null) { throw new NullPointerException(); }
-          name_ = value;
-          bitField0_ |= 0x00000002;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>string name = 10;</code>
-         * @return This builder for chaining.
-         */
-        public Builder clearName() {
-          name_ = getDefaultInstance().getName();
-          bitField0_ = (bitField0_ & ~0x00000002);
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>string name = 10;</code>
-         * @param value The bytes for name to set.
-         * @return This builder for chaining.
-         */
-        public Builder setNameBytes(
-            com.google.protobuf.ByteString value) {
-          if (value == null) { throw new NullPointerException(); }
-          checkByteStringIsUtf8(value);
-          name_ = value;
-          bitField0_ |= 0x00000002;
-          onChanged();
-          return this;
-        }
-
-        private codes.spectrum.svdb.model.v1.ValueOuterClass.Value value_;
-        private com.google.protobuf.SingleFieldBuilder<
-            codes.spectrum.svdb.model.v1.ValueOuterClass.Value, codes.spectrum.svdb.model.v1.ValueOuterClass.Value.Builder, codes.spectrum.svdb.model.v1.ValueOuterClass.ValueOrBuilder> valueBuilder_;
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-         * @return Whether the value field is set.
-         */
-        public boolean hasValue() {
-          return ((bitField0_ & 0x00000004) != 0);
-        }
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-         * @return The value.
-         */
-        public codes.spectrum.svdb.model.v1.ValueOuterClass.Value getValue() {
-          if (valueBuilder_ == null) {
-            return value_ == null ? codes.spectrum.svdb.model.v1.ValueOuterClass.Value.getDefaultInstance() : value_;
-          } else {
-            return valueBuilder_.getMessage();
-          }
-        }
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-         */
-        public Builder setValue(codes.spectrum.svdb.model.v1.ValueOuterClass.Value value) {
-          if (valueBuilder_ == null) {
-            if (value == null) {
-              throw new NullPointerException();
-            }
-            value_ = value;
-          } else {
-            valueBuilder_.setMessage(value);
-          }
-          bitField0_ |= 0x00000004;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-         */
-        public Builder setValue(
-            codes.spectrum.svdb.model.v1.ValueOuterClass.Value.Builder builderForValue) {
-          if (valueBuilder_ == null) {
-            value_ = builderForValue.build();
-          } else {
-            valueBuilder_.setMessage(builderForValue.build());
-          }
-          bitField0_ |= 0x00000004;
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-         */
-        public Builder mergeValue(codes.spectrum.svdb.model.v1.ValueOuterClass.Value value) {
-          if (valueBuilder_ == null) {
-            if (((bitField0_ & 0x00000004) != 0) &&
-              value_ != null &&
-              value_ != codes.spectrum.svdb.model.v1.ValueOuterClass.Value.getDefaultInstance()) {
-              getValueBuilder().mergeFrom(value);
-            } else {
-              value_ = value;
-            }
-          } else {
-            valueBuilder_.mergeFrom(value);
-          }
-          if (value_ != null) {
-            bitField0_ |= 0x00000004;
-            onChanged();
-          }
-          return this;
-        }
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-         */
-        public Builder clearValue() {
-          bitField0_ = (bitField0_ & ~0x00000004);
-          value_ = null;
-          if (valueBuilder_ != null) {
-            valueBuilder_.dispose();
-            valueBuilder_ = null;
-          }
-          onChanged();
-          return this;
-        }
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-         */
-        public codes.spectrum.svdb.model.v1.ValueOuterClass.Value.Builder getValueBuilder() {
-          bitField0_ |= 0x00000004;
-          onChanged();
-          return getValueFieldBuilder().getBuilder();
-        }
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-         */
-        public codes.spectrum.svdb.model.v1.ValueOuterClass.ValueOrBuilder getValueOrBuilder() {
-          if (valueBuilder_ != null) {
-            return valueBuilder_.getMessageOrBuilder();
-          } else {
-            return value_ == null ?
-                codes.spectrum.svdb.model.v1.ValueOuterClass.Value.getDefaultInstance() : value_;
-          }
-        }
-        /**
-         * <code>.codes.spectrum.svdb.model.v1.Value value = 20;</code>
-         */
-        private com.google.protobuf.SingleFieldBuilder<
-            codes.spectrum.svdb.model.v1.ValueOuterClass.Value, codes.spectrum.svdb.model.v1.ValueOuterClass.Value.Builder, codes.spectrum.svdb.model.v1.ValueOuterClass.ValueOrBuilder> 
-            getValueFieldBuilder() {
-          if (valueBuilder_ == null) {
-            valueBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-                codes.spectrum.svdb.model.v1.ValueOuterClass.Value, codes.spectrum.svdb.model.v1.ValueOuterClass.Value.Builder, codes.spectrum.svdb.model.v1.ValueOuterClass.ValueOrBuilder>(
-                    getValue(),
-                    getParentForChildren(),
-                    isClean());
-            value_ = null;
-          }
-          return valueBuilder_;
-        }
-
-        // @@protoc_insertion_point(builder_scope:codes.spectrum.svdb.model.v1.QueryOptions.Arg)
-      }
-
-      // @@protoc_insertion_point(class_scope:codes.spectrum.svdb.model.v1.QueryOptions.Arg)
-      private static final codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg DEFAULT_INSTANCE;
-      static {
-        DEFAULT_INSTANCE = new codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg();
-      }
-
-      public static codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg getDefaultInstance() {
-        return DEFAULT_INSTANCE;
-      }
-
-      private static final com.google.protobuf.Parser<Arg>
-          PARSER = new com.google.protobuf.AbstractParser<Arg>() {
-        @java.lang.Override
-        public Arg parsePartialFrom(
-            com.google.protobuf.CodedInputStream input,
-            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-            throws com.google.protobuf.InvalidProtocolBufferException {
-          Builder builder = newBuilder();
-          try {
-            builder.mergeFrom(input, extensionRegistry);
-          } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-            throw e.setUnfinishedMessage(builder.buildPartial());
-          } catch (com.google.protobuf.UninitializedMessageException e) {
-            throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
-          } catch (java.io.IOException e) {
-            throw new com.google.protobuf.InvalidProtocolBufferException(e)
-                .setUnfinishedMessage(builder.buildPartial());
-          }
-          return builder.buildPartial();
-        }
-      };
-
-      public static com.google.protobuf.Parser<Arg> parser() {
-        return PARSER;
-      }
-
-      @java.lang.Override
-      public com.google.protobuf.Parser<Arg> getParserForType() {
-        return PARSER;
-      }
-
-      @java.lang.Override
-      public codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg getDefaultInstanceForType() {
-        return DEFAULT_INSTANCE;
-      }
-
-    }
-
-    public static final int TEXT_FIELD_NUMBER = 10;
+    public static final int TEXT_FIELD_NUMBER = 1;
     @SuppressWarnings("serial")
     private volatile java.lang.Object text_ = "";
     /**
@@ -1108,7 +177,7 @@ public final class Query {
      * текст запроса в формате SdQL
      * </pre>
      *
-     * <code>string text = 10;</code>
+     * <code>string text = 1;</code>
      * @return The text.
      */
     @java.lang.Override
@@ -1129,7 +198,7 @@ public final class Query {
      * текст запроса в формате SdQL
      * </pre>
      *
-     * <code>string text = 10;</code>
+     * <code>string text = 1;</code>
      * @return The bytes for text.
      */
     @java.lang.Override
@@ -1147,71 +216,106 @@ public final class Query {
       }
     }
 
-    public static final int MODE_FIELD_NUMBER = 20;
-    private int mode_ = 0;
+    public static final int ARGHEADS_FIELD_NUMBER = 2;
+    @SuppressWarnings("serial")
+    private java.util.List<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column> argHeads_;
     /**
      * <pre>
-     * режим выполнения запроса
+     * column описание аргумента
      * </pre>
      *
-     * <code>.codes.spectrum.svdb.model.v1.QueryOptions.Mode mode = 20;</code>
-     * @return The enum numeric value on the wire for mode.
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
      */
-    @java.lang.Override public int getModeValue() {
-      return mode_;
+    @java.lang.Override
+    public java.util.List<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column> getArgHeadsList() {
+      return argHeads_;
     }
     /**
      * <pre>
-     * режим выполнения запроса
+     * column описание аргумента
      * </pre>
      *
-     * <code>.codes.spectrum.svdb.model.v1.QueryOptions.Mode mode = 20;</code>
-     * @return The mode.
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
      */
-    @java.lang.Override public codes.spectrum.svdb.model.v1.Query.QueryOptions.Mode getMode() {
-      codes.spectrum.svdb.model.v1.Query.QueryOptions.Mode result = codes.spectrum.svdb.model.v1.Query.QueryOptions.Mode.forNumber(mode_);
-      return result == null ? codes.spectrum.svdb.model.v1.Query.QueryOptions.Mode.UNRECOGNIZED : result;
+    @java.lang.Override
+    public java.util.List<? extends codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder> 
+        getArgHeadsOrBuilderList() {
+      return argHeads_;
+    }
+    /**
+     * <pre>
+     * column описание аргумента
+     * </pre>
+     *
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
+     */
+    @java.lang.Override
+    public int getArgHeadsCount() {
+      return argHeads_.size();
+    }
+    /**
+     * <pre>
+     * column описание аргумента
+     * </pre>
+     *
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
+     */
+    @java.lang.Override
+    public codes.spectrum.svdb.model.v1.ColumnOuterClass.Column getArgHeads(int index) {
+      return argHeads_.get(index);
+    }
+    /**
+     * <pre>
+     * column описание аргумента
+     * </pre>
+     *
+     * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
+     */
+    @java.lang.Override
+    public codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder getArgHeadsOrBuilder(
+        int index) {
+      return argHeads_.get(index);
     }
 
-    public static final int ARGS_FIELD_NUMBER = 30;
+    public static final int ARGVALUES_FIELD_NUMBER = 3;
     @SuppressWarnings("serial")
-    private java.util.List<codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg> args_;
+    private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.ByteString> argValues_ =
+        emptyList(com.google.protobuf.ByteString.class);
     /**
-     * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+     * <pre>
+     * byteRecord - значение аргумента
+     * </pre>
+     *
+     * <code>repeated bytes argValues = 3;</code>
+     * @return A list containing the argValues.
      */
     @java.lang.Override
-    public java.util.List<codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg> getArgsList() {
-      return args_;
+    public java.util.List<com.google.protobuf.ByteString>
+        getArgValuesList() {
+      return argValues_;
     }
     /**
-     * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+     * <pre>
+     * byteRecord - значение аргумента
+     * </pre>
+     *
+     * <code>repeated bytes argValues = 3;</code>
+     * @return The count of argValues.
      */
-    @java.lang.Override
-    public java.util.List<? extends codes.spectrum.svdb.model.v1.Query.QueryOptions.ArgOrBuilder> 
-        getArgsOrBuilderList() {
-      return args_;
+    public int getArgValuesCount() {
+      return argValues_.size();
     }
     /**
-     * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+     * <pre>
+     * byteRecord - значение аргумента
+     * </pre>
+     *
+     * <code>repeated bytes argValues = 3;</code>
+     * @param index The index of the element to return.
+     * @return The argValues at the given index.
      */
-    @java.lang.Override
-    public int getArgsCount() {
-      return args_.size();
-    }
-    /**
-     * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
-     */
-    @java.lang.Override
-    public codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg getArgs(int index) {
-      return args_.get(index);
-    }
-    /**
-     * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
-     */
-    @java.lang.Override
-    public codes.spectrum.svdb.model.v1.Query.QueryOptions.ArgOrBuilder getArgsOrBuilder(
-        int index) {
-      return args_.get(index);
+    public com.google.protobuf.ByteString getArgValues(int index) {
+      return argValues_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -1229,13 +333,13 @@ public final class Query {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(text_)) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 10, text_);
+        com.google.protobuf.GeneratedMessage.writeString(output, 1, text_);
       }
-      if (mode_ != codes.spectrum.svdb.model.v1.Query.QueryOptions.Mode.ASYNC.getNumber()) {
-        output.writeEnum(20, mode_);
+      for (int i = 0; i < argHeads_.size(); i++) {
+        output.writeMessage(2, argHeads_.get(i));
       }
-      for (int i = 0; i < args_.size(); i++) {
-        output.writeMessage(30, args_.get(i));
+      for (int i = 0; i < argValues_.size(); i++) {
+        output.writeBytes(3, argValues_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -1247,15 +351,20 @@ public final class Query {
 
       size = 0;
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(text_)) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(10, text_);
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(1, text_);
       }
-      if (mode_ != codes.spectrum.svdb.model.v1.Query.QueryOptions.Mode.ASYNC.getNumber()) {
+      for (int i = 0; i < argHeads_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(20, mode_);
+          .computeMessageSize(2, argHeads_.get(i));
       }
-      for (int i = 0; i < args_.size(); i++) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(30, args_.get(i));
+      {
+        int dataSize = 0;
+        for (int i = 0; i < argValues_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeBytesSizeNoTag(argValues_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getArgValuesList().size();
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -1274,9 +383,10 @@ public final class Query {
 
       if (!getText()
           .equals(other.getText())) return false;
-      if (mode_ != other.mode_) return false;
-      if (!getArgsList()
-          .equals(other.getArgsList())) return false;
+      if (!getArgHeadsList()
+          .equals(other.getArgHeadsList())) return false;
+      if (!getArgValuesList()
+          .equals(other.getArgValuesList())) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -1290,11 +400,13 @@ public final class Query {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + TEXT_FIELD_NUMBER;
       hash = (53 * hash) + getText().hashCode();
-      hash = (37 * hash) + MODE_FIELD_NUMBER;
-      hash = (53 * hash) + mode_;
-      if (getArgsCount() > 0) {
-        hash = (37 * hash) + ARGS_FIELD_NUMBER;
-        hash = (53 * hash) + getArgsList().hashCode();
+      if (getArgHeadsCount() > 0) {
+        hash = (37 * hash) + ARGHEADS_FIELD_NUMBER;
+        hash = (53 * hash) + getArgHeadsList().hashCode();
+      }
+      if (getArgValuesCount() > 0) {
+        hash = (37 * hash) + ARGVALUES_FIELD_NUMBER;
+        hash = (53 * hash) + getArgValuesList().hashCode();
       }
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
@@ -1396,10 +508,9 @@ public final class Query {
     /**
      * <pre>
      * клиентский запрос для SVDB
-     * пока это просто обертка над строкой в формате 
+     * обертка над строкой в формате
      * встроенного языка SdQL
-     * NOTE: структура - чтобы не было простых типов в API,
-     * под расширение
+     * с поддержкой дополнительных параметров
      * </pre>
      *
      * Protobuf type {@code codes.spectrum.svdb.model.v1.QueryOptions}
@@ -1436,14 +547,14 @@ public final class Query {
         super.clear();
         bitField0_ = 0;
         text_ = "";
-        mode_ = 0;
-        if (argsBuilder_ == null) {
-          args_ = java.util.Collections.emptyList();
+        if (argHeadsBuilder_ == null) {
+          argHeads_ = java.util.Collections.emptyList();
         } else {
-          args_ = null;
-          argsBuilder_.clear();
+          argHeads_ = null;
+          argHeadsBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000002);
+        argValues_ = emptyList(com.google.protobuf.ByteString.class);
         return this;
       }
 
@@ -1477,14 +588,14 @@ public final class Query {
       }
 
       private void buildPartialRepeatedFields(codes.spectrum.svdb.model.v1.Query.QueryOptions result) {
-        if (argsBuilder_ == null) {
-          if (((bitField0_ & 0x00000004) != 0)) {
-            args_ = java.util.Collections.unmodifiableList(args_);
-            bitField0_ = (bitField0_ & ~0x00000004);
+        if (argHeadsBuilder_ == null) {
+          if (((bitField0_ & 0x00000002) != 0)) {
+            argHeads_ = java.util.Collections.unmodifiableList(argHeads_);
+            bitField0_ = (bitField0_ & ~0x00000002);
           }
-          result.args_ = args_;
+          result.argHeads_ = argHeads_;
         } else {
-          result.args_ = argsBuilder_.build();
+          result.argHeads_ = argHeadsBuilder_.build();
         }
       }
 
@@ -1493,8 +604,9 @@ public final class Query {
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.text_ = text_;
         }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.mode_ = mode_;
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          argValues_.makeImmutable();
+          result.argValues_ = argValues_;
         }
       }
 
@@ -1515,34 +627,42 @@ public final class Query {
           bitField0_ |= 0x00000001;
           onChanged();
         }
-        if (other.mode_ != 0) {
-          setModeValue(other.getModeValue());
-        }
-        if (argsBuilder_ == null) {
-          if (!other.args_.isEmpty()) {
-            if (args_.isEmpty()) {
-              args_ = other.args_;
-              bitField0_ = (bitField0_ & ~0x00000004);
+        if (argHeadsBuilder_ == null) {
+          if (!other.argHeads_.isEmpty()) {
+            if (argHeads_.isEmpty()) {
+              argHeads_ = other.argHeads_;
+              bitField0_ = (bitField0_ & ~0x00000002);
             } else {
-              ensureArgsIsMutable();
-              args_.addAll(other.args_);
+              ensureArgHeadsIsMutable();
+              argHeads_.addAll(other.argHeads_);
             }
             onChanged();
           }
         } else {
-          if (!other.args_.isEmpty()) {
-            if (argsBuilder_.isEmpty()) {
-              argsBuilder_.dispose();
-              argsBuilder_ = null;
-              args_ = other.args_;
-              bitField0_ = (bitField0_ & ~0x00000004);
-              argsBuilder_ = 
+          if (!other.argHeads_.isEmpty()) {
+            if (argHeadsBuilder_.isEmpty()) {
+              argHeadsBuilder_.dispose();
+              argHeadsBuilder_ = null;
+              argHeads_ = other.argHeads_;
+              bitField0_ = (bitField0_ & ~0x00000002);
+              argHeadsBuilder_ = 
                 com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
-                   getArgsFieldBuilder() : null;
+                   getArgHeadsFieldBuilder() : null;
             } else {
-              argsBuilder_.addAllMessages(other.args_);
+              argHeadsBuilder_.addAllMessages(other.argHeads_);
             }
           }
+        }
+        if (!other.argValues_.isEmpty()) {
+          if (argValues_.isEmpty()) {
+            argValues_ = other.argValues_;
+            argValues_.makeImmutable();
+            bitField0_ |= 0x00000004;
+          } else {
+            ensureArgValuesIsMutable();
+            argValues_.addAll(other.argValues_);
+          }
+          onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
@@ -1570,29 +690,30 @@ public final class Query {
               case 0:
                 done = true;
                 break;
-              case 82: {
+              case 10: {
                 text_ = input.readStringRequireUtf8();
                 bitField0_ |= 0x00000001;
                 break;
-              } // case 82
-              case 160: {
-                mode_ = input.readEnum();
-                bitField0_ |= 0x00000002;
-                break;
-              } // case 160
-              case 242: {
-                codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg m =
+              } // case 10
+              case 18: {
+                codes.spectrum.svdb.model.v1.ColumnOuterClass.Column m =
                     input.readMessage(
-                        codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.parser(),
+                        codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.parser(),
                         extensionRegistry);
-                if (argsBuilder_ == null) {
-                  ensureArgsIsMutable();
-                  args_.add(m);
+                if (argHeadsBuilder_ == null) {
+                  ensureArgHeadsIsMutable();
+                  argHeads_.add(m);
                 } else {
-                  argsBuilder_.addMessage(m);
+                  argHeadsBuilder_.addMessage(m);
                 }
                 break;
-              } // case 242
+              } // case 18
+              case 26: {
+                com.google.protobuf.ByteString v = input.readBytes();
+                ensureArgValuesIsMutable();
+                argValues_.add(v);
+                break;
+              } // case 26
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -1616,7 +737,7 @@ public final class Query {
        * текст запроса в формате SdQL
        * </pre>
        *
-       * <code>string text = 10;</code>
+       * <code>string text = 1;</code>
        * @return The text.
        */
       public java.lang.String getText() {
@@ -1636,7 +757,7 @@ public final class Query {
        * текст запроса в формате SdQL
        * </pre>
        *
-       * <code>string text = 10;</code>
+       * <code>string text = 1;</code>
        * @return The bytes for text.
        */
       public com.google.protobuf.ByteString
@@ -1657,7 +778,7 @@ public final class Query {
        * текст запроса в формате SdQL
        * </pre>
        *
-       * <code>string text = 10;</code>
+       * <code>string text = 1;</code>
        * @param value The text to set.
        * @return This builder for chaining.
        */
@@ -1674,7 +795,7 @@ public final class Query {
        * текст запроса в формате SdQL
        * </pre>
        *
-       * <code>string text = 10;</code>
+       * <code>string text = 1;</code>
        * @return This builder for chaining.
        */
       public Builder clearText() {
@@ -1688,7 +809,7 @@ public final class Query {
        * текст запроса в формате SdQL
        * </pre>
        *
-       * <code>string text = 10;</code>
+       * <code>string text = 1;</code>
        * @param value The bytes for text to set.
        * @return This builder for chaining.
        */
@@ -1702,317 +823,428 @@ public final class Query {
         return this;
       }
 
-      private int mode_ = 0;
-      /**
-       * <pre>
-       * режим выполнения запроса
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.QueryOptions.Mode mode = 20;</code>
-       * @return The enum numeric value on the wire for mode.
-       */
-      @java.lang.Override public int getModeValue() {
-        return mode_;
-      }
-      /**
-       * <pre>
-       * режим выполнения запроса
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.QueryOptions.Mode mode = 20;</code>
-       * @param value The enum numeric value on the wire for mode to set.
-       * @return This builder for chaining.
-       */
-      public Builder setModeValue(int value) {
-        mode_ = value;
-        bitField0_ |= 0x00000002;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * режим выполнения запроса
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.QueryOptions.Mode mode = 20;</code>
-       * @return The mode.
-       */
-      @java.lang.Override
-      public codes.spectrum.svdb.model.v1.Query.QueryOptions.Mode getMode() {
-        codes.spectrum.svdb.model.v1.Query.QueryOptions.Mode result = codes.spectrum.svdb.model.v1.Query.QueryOptions.Mode.forNumber(mode_);
-        return result == null ? codes.spectrum.svdb.model.v1.Query.QueryOptions.Mode.UNRECOGNIZED : result;
-      }
-      /**
-       * <pre>
-       * режим выполнения запроса
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.QueryOptions.Mode mode = 20;</code>
-       * @param value The mode to set.
-       * @return This builder for chaining.
-       */
-      public Builder setMode(codes.spectrum.svdb.model.v1.Query.QueryOptions.Mode value) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        bitField0_ |= 0x00000002;
-        mode_ = value.getNumber();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * режим выполнения запроса
-       * </pre>
-       *
-       * <code>.codes.spectrum.svdb.model.v1.QueryOptions.Mode mode = 20;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearMode() {
-        bitField0_ = (bitField0_ & ~0x00000002);
-        mode_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private java.util.List<codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg> args_ =
+      private java.util.List<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column> argHeads_ =
         java.util.Collections.emptyList();
-      private void ensureArgsIsMutable() {
-        if (!((bitField0_ & 0x00000004) != 0)) {
-          args_ = new java.util.ArrayList<codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg>(args_);
-          bitField0_ |= 0x00000004;
+      private void ensureArgHeadsIsMutable() {
+        if (!((bitField0_ & 0x00000002) != 0)) {
+          argHeads_ = new java.util.ArrayList<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column>(argHeads_);
+          bitField0_ |= 0x00000002;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilder<
-          codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg, codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.Builder, codes.spectrum.svdb.model.v1.Query.QueryOptions.ArgOrBuilder> argsBuilder_;
+          codes.spectrum.svdb.model.v1.ColumnOuterClass.Column, codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder, codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder> argHeadsBuilder_;
 
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public java.util.List<codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg> getArgsList() {
-        if (argsBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(args_);
+      public java.util.List<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column> getArgHeadsList() {
+        if (argHeadsBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(argHeads_);
         } else {
-          return argsBuilder_.getMessageList();
+          return argHeadsBuilder_.getMessageList();
         }
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public int getArgsCount() {
-        if (argsBuilder_ == null) {
-          return args_.size();
+      public int getArgHeadsCount() {
+        if (argHeadsBuilder_ == null) {
+          return argHeads_.size();
         } else {
-          return argsBuilder_.getCount();
+          return argHeadsBuilder_.getCount();
         }
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg getArgs(int index) {
-        if (argsBuilder_ == null) {
-          return args_.get(index);
+      public codes.spectrum.svdb.model.v1.ColumnOuterClass.Column getArgHeads(int index) {
+        if (argHeadsBuilder_ == null) {
+          return argHeads_.get(index);
         } else {
-          return argsBuilder_.getMessage(index);
+          return argHeadsBuilder_.getMessage(index);
         }
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public Builder setArgs(
-          int index, codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg value) {
-        if (argsBuilder_ == null) {
+      public Builder setArgHeads(
+          int index, codes.spectrum.svdb.model.v1.ColumnOuterClass.Column value) {
+        if (argHeadsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureArgsIsMutable();
-          args_.set(index, value);
+          ensureArgHeadsIsMutable();
+          argHeads_.set(index, value);
           onChanged();
         } else {
-          argsBuilder_.setMessage(index, value);
+          argHeadsBuilder_.setMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public Builder setArgs(
-          int index, codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.Builder builderForValue) {
-        if (argsBuilder_ == null) {
-          ensureArgsIsMutable();
-          args_.set(index, builderForValue.build());
+      public Builder setArgHeads(
+          int index, codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder builderForValue) {
+        if (argHeadsBuilder_ == null) {
+          ensureArgHeadsIsMutable();
+          argHeads_.set(index, builderForValue.build());
           onChanged();
         } else {
-          argsBuilder_.setMessage(index, builderForValue.build());
+          argHeadsBuilder_.setMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public Builder addArgs(codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg value) {
-        if (argsBuilder_ == null) {
+      public Builder addArgHeads(codes.spectrum.svdb.model.v1.ColumnOuterClass.Column value) {
+        if (argHeadsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureArgsIsMutable();
-          args_.add(value);
+          ensureArgHeadsIsMutable();
+          argHeads_.add(value);
           onChanged();
         } else {
-          argsBuilder_.addMessage(value);
+          argHeadsBuilder_.addMessage(value);
         }
         return this;
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public Builder addArgs(
-          int index, codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg value) {
-        if (argsBuilder_ == null) {
+      public Builder addArgHeads(
+          int index, codes.spectrum.svdb.model.v1.ColumnOuterClass.Column value) {
+        if (argHeadsBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
           }
-          ensureArgsIsMutable();
-          args_.add(index, value);
+          ensureArgHeadsIsMutable();
+          argHeads_.add(index, value);
           onChanged();
         } else {
-          argsBuilder_.addMessage(index, value);
+          argHeadsBuilder_.addMessage(index, value);
         }
         return this;
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public Builder addArgs(
-          codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.Builder builderForValue) {
-        if (argsBuilder_ == null) {
-          ensureArgsIsMutable();
-          args_.add(builderForValue.build());
+      public Builder addArgHeads(
+          codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder builderForValue) {
+        if (argHeadsBuilder_ == null) {
+          ensureArgHeadsIsMutable();
+          argHeads_.add(builderForValue.build());
           onChanged();
         } else {
-          argsBuilder_.addMessage(builderForValue.build());
+          argHeadsBuilder_.addMessage(builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public Builder addArgs(
-          int index, codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.Builder builderForValue) {
-        if (argsBuilder_ == null) {
-          ensureArgsIsMutable();
-          args_.add(index, builderForValue.build());
+      public Builder addArgHeads(
+          int index, codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder builderForValue) {
+        if (argHeadsBuilder_ == null) {
+          ensureArgHeadsIsMutable();
+          argHeads_.add(index, builderForValue.build());
           onChanged();
         } else {
-          argsBuilder_.addMessage(index, builderForValue.build());
+          argHeadsBuilder_.addMessage(index, builderForValue.build());
         }
         return this;
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public Builder addAllArgs(
-          java.lang.Iterable<? extends codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg> values) {
-        if (argsBuilder_ == null) {
-          ensureArgsIsMutable();
+      public Builder addAllArgHeads(
+          java.lang.Iterable<? extends codes.spectrum.svdb.model.v1.ColumnOuterClass.Column> values) {
+        if (argHeadsBuilder_ == null) {
+          ensureArgHeadsIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, args_);
+              values, argHeads_);
           onChanged();
         } else {
-          argsBuilder_.addAllMessages(values);
+          argHeadsBuilder_.addAllMessages(values);
         }
         return this;
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public Builder clearArgs() {
-        if (argsBuilder_ == null) {
-          args_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000004);
+      public Builder clearArgHeads() {
+        if (argHeadsBuilder_ == null) {
+          argHeads_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000002);
           onChanged();
         } else {
-          argsBuilder_.clear();
+          argHeadsBuilder_.clear();
         }
         return this;
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public Builder removeArgs(int index) {
-        if (argsBuilder_ == null) {
-          ensureArgsIsMutable();
-          args_.remove(index);
+      public Builder removeArgHeads(int index) {
+        if (argHeadsBuilder_ == null) {
+          ensureArgHeadsIsMutable();
+          argHeads_.remove(index);
           onChanged();
         } else {
-          argsBuilder_.remove(index);
+          argHeadsBuilder_.remove(index);
         }
         return this;
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.Builder getArgsBuilder(
+      public codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder getArgHeadsBuilder(
           int index) {
-        return getArgsFieldBuilder().getBuilder(index);
+        return getArgHeadsFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public codes.spectrum.svdb.model.v1.Query.QueryOptions.ArgOrBuilder getArgsOrBuilder(
+      public codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder getArgHeadsOrBuilder(
           int index) {
-        if (argsBuilder_ == null) {
-          return args_.get(index);  } else {
-          return argsBuilder_.getMessageOrBuilder(index);
+        if (argHeadsBuilder_ == null) {
+          return argHeads_.get(index);  } else {
+          return argHeadsBuilder_.getMessageOrBuilder(index);
         }
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public java.util.List<? extends codes.spectrum.svdb.model.v1.Query.QueryOptions.ArgOrBuilder> 
-           getArgsOrBuilderList() {
-        if (argsBuilder_ != null) {
-          return argsBuilder_.getMessageOrBuilderList();
+      public java.util.List<? extends codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder> 
+           getArgHeadsOrBuilderList() {
+        if (argHeadsBuilder_ != null) {
+          return argHeadsBuilder_.getMessageOrBuilderList();
         } else {
-          return java.util.Collections.unmodifiableList(args_);
+          return java.util.Collections.unmodifiableList(argHeads_);
         }
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.Builder addArgsBuilder() {
-        return getArgsFieldBuilder().addBuilder(
-            codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.getDefaultInstance());
+      public codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder addArgHeadsBuilder() {
+        return getArgHeadsFieldBuilder().addBuilder(
+            codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.getDefaultInstance());
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.Builder addArgsBuilder(
+      public codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder addArgHeadsBuilder(
           int index) {
-        return getArgsFieldBuilder().addBuilder(
-            index, codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.getDefaultInstance());
+        return getArgHeadsFieldBuilder().addBuilder(
+            index, codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.getDefaultInstance());
       }
       /**
-       * <code>repeated .codes.spectrum.svdb.model.v1.QueryOptions.Arg args = 30;</code>
+       * <pre>
+       * column описание аргумента
+       * </pre>
+       *
+       * <code>repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;</code>
        */
-      public java.util.List<codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.Builder> 
-           getArgsBuilderList() {
-        return getArgsFieldBuilder().getBuilderList();
+      public java.util.List<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder> 
+           getArgHeadsBuilderList() {
+        return getArgHeadsFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilder<
-          codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg, codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.Builder, codes.spectrum.svdb.model.v1.Query.QueryOptions.ArgOrBuilder> 
-          getArgsFieldBuilder() {
-        if (argsBuilder_ == null) {
-          argsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
-              codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg, codes.spectrum.svdb.model.v1.Query.QueryOptions.Arg.Builder, codes.spectrum.svdb.model.v1.Query.QueryOptions.ArgOrBuilder>(
-                  args_,
-                  ((bitField0_ & 0x00000004) != 0),
+          codes.spectrum.svdb.model.v1.ColumnOuterClass.Column, codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder, codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder> 
+          getArgHeadsFieldBuilder() {
+        if (argHeadsBuilder_ == null) {
+          argHeadsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              codes.spectrum.svdb.model.v1.ColumnOuterClass.Column, codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder, codes.spectrum.svdb.model.v1.ColumnOuterClass.ColumnOrBuilder>(
+                  argHeads_,
+                  ((bitField0_ & 0x00000002) != 0),
                   getParentForChildren(),
                   isClean());
-          args_ = null;
+          argHeads_ = null;
         }
-        return argsBuilder_;
+        return argHeadsBuilder_;
+      }
+
+      private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.ByteString> argValues_ = emptyList(com.google.protobuf.ByteString.class);
+      private void ensureArgValuesIsMutable() {
+        if (!argValues_.isModifiable()) {
+          argValues_ = makeMutableCopy(argValues_);
+        }
+        bitField0_ |= 0x00000004;
+      }
+      /**
+       * <pre>
+       * byteRecord - значение аргумента
+       * </pre>
+       *
+       * <code>repeated bytes argValues = 3;</code>
+       * @return A list containing the argValues.
+       */
+      public java.util.List<com.google.protobuf.ByteString>
+          getArgValuesList() {
+        argValues_.makeImmutable();
+        return argValues_;
+      }
+      /**
+       * <pre>
+       * byteRecord - значение аргумента
+       * </pre>
+       *
+       * <code>repeated bytes argValues = 3;</code>
+       * @return The count of argValues.
+       */
+      public int getArgValuesCount() {
+        return argValues_.size();
+      }
+      /**
+       * <pre>
+       * byteRecord - значение аргумента
+       * </pre>
+       *
+       * <code>repeated bytes argValues = 3;</code>
+       * @param index The index of the element to return.
+       * @return The argValues at the given index.
+       */
+      public com.google.protobuf.ByteString getArgValues(int index) {
+        return argValues_.get(index);
+      }
+      /**
+       * <pre>
+       * byteRecord - значение аргумента
+       * </pre>
+       *
+       * <code>repeated bytes argValues = 3;</code>
+       * @param index The index to set the value at.
+       * @param value The argValues to set.
+       * @return This builder for chaining.
+       */
+      public Builder setArgValues(
+          int index, com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        ensureArgValuesIsMutable();
+        argValues_.set(index, value);
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * byteRecord - значение аргумента
+       * </pre>
+       *
+       * <code>repeated bytes argValues = 3;</code>
+       * @param value The argValues to add.
+       * @return This builder for chaining.
+       */
+      public Builder addArgValues(com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        ensureArgValuesIsMutable();
+        argValues_.add(value);
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * byteRecord - значение аргумента
+       * </pre>
+       *
+       * <code>repeated bytes argValues = 3;</code>
+       * @param values The argValues to add.
+       * @return This builder for chaining.
+       */
+      public Builder addAllArgValues(
+          java.lang.Iterable<? extends com.google.protobuf.ByteString> values) {
+        ensureArgValuesIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, argValues_);
+        bitField0_ |= 0x00000004;
+        onChanged();
+        return this;
+      }
+      /**
+       * <pre>
+       * byteRecord - значение аргумента
+       * </pre>
+       *
+       * <code>repeated bytes argValues = 3;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearArgValues() {
+        argValues_ = emptyList(com.google.protobuf.ByteString.class);
+        bitField0_ = (bitField0_ & ~0x00000004);
+        onChanged();
+        return this;
       }
 
       // @@protoc_insertion_point(builder_scope:codes.spectrum.svdb.model.v1.QueryOptions)
@@ -2071,11 +1303,6 @@ public final class Query {
   private static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_codes_spectrum_svdb_model_v1_QueryOptions_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_codes_spectrum_svdb_model_v1_QueryOptions_Arg_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_codes_spectrum_svdb_model_v1_QueryOptions_Arg_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2086,22 +1313,15 @@ public final class Query {
   static {
     java.lang.String[] descriptorData = {
       "\n\016v1/query.proto\022\034codes.spectrum.svdb.mo" +
-      "del.v1\032\016v1/value.proto\032\017v1/column.proto\"" +
-      "\300\002\n\014QueryOptions\022\014\n\004text\030\n \001(\t\022=\n\004mode\030\024" +
-      " \001(\0162/.codes.spectrum.svdb.model.v1.Quer" +
-      "yOptions.Mode\022<\n\004args\030\036 \003(\0132..codes.spec" +
-      "trum.svdb.model.v1.QueryOptions.Arg\032\201\001\n\003" +
-      "Arg\0228\n\010dataType\030\005 \001(\0162&.codes.spectrum.s" +
-      "vdb.model.v1.DataType\022\014\n\004name\030\n \001(\t\0222\n\005v" +
-      "alue\030\024 \001(\0132#.codes.spectrum.svdb.model.v" +
-      "1.Value\"\033\n\004Mode\022\t\n\005ASYNC\020\000\022\010\n\004SYNC\020\nJ\004\010\001" +
-      "\020\nB/Z-gitlab.spectrumdata.tech/sd3/svdb/" +
-      "go/model/v1b\006proto3"
+      "del.v1\032\017v1/column.proto\"g\n\014QueryOptions\022" +
+      "\014\n\004text\030\001 \001(\t\0226\n\010argHeads\030\002 \003(\0132$.codes." +
+      "spectrum.svdb.model.v1.Column\022\021\n\targValu" +
+      "es\030\003 \003(\014B/Z-gitlab.spectrumdata.tech/sd3" +
+      "/svdb/go/model/v1b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          codes.spectrum.svdb.model.v1.ValueOuterClass.getDescriptor(),
           codes.spectrum.svdb.model.v1.ColumnOuterClass.getDescriptor(),
         });
     internal_static_codes_spectrum_svdb_model_v1_QueryOptions_descriptor =
@@ -2109,15 +1329,8 @@ public final class Query {
     internal_static_codes_spectrum_svdb_model_v1_QueryOptions_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_codes_spectrum_svdb_model_v1_QueryOptions_descriptor,
-        new java.lang.String[] { "Text", "Mode", "Args", });
-    internal_static_codes_spectrum_svdb_model_v1_QueryOptions_Arg_descriptor =
-      internal_static_codes_spectrum_svdb_model_v1_QueryOptions_descriptor.getNestedTypes().get(0);
-    internal_static_codes_spectrum_svdb_model_v1_QueryOptions_Arg_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_codes_spectrum_svdb_model_v1_QueryOptions_Arg_descriptor,
-        new java.lang.String[] { "DataType", "Name", "Value", });
+        new java.lang.String[] { "Text", "ArgHeads", "ArgValues", });
     descriptor.resolveAllFeaturesImmutable();
-    codes.spectrum.svdb.model.v1.ValueOuterClass.getDescriptor();
     codes.spectrum.svdb.model.v1.ColumnOuterClass.getDescriptor();
   }
 

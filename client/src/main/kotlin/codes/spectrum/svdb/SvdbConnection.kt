@@ -1,6 +1,8 @@
 package codes.spectrum.svdb
 
-import codes.spectrum.commons.ExceptionGroup
+import codes.spectrum.*
+import codes.spectrum.commons.*
+import codes.spectrum.svdb.jdbc.unmarshalByteField
 import codes.spectrum.svdb.model.v1.*
 import io.grpc.ManagedChannel
 import kotlinx.coroutines.TimeoutCancellationException
@@ -109,10 +111,34 @@ class SvdbConnection(
         return result
     }
 
+    data class AnnotatedRecord  (
+            val columns : List<ColumnOuterClass.Column>,
+            val row : RecordOuterClass.Record,
+    ) {
+        fun at(colIndex : Int) : Any? {
+            val value = row.getFields(colIndex)
+            val item = value
+            val type = this.columns[colIndex].dataType
+            return unmarshalByteField(item, type)
+        }
+
+        inline fun <reified T:Any> atOf(colIndex : Int) : T {
+            return Effective.cast(at(colIndex))
+        }
+
+        fun toStringMap() : Map<String, String> {
+            val result = mutableMapOf<String,String>()
+            columns.forEachIndexed { index, column ->
+                result[column.code] = unmarshalByteField(row.getFields(index), column.dataType)?.toString() ?: ""
+            }
+            return result
+        }
+    }
+
     suspend fun executeList(
         queryText: String,
         params: Map<String, Any> = mapOf(),
-    ): List<RecordOuterClass.Record> {
+    ): List<AnnotatedRecord> {
         return try {
             val startTime = Instant.now()
             if (timeout > 0) {
@@ -131,7 +157,7 @@ class SvdbConnection(
         queryText: String,
         params: Map<String, Any> = mapOf(),
         startTime: Instant,
-    ): List<RecordOuterClass.Record> {
+    ): List<AnnotatedRecord> {
         // если получили 502 Bad Gateway или RST_STREAM closed stream,
         // то уходим на политику ретрая через 0, 100 мс, 300 мс, 1 с, 3 с, 10 с
         lateinit var lastError: Throwable
@@ -161,7 +187,7 @@ class SvdbConnection(
         queryText: String,
         params: Map<String, Any>,
         startTime: Instant,
-    ): List<RecordOuterClass.Record> {
+    ): List<AnnotatedRecord> {
         val cursorResult = runCatching {
             val cursor = startNewCursor(startTime)
             cursor.executeQuery(queryText, params)
@@ -170,15 +196,22 @@ class SvdbConnection(
         if (cursorResult.isFailure) {
             throw cursorResult.exceptionOrNull()!!
         }
-        val data = mutableListOf<RecordOuterClass.Record>()
+        val data = mutableListOf<AnnotatedRecord>()
         val cursor = cursorResult.getOrThrow()
+        val columns = mutableListOf<ColumnOuterClass.Column>()
         while (true) {
             val fetchResult = cursor.fetch()
-            if (fetchResult.state.type == "ERROR") {
+            if (fetchResult.state.type == SvdbStateTypes.ERROR.stringValue) {
                 error("${fetchResult.state.code} ${fetchResult.state.message}")
             }
-            data.addAll(fetchResult.recordsList)
-            if (fetchResult.recordsList.size == 0 || fetchResult.state.type == "EOF") {
+            if (columns.isEmpty() && fetchResult.columnsList.isNotEmpty()) {
+                columns.addAll(fetchResult.columnsList)
+            }
+            data.addAll(fetchResult.recordsList.map {
+                AnnotatedRecord(columns, it)
+            })
+            // могут быть пустые фетчи
+            if (fetchResult.state.type == SvdbStateTypes.EOF.stringValue) {
                 break
             }
         }

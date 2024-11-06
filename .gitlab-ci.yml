@@ -6,7 +6,7 @@
   if: $CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH == "dev"
 
 variables:
-  KT_IMAGE: ${BUILD_IMAGE}
+  KT_IMAGE: ${BUILD_IMAGE_V2}
   DOCKER_DRIVER: overlay2
   DOCKER_HOST: tcp://docker:2376
   DOCKER_TLS_VERIFY: 1

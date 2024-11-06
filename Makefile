@@ -1,4 +1,4 @@
-.PHONY: help
+.PHONY: help test
 
 PROTO_PATH = proto
 PROTO_SRC = $(PROTO_PATH)/**/*.proto
@@ -12,8 +12,7 @@ help: ## This help.
 	@printf "\033[33m%s:\033[0m\n" 'Available commands'
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-test: get-binary ## выполняет все тесты
-	@printf "\n\e[30;42m %s \033[0m\n\n" 'Start tests'
+test: ## выполняет все тесты
 	@./gradlew test
 
 publish: ## публикация

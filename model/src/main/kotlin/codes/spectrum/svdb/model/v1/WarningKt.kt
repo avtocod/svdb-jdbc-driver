@@ -33,7 +33,7 @@ public object WarningKt {
      * код ошибки SQL
      * ```
      *
-     * `int32 code = 10;`
+     * `int32 code = 1;`
      */
     public var code: kotlin.Int
       @JvmName("getCode")
@@ -47,7 +47,7 @@ public object WarningKt {
      * код ошибки SQL
      * ```
      *
-     * `int32 code = 10;`
+     * `int32 code = 1;`
      */
     public fun clearCode() {
       _builder.clearCode()
@@ -58,7 +58,7 @@ public object WarningKt {
      * SQLState
      * ```
      *
-     * `string state = 15;`
+     * `string state = 2;`
      */
     public var state: kotlin.String
       @JvmName("getState")
@@ -72,7 +72,7 @@ public object WarningKt {
      * SQLState
      * ```
      *
-     * `string state = 15;`
+     * `string state = 2;`
      */
     public fun clearState() {
       _builder.clearState()
@@ -83,7 +83,7 @@ public object WarningKt {
      * сообщение
      * ```
      *
-     * `string reason = 20;`
+     * `string reason = 3;`
      */
     public var reason: kotlin.String
       @JvmName("getReason")
@@ -97,7 +97,7 @@ public object WarningKt {
      * сообщение
      * ```
      *
-     * `string reason = 20;`
+     * `string reason = 3;`
      */
     public fun clearReason() {
       _builder.clearReason()

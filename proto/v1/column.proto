@@ -5,7 +5,7 @@ option go_package = "gitlab.spectrumdata.tech/sd3/svdb/go/model/v1";
 
 enum DataType {
   // ZERO
-  AUTO = 0;
+  UNDEFINED = 0;
 
   // ПЕРВИЧНЫЕ ТИПЫ
   STRING = 0x01;
@@ -14,15 +14,17 @@ enum DataType {
   FLOAT = 0x8;
   DECIMAL = 0x10;
   TIMESTAMP = 0x20;
-  // DATE не используется
-  // будет DEPRECATED в версии 2.0
   DATE = 0x40;
   DURATION = 0x80;
+
   ARRAY = 0xF0;
   OBJECT = 0x100;
+
+  // не "не типизированное значение" а значение в которое префиксом вшит еще тип
+  ANY = 0x1000;
 };
 
-// метаданные
+// Определение поля
 message Column {
   // код поля
   string code = 1;
@@ -30,12 +32,6 @@ message Column {
   // тип данных
   DataType dataType = 2;
 
-  // в текущей реализации НЕ используется.
-  // в дальнейшем можно будет использовать
-  // для типизированных массивов, сохраняя
-  // в dataType тип элементов массива
-  bool isArray = 3;
-
   // опции
-  map<string, string> options = 4;
+  map<string, string> options = 3;
 }

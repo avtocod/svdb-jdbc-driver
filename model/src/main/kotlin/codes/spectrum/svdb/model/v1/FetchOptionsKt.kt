@@ -38,10 +38,35 @@ public object FetchOptionsKt {
 
     /**
      * ```
+     * uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
+     * ```
+     *
+     * `string cursorUid = 1;`
+     */
+    public var cursorUid: kotlin.String
+      @JvmName("getCursorUid")
+      get() = _builder.getCursorUid()
+      @JvmName("setCursorUid")
+      set(value) {
+        _builder.setCursorUid(value)
+      }
+    /**
+     * ```
+     * uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
+     * ```
+     *
+     * `string cursorUid = 1;`
+     */
+    public fun clearCursorUid() {
+      _builder.clearCursorUid()
+    }
+
+    /**
+     * ```
      * режим выполнения запроса
      * ```
      *
-     * `.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 10;`
+     * `.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 2;`
      */
     public var mode: codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode
       @JvmName("getMode")
@@ -62,35 +87,10 @@ public object FetchOptionsKt {
      * режим выполнения запроса
      * ```
      *
-     * `.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 10;`
+     * `.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 2;`
      */
     public fun clearMode() {
       _builder.clearMode()
-    }
-
-    /**
-     * ```
-     * uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
-     * ```
-     *
-     * `string cursorUid = 20;`
-     */
-    public var cursorUid: kotlin.String
-      @JvmName("getCursorUid")
-      get() = _builder.getCursorUid()
-      @JvmName("setCursorUid")
-      set(value) {
-        _builder.setCursorUid(value)
-      }
-    /**
-     * ```
-     * uid курсора, который нужно фетчить. если пусто, то фетчится последний курсор
-     * ```
-     *
-     * `string cursorUid = 20;`
-     */
-    public fun clearCursorUid() {
-      _builder.clearCursorUid()
     }
   }
 }

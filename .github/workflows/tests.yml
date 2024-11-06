@@ -2,15 +2,15 @@ name: tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, dev ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, dev ]
 
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
     container:
-      image: avtocod/svdb-jdbc-test:0.0.2
+      image: avtocod/svdb-jdbc-test:0.0.3
       options: --user root
       volumes:
         - /opt:/test_instance

@@ -1,6 +1,5 @@
 package codes.spectrum.svdb.jdbc
 
-import codes.spectrum.svdb.*
 import codes.spectrum.withSvdbServer
 import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.throwables.shouldNotThrowAny
@@ -27,7 +26,7 @@ class SvdbDriverTest : FunSpec() {
 
                 context("query with statement") {
                     test("Проверяем количество") {
-                        val query = "select * from demo.inns $SDQL_DRIVER_PROTOCOL_V1"
+                        val query = "select * from demo.inns"
                         getConnection(driver).use { connection ->
                             connection.createStatement().use { statement ->
                                 statement.executeQuery(query).use {
@@ -42,7 +41,7 @@ class SvdbDriverTest : FunSpec() {
                     }
 
                     test("Проверяем получение данных первую колонку по индексу") {
-                        val query = "select * from demo.inns $SDQL_DRIVER_PROTOCOL_V1"
+                        val query = "select * from demo.inns"
                         getConnection(driver).use { connection ->
                             connection.createStatement().use { statement ->
                                 statement.executeQuery(query).use {
@@ -66,7 +65,7 @@ class SvdbDriverTest : FunSpec() {
                     }
 
                     test("Проверяем получение данных первую колонку по лейблу") {
-                        val query = "select * from demo.inns $SDQL_DRIVER_PROTOCOL_V1"
+                        val query = "select * from demo.inns"
                         getConnection(driver).use { connection ->
                             connection.createStatement().use { statement ->
                                 statement.executeQuery(query).use {
@@ -90,7 +89,7 @@ class SvdbDriverTest : FunSpec() {
                     }
 
                     test("Проверяем метаданные для resultSet") {
-                        val query = "select * from demo.inns $SDQL_DRIVER_PROTOCOL_V1"
+                        val query = "select * from demo.inns"
                         getConnection(driver).use { connection ->
                             connection.createStatement().use { statement ->
                                 statement.executeQuery(query).use { resultSet ->
@@ -111,7 +110,7 @@ class SvdbDriverTest : FunSpec() {
                     }
 
                     test("Проверяем булевы колонки") {
-                        val query = "SELECT is_null FROM sys.fields WHERE field_name = '_raw' $SDQL_DRIVER_PROTOCOL_V1;"
+                        val query = "SELECT is_null FROM sys.fields WHERE field_name = '_raw';"
                         getConnection(driver).use { connection ->
                             connection.createStatement().use { statement ->
                                 val resultSet =
@@ -124,7 +123,7 @@ class SvdbDriverTest : FunSpec() {
                     }
 
                     test("Проверяем получение массива") {
-                        val query = "SELECT * from sys.sessions with explicit_fields $SDQL_DRIVER_PROTOCOL_V1;"
+                        val query = "SELECT * from sys.sessions with explicit_fields;"
                         getConnection(driver).use { connection ->
                             connection.createStatement().use { statement ->
                                 val resultSet =
@@ -137,7 +136,7 @@ class SvdbDriverTest : FunSpec() {
                     }
 
                     test("Проверяем преобразование типов с decimal") {
-                        val query = "select decimal(2.14), decimal(-2.14), 2.14 $SDQL_DRIVER_PROTOCOL_V1;"
+                        val query = "select decimal(2.14), decimal(-2.14), 2.14;"
                         getConnection(driver).use { connection ->
                             connection.createStatement().use { statement ->
                                 val resultSet = statement.executeQuery(query)
@@ -165,7 +164,7 @@ class SvdbDriverTest : FunSpec() {
                     }
 
                     test("Проверяем математическое выражение") {
-                        val query = "select 1 + 1 $SDQL_DRIVER_PROTOCOL_V1;"
+                        val query = "select 1 + 1;"
                         getConnection(driver).use { connection ->
                             connection.createStatement().use { statement ->
                                 val resultSet = statement.executeQuery(query)
@@ -176,7 +175,7 @@ class SvdbDriverTest : FunSpec() {
                     }
 
                     test("Проверяем математическое выражение с int и double") {
-                        val query = "select 4 + 3.5 $SDQL_DRIVER_PROTOCOL_V1;"
+                        val query = "select 4 + 3.5;"
                         getConnection(driver).use { connection ->
                             connection.createStatement().use { statement ->
                                 val resultSet = statement.executeQuery(query)
@@ -189,7 +188,7 @@ class SvdbDriverTest : FunSpec() {
 
                 context("Prepared Query") {
                     test("Проверяем запрос без параметров") {
-                        val query = "select * from demo.inns $SDQL_DRIVER_PROTOCOL_V1;"
+                        val query = "select * from demo.inns;"
                         getConnection(driver).use { connection ->
                             connection.prepareStatement(query).use { preparedStatement ->
                                 val resultSet = preparedStatement.executeQuery()
@@ -203,7 +202,7 @@ class SvdbDriverTest : FunSpec() {
                     test("Проверяем запрос c параметром") {
                         getConnection(driver).use { connection ->
                             val literal = "kkk"
-                            connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1")
                                 .use { preparedStatement ->
                                     preparedStatement.setString(1, literal)
                                     val resultSet = preparedStatement.executeQuery()
@@ -217,7 +216,7 @@ class SvdbDriverTest : FunSpec() {
                         getConnection(driver).use { connection ->
                             val first = 2
                             val second = 8
-                            connection.prepareStatement("select \$1 + \$2 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1 + \$2")
                                 .use { preparedStatement ->
                                     preparedStatement.setInt(1, first)
                                     preparedStatement.setInt(2, second)
@@ -232,7 +231,7 @@ class SvdbDriverTest : FunSpec() {
                         getConnection(driver).use { connection ->
                             val first = 2
                             val second = 8
-                            connection.prepareStatement("select \$1, \$2 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1, \$2")
                                 .use { preparedStatement ->
                                     preparedStatement.setInt(2, second)
                                     preparedStatement.setInt(1, first)
@@ -248,7 +247,7 @@ class SvdbDriverTest : FunSpec() {
                         getConnection(driver).use { connection ->
                             val first = 2
                             val second = 8
-                            connection.prepareStatement("select \$1 + \$2 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1 + \$2")
                                 .use { preparedStatement ->
                                     preparedStatement.setInt(1, first)
                                     preparedStatement.setInt(2, second)
@@ -264,7 +263,7 @@ class SvdbDriverTest : FunSpec() {
                     test("Проверяем запрос c параметром int") {
                         getConnection(driver).use { connection ->
                             val literal = 8
-                            connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1")
                                 .use { preparedStatement ->
                                     preparedStatement.setInt(1, literal)
                                     val resultSet = preparedStatement.executeQuery()
@@ -277,7 +276,7 @@ class SvdbDriverTest : FunSpec() {
                     test("Проверяем запрос c параметром bool") {
                         getConnection(driver).use { connection ->
                             val literal = true
-                            connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1")
                                 .use { preparedStatement ->
                                     preparedStatement.setBoolean(1, literal)
                                     val resultSet = preparedStatement.executeQuery()
@@ -290,7 +289,7 @@ class SvdbDriverTest : FunSpec() {
                     test("Проверяем запрос c параметром BigDecimal") {
                         getConnection(driver).use { connection ->
                             val literal = BigDecimal(12.001)
-                            connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1")
                                 .use { preparedStatement ->
                                     preparedStatement.setBigDecimal(1, literal)
                                     val resultSet = preparedStatement.executeQuery()
@@ -303,22 +302,9 @@ class SvdbDriverTest : FunSpec() {
                     test("Проверяем запрос c параметром LocalDate") {
                         getConnection(driver).use { connection ->
                             val localDate = LocalDate.of(2022, 4, 1)
-                            connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1")
                                 .use { preparedStatement ->
                                     preparedStatement.setDate(1, java.sql.Date.valueOf(localDate))
-                                    val resultSet = preparedStatement.executeQuery()
-                                    resultSet.next()
-                                    resultSet.getDate(1).toLocalDate() shouldBe localDate
-                                }
-                        }
-                    }
-
-                    test("Проверяем запрос c параметром LocalDate с передачей как object") {
-                        getConnection(driver).use { connection ->
-                            val localDate = LocalDate.of(2022, 4, 1)
-                            connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
-                                .use { preparedStatement ->
-                                    preparedStatement.setObject(1, localDate)
                                     val resultSet = preparedStatement.executeQuery()
                                     resultSet.next()
                                     resultSet.getDate(1).toLocalDate() shouldBe localDate
@@ -329,7 +315,7 @@ class SvdbDriverTest : FunSpec() {
                     test("Проверяем запрос c параметром Time") {
                         getConnection(driver).use { connection ->
                             val literal = Time(System.currentTimeMillis())
-                            connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1")
                                 .use { preparedStatement ->
                                     preparedStatement.setTime(1, literal)
                                     val resultSet = preparedStatement.executeQuery()
@@ -342,7 +328,7 @@ class SvdbDriverTest : FunSpec() {
                     test("Проверяем запрос c параметром Timestamp") {
                         getConnection(driver).use { connection ->
                             val literal = Timestamp(System.currentTimeMillis())
-                            connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1")
                                 .use { preparedStatement ->
                                     preparedStatement.setTimestamp(1, literal)
                                     val resultSet = preparedStatement.executeQuery()
@@ -352,22 +338,9 @@ class SvdbDriverTest : FunSpec() {
                         }
                     }
 
-                    test("Проверяем запрос c параметром Instant передача как object") {
-                        getConnection(driver).use { connection ->
-                            val literal = Instant.ofEpochMilli(Date().time)
-                            connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
-                                .use { preparedStatement ->
-                                    preparedStatement.setObject(1, literal)
-                                    val resultSet = preparedStatement.executeQuery()
-                                    resultSet.next()
-                                    Instant.ofEpochMilli(resultSet.getTime(1).time) shouldBe literal
-                                }
-                        }
-                    }
-
                     test("Проверяем запрос с null") {
                         getConnection(driver).use { connection ->
-                            connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1")
                                 .use { preparedStatement ->
                                     preparedStatement.setNull(1, Types.VARCHAR)
                                     val resultSet = preparedStatement.executeQuery()
@@ -397,7 +370,7 @@ class SvdbDriverTest : FunSpec() {
                         getConnection(driver).use { connection ->
                             val literal = arrayOf("frist", "second")
                             val sqlArray = connection.createArrayOf("text", literal)
-                            connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1")
                                 .use { preparedStatement ->
                                     preparedStatement.setArray(1, sqlArray)
                                     val resultSet = preparedStatement.executeQuery()
@@ -411,7 +384,7 @@ class SvdbDriverTest : FunSpec() {
                         getConnection(driver).use { connection ->
                             val literal = arrayOf(arrayOf("frist", "second"), arrayOf("third"))
                             val sqlArray = connection.createArrayOf("text", literal)
-                            connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1")
                                 .use { preparedStatement ->
                                     preparedStatement.setArray(1, sqlArray)
                                     val resultSet = preparedStatement.executeQuery()
@@ -421,23 +394,10 @@ class SvdbDriverTest : FunSpec() {
                         }
                     }
 
-                    test("Проверяем запрос c параметром который не поддерживается") {
-                        getConnection(driver).use { connection ->
-                            val literal = arrayListOf("param")
-                            shouldThrow<SQLException> {
-                                connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
-                                    .use { preparedStatement ->
-                                        preparedStatement.setObject(1, literal)
-                                        preparedStatement.executeQuery()
-                                    }
-                            }
-                        }
-                    }
-
                     test("Проверяем, что есть восстановление если не будет uid для prepare query") {
                         getConnection(driver).use { connection ->
                             val literal = "kkk"
-                            connection.prepareStatement("select \$1 $SDQL_DRIVER_PROTOCOL_V1")
+                            connection.prepareStatement("select \$1")
                                 .use { preparedStatement ->
                                     preparedStatement.setString(1, literal)
                                     preparedStatement.executeQuery().also {
@@ -548,7 +508,7 @@ class SvdbDriverTest : FunSpec() {
                     test("Таймаут при долгом запросе") {
                         shouldThrow<SQLTimeoutException> {
                             getConnection(driver, timeout = 1).createStatement()
-                                .executeQuery("select * from debug.long $SDQL_DRIVER_PROTOCOL_V1")
+                                .executeQuery("select * from debug.long")
                                 .also {
                                     while (it.next()) {
                                     }
@@ -561,7 +521,7 @@ class SvdbDriverTest : FunSpec() {
                             getConnection(
                                 driver,
                                 timeout = 1
-                            ).prepareStatement("select * from debug.long $SDQL_DRIVER_PROTOCOL_V1")
+                            ).prepareStatement("select * from debug.long")
                                 .use { preparedStatement ->
                                     val resultSet = preparedStatement.executeQuery()
                                     while (resultSet.next()) {
@@ -574,7 +534,7 @@ class SvdbDriverTest : FunSpec() {
                         shouldNotThrowAny {
                             getConnection(driver, timeout = 1).use { connection ->
                                 connection.createStatement().use {
-                                    it.executeQuery("select * from demo.inns $SDQL_DRIVER_PROTOCOL_V1")
+                                    it.executeQuery("select * from demo.inns")
                                         .use { resultSet ->
                                             while (resultSet.next()) {
                                             }
