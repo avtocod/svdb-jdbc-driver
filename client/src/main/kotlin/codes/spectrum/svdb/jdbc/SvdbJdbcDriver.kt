@@ -3,6 +3,7 @@ package codes.spectrum.svdb.jdbc
 import codes.spectrum.commons.ExceptionGroup
 import codes.spectrum.svdb.NativeDriver
 import codes.spectrum.svdb.ProjectInfo
+import codes.spectrum.svdb.SvdbConnection
 import codes.spectrum.svdb.SvdbCreds
 import kotlinx.coroutines.runBlocking
 import java.sql.Connection
@@ -19,6 +20,8 @@ class SvdbJdbcDriver(
     private val nativeDriver: NativeDriver = NativeDriver()
 ) : Driver {
     companion object {
+        private val svdbUrlPrefix = """^(jdbc-svdb://)|(svdb://)""".toRegex()
+
         init {
             register()
         }
@@ -39,10 +42,8 @@ class SvdbJdbcDriver(
     var connectionsCount: Int = 0
         private set
 
-    private val cleanUrlPrefix = """^(jdbc-svdb://)|(svdb://)""".toRegex()
-
     internal fun parseUrl(url: String): SvdbJdbcUrl {
-        val cleanedUrl = url.replace(cleanUrlPrefix, "")
+        val cleanedUrl = url.replace(svdbUrlPrefix, "")
         val (host, portStr) = cleanedUrl.split(":")
         val port = try {
             portStr.toInt()
@@ -103,7 +104,7 @@ class SvdbJdbcDriver(
     }
 
     override fun acceptsURL(url: String): Boolean {
-        return url.startsWith("svdb://") || url.startsWith("jdbc-svdb://")
+        return url.contains(svdbUrlPrefix)
     }
 
     override fun getPropertyInfo(url: String?, info: Properties?): Array<DriverPropertyInfo> {
@@ -111,7 +112,7 @@ class SvdbJdbcDriver(
     }
 
     override fun getMajorVersion(): Int {
-        return ProjectInfo.version.split(".")[0].toInt()
+        return ProjectInfo.version.substringBefore(".").toInt()
     }
 
     override fun getMinorVersion(): Int {

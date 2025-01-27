@@ -4,6 +4,7 @@ import codes.spectrum.commons.Effective
 import codes.spectrum.commons.toInt
 import codes.spectrum.svdb.ISvdbCursor
 import codes.spectrum.svdb.SvdbStateCodes
+import codes.spectrum.svdb.SvdbStateTypes
 import codes.spectrum.svdb.model.v1.*
 import codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType
 import com.google.protobuf.ByteString
@@ -25,7 +26,7 @@ class SvdbJdbcResultSet(
     private val prefetchQueueRecords: Queue<RecordOuterClass.Record> = LinkedList()
     private val columnsData: MutableList<ColumnOuterClass.Column> = mutableListOf()
     private val warningsQueue: Queue<WarningOuterClass.Warning> = LinkedList()
-    private var lastResult: Queryresult.QueryResult = queryResult { state = state { type = "OK" } }
+    private var lastResult: Queryresult.QueryResult = queryResult { state = state { type = SvdbStateTypes.OK.toString() } }
     private var wasFirst = false
     private var internalIsClosed = false
 
@@ -46,7 +47,7 @@ class SvdbJdbcResultSet(
         checkIsClosed()
 
         // если была ошибка, то больше данных нет
-        if (lastResult.state.type == "ERROR") {
+        if (lastResult.state.type == SvdbStateTypes.ERROR.toString()) {
             if (lastResult.state.code == SvdbStateCodes.TIMEOUT.intValue) {
                 throw SQLTimeoutException("(${lastResult.state.code}) ${lastResult.state.message}")
             }
@@ -62,11 +63,11 @@ class SvdbJdbcResultSet(
 
         // если prefetch очереди нет, а при этом последний результат был EOF,
         // то данных больше нет
-        if (lastResult.state.type == "EOF") {
+        if (lastResult.state.type == SvdbStateTypes.EOF.toString()) {
             return false
         }
 
-        while (lastResult.state.type == "OK" && prefetchQueueRecords.size == 0
+        while (lastResult.state.type == SvdbStateTypes.OK.toString() && prefetchQueueRecords.size == 0
         ) {
             read()
         }
@@ -75,7 +76,12 @@ class SvdbJdbcResultSet(
     }
 
     private fun checkIsClosed() {
-        if (internalIsClosed) throw SQLException("This ResultSet is closed.", SvdbJdbcState.OBJECT_NOT_IN_STATE.code)
+        if (internalIsClosed) {
+            throw SQLException(
+                "This ResultSet is closed.",
+                SvdbJdbcState.OBJECT_NOT_IN_STATE.code)
+        }
+
     }
 
     override fun <T : Any?> unwrap(iface: Class<T>?): T  = TODO("method name ${retriveFunName()} called")

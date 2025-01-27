@@ -6,7 +6,9 @@ class SvdbJdbcFileLogger(path: String) {
     private val file = File(path)
 
     fun log(message: String) {
-        file.appendText(message)
-        file.appendText(System.lineSeparator())
+        file.bufferedWriter().use {
+            it.write(message)
+            it.newLine()
+        }
     }
 }

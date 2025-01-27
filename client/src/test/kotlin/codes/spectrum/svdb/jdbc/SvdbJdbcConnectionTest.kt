@@ -1,5 +1,6 @@
 package codes.spectrum.svdb.jdbc
 
+import codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldContain
@@ -43,7 +44,7 @@ class SvdbJdbcConnectionTest : FunSpec() {
                     schema = "fssp",
                     table = "source",
                     name = "first_name",
-                    type_name = "STRING",
+                    type = DataType.STRING,
                     description = "имя",
                     position = 5,
                     isNull = true

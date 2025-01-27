@@ -1,6 +1,5 @@
 package codes.spectrum.svdb
 
-import codes.spectrum.*
 import codes.spectrum.commons.*
 import codes.spectrum.svdb.jdbc.unmarshalByteField
 import codes.spectrum.svdb.model.v1.*
@@ -62,7 +61,7 @@ class SvdbConnection(
                 exceptions = mutableListOf()
             )
         )
-        for (it in retryIntervals) {
+        for (it in RETRY_INTERVALS) {
             delay(it)
             try {
                 runBlocking { result = internalExecuteQuery(queryText, params, startTime) }
@@ -161,7 +160,7 @@ class SvdbConnection(
         // если получили 502 Bad Gateway или RST_STREAM closed stream,
         // то уходим на политику ретрая через 0, 100 мс, 300 мс, 1 с, 3 с, 10 с
         lateinit var lastError: Throwable
-        for (it in retryIntervals) {
+        for (it in RETRY_INTERVALS) {
             delay(it)
             try {
                 return internalExecuteList(queryText, params, startTime)
@@ -246,14 +245,14 @@ class SvdbConnection(
 
     companion object {
         // текст часто содержится в исключении, если произошел разрыв соединения
-        val RST_STREAM_ERROR_TEXT = "RST_STREAM closed stream"
+        const val RST_STREAM_ERROR_TEXT = "RST_STREAM closed stream"
 
         // текст содержащийся в 502 ошибке с nginx
-        val CODE_502 = "HTTP status code 502"
+        const val CODE_502 = "HTTP status code 502"
 
         // определяет интервал между попытками подключится
-        val retryIntervals = mutableListOf(0, 100L, 300L, 1000L, 3000L, 10000L)
+        val RETRY_INTERVALS = mutableListOf(0, 100L, 300L, 1000L, 3000L, 10000L)
 
-        private val DRIVER_TAG_MARKER = Regex("\\s+@D\\s+")
+        val DRIVER_TAG_MARKER = Regex("\\s+@D\\s+")
     }
 }

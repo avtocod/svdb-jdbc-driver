@@ -1,6 +1,7 @@
 package codes.spectrum.svdb.jdbc
 
 import codes.spectrum.svdb.*
+import codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType
 import com.google.common.cache.Cache
 import com.google.common.cache.CacheBuilder
 import kotlinx.coroutines.runBlocking
@@ -23,21 +24,13 @@ class SvdbJdbcConnection(
      * Кеш prepare запросов key - sql запрос, value - uid
      */
     private val cache: Cache<String, String> by lazy {
-        CacheBuilder.newBuilder().maximumSize(cacheMaximumSize).build()
+        CacheBuilder.newBuilder().maximumSize(CACHE_MAXIMUM_SIZE).build()
     }
 
-    internal val svdbJdbcSysData: SvdbJdbcSysData by UpdatableLazyDelegate(refreshTime) {
+    internal val svdbJdbcSysData: SvdbJdbcSysData by UpdatableLazyDelegate(REFRESH_TIME_MS) {
         runBlocking {
             val tablesMap: List<Map<String, String>> = svdbConnection.executeList("select * from sys.tables")
                 .map { row -> row.toStringMap() }
-            val schemas: List<Schema> = tablesMap.map {
-                (it["schema"] ?: "") to ((it["table_name"] ?: "") to (it["comment"] ?: ""))
-            }.groupBy({ it.first }) { it.second }
-                .map { entry ->
-                    Schema(entry.key, entry.value.map {
-                        Table(it.first, it.second)
-                    })
-                }.distinct()
 
             val catalogs: Map<String, List<String>> = tablesMap.map {
                 (it["catalog"] ?: "") to (it["schema"] ?: "")
@@ -51,7 +44,12 @@ class SvdbJdbcConnection(
                     SvdbJdbcCatalog(
                         name = name,
                         schemas = catalogs.getOrDefault(name, listOf())
-                            .map { catalogName -> schemas.first { it.name == catalogName } }
+                            .map { schema ->
+                                Schema(schema, tablesMap
+                                    .filter { it["schema"] == schema }
+                                    .map { Table(it["table_name"] ?: "", it["comment"] ?: "") }
+                                )
+                            }
                     )
                 }
 
@@ -62,7 +60,7 @@ class SvdbJdbcConnection(
                     schema = it["schema"] ?: "",
                     table = it["table_name"] ?: "",
                     name = it["field_name"] ?: "",
-                    type_name = it["type"] ?: "",
+                    type = DataType.valueOf(it["type"] ?: "UNDEFINED"),
                     description = it["comment"] ?: "",
                     position = it["idx"]?.toInt()?.plus(1) ?: -1,
                     isNull = it["is_null"]?.toBoolean() ?: false
@@ -310,12 +308,12 @@ class SvdbJdbcConnection(
     }
 
     companion object {
-        const val DEFAULT_DATABASE = "data"
+        private const val DEFAULT_DATABASE = "data"
 
-        const val DEFAULT_USERNAME = "default"
+        private const val DEFAULT_USERNAME = "default"
 
-        const val refreshTime = 5 * 1000L
+        private const val REFRESH_TIME_MS = 5 * 1000L
 
-        const val cacheMaximumSize = 1000L
+        private const val CACHE_MAXIMUM_SIZE = 1000L
     }
 }
