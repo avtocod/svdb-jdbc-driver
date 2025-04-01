@@ -376,7 +376,7 @@ class SvdbDatabaseMetaData(
     override fun dataDefinitionIgnoredInTransactions(): Boolean = false
 
     override fun getProcedures(catalog: String?, schemaPattern: String?, procedureNamePattern: String?): ResultSet {
-       return SvdbJdbcStaticStringResultSet(sequenceOf(), "PROCEDURES")
+       return SvdbJdbcStaticStringResultSet(sequenceOf())
     }
 
     override fun getProcedureColumns(
@@ -396,24 +396,24 @@ class SvdbDatabaseMetaData(
             svdbJdbcSysData.toSchemasTablesScv(
                 catalog = catalog,
                 schema = schemaPattern
-            ), "tables"
+            ),
         )
     }
 
     override fun getSchemas(): ResultSet {
-        return SvdbJdbcStaticStringResultSet(svdbJdbcSysData.toSchemasScv(), "schemas")
+        return SvdbJdbcStaticStringResultSet(svdbJdbcSysData.toSchemasScv())
     }
 
     override fun getSchemas(catalog: String?, schemaPattern: String?): ResultSet {
-        return SvdbJdbcStaticStringResultSet(svdbJdbcSysData.toSchemasScv(catalog = catalog), "schemas")
+        return SvdbJdbcStaticStringResultSet(svdbJdbcSysData.toSchemasScv(catalog = catalog))
     }
 
     override fun getCatalogs(): ResultSet {
-        return SvdbJdbcStaticStringResultSet(svdbJdbcSysData.toCatalogsScv(), "databases")
+        return SvdbJdbcStaticStringResultSet(svdbJdbcSysData.toCatalogsScv())
     }
 
     override fun getTableTypes(): ResultSet {
-        return SvdbJdbcStaticStringResultSet(sequenceOf("TABLE_TYPE", "TABLE"), "schemas")
+        return SvdbJdbcStaticStringResultSet(sequenceOf("TABLE_TYPE", "TABLE"))
     }
 
     override fun getColumns(
@@ -423,7 +423,7 @@ class SvdbDatabaseMetaData(
         columnNamePattern: String?
     ): ResultSet {
         return SvdbJdbcStaticStringResultSet(
-            svdbJdbcSysData.toFieldsScv(catalog = catalog, schema = schemaPattern, table = tableNamePattern), "columns"
+            svdbJdbcSysData.toFieldsScv(catalog = catalog, schema = schemaPattern, table = tableNamePattern),
         )
     }
 
@@ -447,15 +447,15 @@ class SvdbDatabaseMetaData(
     override fun getVersionColumns(catalog: String?, schema: String?, table: String?): ResultSet  = TODO("method name ${retriveFunName()} called")
 
     override fun getPrimaryKeys(catalog: String?, schema: String?, table: String?): ResultSet {
-       return SvdbJdbcStaticStringResultSet(sequenceOf(), "KEYS")
+       return SvdbJdbcStaticStringResultSet(sequenceOf())
     }
 
     override fun getImportedKeys(catalog: String?, schema: String?, table: String?): ResultSet {
-        return SvdbJdbcStaticStringResultSet(sequenceOf(), "KEYS")
+        return SvdbJdbcStaticStringResultSet(sequenceOf())
     }
 
     override fun getExportedKeys(catalog: String?, schema: String?, table: String?): ResultSet {
-        return SvdbJdbcStaticStringResultSet(sequenceOf(), "KEYS")
+        return SvdbJdbcStaticStringResultSet(sequenceOf())
     }
 
     override fun getCrossReference(
@@ -468,7 +468,7 @@ class SvdbDatabaseMetaData(
     ): ResultSet  = TODO("method name ${retriveFunName()} called")
 
     override fun getTypeInfo(): ResultSet {
-        return SvdbJdbcStaticStringResultSet(sequenceOf("TABLE_CAT", "text"), "types")
+        return SvdbJdbcStaticStringResultSet(sequenceOf("TABLE_CAT", "text"))
     }
 
     override fun getIndexInfo(
@@ -478,7 +478,7 @@ class SvdbDatabaseMetaData(
         unique: Boolean,
         approximate: Boolean
     ): ResultSet {
-        return SvdbJdbcStaticStringResultSet(sequenceOf(), "INDEXES")
+        return SvdbJdbcStaticStringResultSet(sequenceOf())
     }
 
     override fun supportsResultSetType(type: Int): Boolean  = TODO("method name ${retriveFunName()} called")
