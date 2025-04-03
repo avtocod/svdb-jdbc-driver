@@ -43,9 +43,13 @@ internal class SessionInterceptor(private val creds: SvdbCreds) : ClientIntercep
         next: Channel?
     ): ClientCall<ReqT, RespT> {
         return object :
-            ForwardingClientCall.SimpleForwardingClientCall<ReqT, RespT>(next!!.newCall(method, callOptions)) {
+            ForwardingClientCall.SimpleForwardingClientCall<ReqT, RespT>(requireNotNull(next) {
+                "interceptor called with null channel"
+            }.newCall(method, callOptions)) {
             override fun start(responseListener: Listener<RespT>?, headers: Metadata?) {
-                headers!!.put(
+                requireNotNull(headers) {
+                    "interceptor call metadata is null"
+                }.put(
                     Metadata.Key.of(AUTHORIZATION_HEADER, Metadata.ASCII_STRING_MARSHALLER),
                     creds.toAuthorizationHeader()
                 )

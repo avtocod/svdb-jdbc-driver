@@ -2,6 +2,7 @@ package codes.spectrum.svdb.jdbc
 
 import codes.spectrum.svdb.ISvdbCursor
 import codes.spectrum.svdb.SvdbConnection
+import codes.spectrum.svdb.SvdbConnection.Companion.DRIVER_TAG_MARKER
 import codes.spectrum.svdb.SvdbNull
 import codes.spectrum.svdb.model.v1.ColumnOuterClass
 import com.google.common.cache.Cache
@@ -33,7 +34,7 @@ class SvdbJdbcPreparedStatement(
         val cursor = connection.executeQuery("$PREPARE_PREFIX $sql").getOrThrow()
         return SvdbJdbcResultSet(cursor).let {
             it.next()
-            it.getString(1) ?: error("Cannot get uid for prepare query: $sql")
+            it.getString(PREPARED_QUERY_UID_FIELD_NAME) ?: error("Cannot get uid for prepare query: $sql")
         }.also {
             cache.put(sql, it)
         }
@@ -49,7 +50,7 @@ class SvdbJdbcPreparedStatement(
     }
 
     override fun executeQuery(): ResultSet = runBlocking {
-        checkClosed()
+        ensureIsOpen()
         runWrappingSqlException(DATA_EXCEPTION) {
             val params = parameters.mapKeys { it.key.toString() }
             var result = connection.executeQuery(buildExecuteSql(uid), params)
@@ -64,13 +65,13 @@ class SvdbJdbcPreparedStatement(
 
     private fun buildExecuteSql(uid: String): String {
         var normalizedSql = "$EXECUTE_PREFIX '$uid'"
-        if (!normalizedSql.contains(" @D ")) {
+        if (DRIVER_TAG_MARKER !in normalizedSql) {
             normalizedSql += JdbcDriverQuerySuffix
         }
         return normalizedSql
     }
 
-    private fun checkClosed() {
+    private fun ensureIsOpen() {
         if (isClosed) throw SQLException("PrepareStatement has been closed", SvdbJdbcState.OBJECT_NOT_IN_STATE.code)
     }
 
@@ -111,7 +112,7 @@ class SvdbJdbcPreparedStatement(
     override fun setQueryTimeout(seconds: Int) = TODO("method name ${retriveFunName()} called")
 
     override fun cancel() {
-        checkClosed()
+        ensureIsOpen()
         cursor?.cancel()
     }
 
@@ -122,7 +123,7 @@ class SvdbJdbcPreparedStatement(
     override fun setCursorName(name: String?) = TODO("method name ${retriveFunName()} called")
 
     override fun execute(): Boolean {
-        checkClosed()
+        ensureIsOpen()
         resultSet = executeQuery()
         return true
     }
@@ -144,7 +145,7 @@ class SvdbJdbcPreparedStatement(
     }
 
     override fun getResultSet(): ResultSet {
-        checkClosed()
+        ensureIsOpen()
         return resultSet ?: throw SQLException("result set is not initialized")
     }
 
@@ -194,71 +195,71 @@ class SvdbJdbcPreparedStatement(
     override fun isCloseOnCompletion(): Boolean  = TODO("method name ${retriveFunName()} called")
 
     override fun setNull(parameterIndex: Int, sqlType: Int) {
-        checkClosed()
+        ensureIsOpen()
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.STRING, SvdbNull)
     }
 
     override fun setNull(parameterIndex: Int, sqlType: Int, typeName: String?) {
-        checkClosed()
+        ensureIsOpen()
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.STRING, SvdbNull)
     }
 
     override fun setBoolean(parameterIndex: Int, x: Boolean) {
-        checkClosed()
+        ensureIsOpen()
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.BOOL, x)
     }
 
     override fun setByte(parameterIndex: Int, x: Byte) {
-        checkClosed()
+        ensureIsOpen()
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x)
     }
 
     override fun setShort(parameterIndex: Int, x: Short) {
-        checkClosed()
+        ensureIsOpen()
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x)
     }
 
     override fun setInt(parameterIndex: Int, x: Int) {
-        checkClosed()
+        ensureIsOpen()
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x)
     }
 
     override fun setLong(parameterIndex: Int, x: Long) {
-        checkClosed()
+        ensureIsOpen()
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.INT, x)
     }
 
     override fun setFloat(parameterIndex: Int, x: Float) {
-        checkClosed()
+        ensureIsOpen()
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.FLOAT, x)
     }
 
     override fun setDouble(parameterIndex: Int, x: Double) {
-        checkClosed()
+        ensureIsOpen()
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.FLOAT, x)
     }
 
     override fun setBigDecimal(parameterIndex: Int, x: BigDecimal) {
-        checkClosed()
+        ensureIsOpen()
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.DECIMAL, x)
     }
 
     override fun setString(parameterIndex: Int, x: String) {
-        checkClosed()
+        ensureIsOpen()
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.STRING, x)
     }
 
     override fun setBytes(parameterIndex: Int, x: ByteArray)  = TODO("method name ${retriveFunName()} called")
 
     override fun setDate(parameterIndex: Int, x: Date) {
-        checkClosed()
+        ensureIsOpen()
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.TIMESTAMP, x.toLocalDate())
     }
 
     override fun setDate(parameterIndex: Int, x: Date?, cal: Calendar)  = TODO("method name ${retriveFunName()} called")
 
     override fun setTime(parameterIndex: Int, x: Time) {
-        checkClosed()
+        ensureIsOpen()
         // Внутри используем long
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.TIMESTAMP, x.time)
     }
@@ -266,7 +267,7 @@ class SvdbJdbcPreparedStatement(
     override fun setTime(parameterIndex: Int, x: Time?, cal: Calendar?)  = TODO("method name ${retriveFunName()} called")
 
     override fun setTimestamp(parameterIndex: Int, x: Timestamp) {
-        checkClosed()
+        ensureIsOpen()
         // Внутри используем long
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.TIMESTAMP, x.time)
     }
@@ -288,14 +289,14 @@ class SvdbJdbcPreparedStatement(
     override fun setBinaryStream(parameterIndex: Int, x: InputStream?)  = TODO("method name ${retriveFunName()} called")
 
     override fun clearParameters() {
-        checkClosed()
+        ensureIsOpen()
         parameters.clear()
     }
 
     override fun setObject(parameterIndex: Int, x: Any?, targetSqlType: Int)  = TODO("method name ${retriveFunName()} called")
 
     override fun setObject(paramIdx: Int, x: Any) {
-        checkClosed()
+        ensureIsOpen()
         when (x) {
             is Boolean -> parameters[paramIdx] = SvdbJdbcParameter(ColumnOuterClass.DataType.BOOL, x)
 
@@ -349,7 +350,7 @@ class SvdbJdbcPreparedStatement(
     override fun setClob(parameterIndex: Int, reader: Reader?)  = TODO("method name ${retriveFunName()} called")
 
     override fun setArray(parameterIndex: Int, x: java.sql.Array) {
-        checkClosed()
+        ensureIsOpen()
         parameters[parameterIndex] = SvdbJdbcParameter(ColumnOuterClass.DataType.ARRAY, x.array)
     }
 
@@ -376,6 +377,8 @@ class SvdbJdbcPreparedStatement(
     override fun setSQLXML(parameterIndex: Int, xmlObject: SQLXML?)  = TODO("method name ${retriveFunName()} called")
 
     companion object {
+        const val PREPARED_QUERY_UID_FIELD_NAME = "uid"
+
         const val EXECUTE_PREFIX = "EXECUTE"
 
         const val PREPARE_PREFIX = "PREPARE"

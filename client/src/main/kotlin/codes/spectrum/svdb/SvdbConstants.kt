@@ -1,6 +1,7 @@
 package codes.spectrum.svdb
 
 enum class SvdbStateTypes(val stringValue: String) {
+    OK("OK"),
     EOF("EOF"),
     ERROR("ERROR"),
 }

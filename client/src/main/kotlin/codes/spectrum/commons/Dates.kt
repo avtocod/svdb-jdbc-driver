@@ -76,22 +76,22 @@ val MAX_NULL_LOCAL_DATE_TIME = LocalDateTime.of(MAX_YEAR, 1, 1, 0, 0, 0)
 /**
  * Логический null для [Date] в позиции "от"
  */
-val MIN_NULL_DATE = ISO_DATE_FORMATTER.parse("1800-01-01T00:00:00.000+0000")
+val MIN_NULL_DATE = ISO_DATE_FORMATTER.parse("${MIN_YEAR}-01-01T00:00:00.000+0000")
 
 /**
  * Логический null для [Date] в позиции "до"
  */
-val MAX_NULL_DATE = ISO_DATE_FORMATTER.parse("3000-01-01T00:00:00.000+0000")
+val MAX_NULL_DATE = ISO_DATE_FORMATTER.parse("${MAX_YEAR}-01-01T00:00:00.000+0000")
 
 /**
  * Логический null для [Instant] в позиции "от"
  */
-val MIN_NULL_INSTANT = Instant.parse("1800-01-01T00:00:00.000Z")
+val MIN_NULL_INSTANT = Instant.parse("${MIN_YEAR}-01-01T00:00:00.000Z")
 
 /**
  * Логический null для [Instant] в позиции "до"
  */
-val MAX_NULL_INSTANT = Instant.parse("3000-01-01T00:00:00.00Z")
+val MAX_NULL_INSTANT = Instant.parse("${MAX_YEAR}-01-01T00:00:00.00Z")
 
 /**
  * Реализация старого сериализатора за исключением части,
