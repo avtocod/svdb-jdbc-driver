@@ -77,7 +77,7 @@ class NativeDriver {
         creds: SvdbCreds? = null,
         options: SvdbDriverOptions = SvdbDriverOptions.DEFAULT
     ): SvdbConnection {
-        val host = connection.host.replace(CLUSTER_PREFIX, "@", ignoreCase = true)
+        val host = connection.host.replace(CLUSTER_PREFIX, URL_NODE_RANGE_MARKER, ignoreCase = true)
         val port = connection.port
         val login = creds?.login ?: connection.user.replace("~", "@")
         val pass = creds?.password ?: connection.password
@@ -102,10 +102,10 @@ class NativeDriver {
         var resolvedHost = host
         val splittedHost = host.split(".")
         val firstPart = splittedHost[0]
-        if (firstPart.contains("@")) {
-            val clusterSize = firstPart.split("@")[1].toInt()
+        if (firstPart.contains(URL_NODE_RANGE_MARKER)) {
+            val clusterSize = firstPart.split(URL_NODE_RANGE_MARKER)[1].toInt()
             val nodeNumber = Random.nextInt(1..clusterSize)
-            resolvedHost = firstPart.split("@")[0] + "${nodeNumber}.${splittedHost.drop(1).joinToString(".")}"
+            resolvedHost = firstPart.substringBefore(URL_NODE_RANGE_MARKER) + "${nodeNumber}.${splittedHost.drop(1).joinToString(".")}"
         }
 
         if (options.useMTLS) {
@@ -186,6 +186,7 @@ class NativeDriver {
 
     companion object {
         private const val CLUSTER_PREFIX = "SVDBCLSTR-"
+        private const val URL_NODE_RANGE_MARKER = "@"
     }
 }
 

@@ -40,9 +40,8 @@ fun getIndexByLabel(
 fun QueryResult.at(rowIndex : Int, colIndex: Int): Any? {
     val row = this.getRecords(rowIndex)
     val value = row.getFields(colIndex)
-    val item = value
     val type = this.columnsList[colIndex].dataType
-    return unmarshalByteField(item, type)
+    return unmarshalByteField(value, type)
 }
 
 

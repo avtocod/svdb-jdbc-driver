@@ -10,8 +10,7 @@ import java.sql.Date
 import java.util.*
 
 class SvdbJdbcStaticStringResultSet(
-    s: Sequence<String>,
-    private val tableName: String,
+    result: Sequence<String>,
     separator: String = FIELD_SEPARATOR
 ): ResultSet {
     private val iterator: Iterator<String>
@@ -19,7 +18,7 @@ class SvdbJdbcStaticStringResultSet(
     private var record: List<String>? = null
 
     init {
-        iterator = s.iterator()
+        iterator = result.iterator()
 
         val firstRow = if (iterator.hasNext()) {
             iterator.next()
