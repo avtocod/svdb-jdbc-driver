@@ -52,7 +52,7 @@ class SvdbJdbcAutoDriverLoader: Closeable {
 
         // должен быть заменен на URL, где хостится jar драйвера,
         // обычно заменяет build.gradle.kts из env SVDB_DRIVER_JAR_URL
-        const val DEFAULT_JAR_URL = "https://nexus.spectrumdata.tech/repository/bin/projdata%2Fsd3%2Fsvdb%2Fmaster%2Fsvdb-jdbc.jar"
+        const val DEFAULT_JAR_URL = "https://nexus.spectrumdata.tech/repository/bin/projdata/sd3/svdb-jdbc-driver/master/svdb-jdbc-driver-jdbc.jar"
 
         const val DEFAULT_DRIVER_CLASS_NAME = "codes.spectrum.svdb.jdbc.SvdbJdbcDriver"
 
