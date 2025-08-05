@@ -24,12 +24,12 @@ public object CancelOptionsKt {
   ) {
     public companion object {
       @kotlin.jvm.JvmSynthetic
-      @kotlin.PublishedApi
+    @kotlin.PublishedApi
       internal fun _create(builder: codes.spectrum.svdb.model.v1.Cancel.CancelOptions.Builder): Dsl = Dsl(builder)
     }
 
     @kotlin.jvm.JvmSynthetic
-    @kotlin.PublishedApi
+  @kotlin.PublishedApi
     internal fun _build(): codes.spectrum.svdb.model.v1.Cancel.CancelOptions = _builder.build()
 
     /**
@@ -40,11 +40,11 @@ public object CancelOptionsKt {
      * `string sessionUid = 1;`
      */
     public var sessionUid: kotlin.String
-      @JvmName("getSessionUid")
-      get() = _builder.getSessionUid()
-      @JvmName("setSessionUid")
-      set(value) {
-        _builder.setSessionUid(value)
+      @kotlin.jvm.JvmName("getSessionUid")
+        get() = _builder.sessionUid
+      @kotlin.jvm.JvmName("setSessionUid")
+        set(value) {
+        _builder.sessionUid = value
       }
     /**
      * ```
@@ -65,11 +65,11 @@ public object CancelOptionsKt {
      * `string cursorUid = 2;`
      */
     public var cursorUid: kotlin.String
-      @JvmName("getCursorUid")
-      get() = _builder.getCursorUid()
-      @JvmName("setCursorUid")
-      set(value) {
-        _builder.setCursorUid(value)
+      @kotlin.jvm.JvmName("getCursorUid")
+        get() = _builder.cursorUid
+      @kotlin.jvm.JvmName("setCursorUid")
+        set(value) {
+        _builder.cursorUid = value
       }
     /**
      * ```

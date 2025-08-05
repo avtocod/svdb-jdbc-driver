@@ -28,12 +28,12 @@ public object FetchOptionsKt {
   ) {
     public companion object {
       @kotlin.jvm.JvmSynthetic
-      @kotlin.PublishedApi
+    @kotlin.PublishedApi
       internal fun _create(builder: codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Builder): Dsl = Dsl(builder)
     }
 
     @kotlin.jvm.JvmSynthetic
-    @kotlin.PublishedApi
+  @kotlin.PublishedApi
     internal fun _build(): codes.spectrum.svdb.model.v1.Fetch.FetchOptions = _builder.build()
 
     /**
@@ -44,11 +44,11 @@ public object FetchOptionsKt {
      * `string cursorUid = 1;`
      */
     public var cursorUid: kotlin.String
-      @JvmName("getCursorUid")
-      get() = _builder.getCursorUid()
-      @JvmName("setCursorUid")
-      set(value) {
-        _builder.setCursorUid(value)
+      @kotlin.jvm.JvmName("getCursorUid")
+        get() = _builder.cursorUid
+      @kotlin.jvm.JvmName("setCursorUid")
+        set(value) {
+        _builder.cursorUid = value
       }
     /**
      * ```
@@ -69,18 +69,18 @@ public object FetchOptionsKt {
      * `.codes.spectrum.svdb.model.v1.FetchOptions.Mode mode = 2;`
      */
     public var mode: codes.spectrum.svdb.model.v1.Fetch.FetchOptions.Mode
-      @JvmName("getMode")
-      get() = _builder.getMode()
-      @JvmName("setMode")
-      set(value) {
-        _builder.setMode(value)
+      @kotlin.jvm.JvmName("getMode")
+        get() = _builder.mode
+      @kotlin.jvm.JvmName("setMode")
+        set(value) {
+        _builder.mode = value
       }
     public var modeValue: kotlin.Int
-      @JvmName("getModeValue")
-      get() = _builder.getModeValue()
-      @JvmName("setModeValue")
-      set(value) {
-        _builder.setModeValue(value)
+      @kotlin.jvm.JvmName("getModeValue")
+        get() = _builder.modeValue
+      @kotlin.jvm.JvmName("setModeValue")
+        set(value) {
+        _builder.modeValue = value
       }
     /**
      * ```

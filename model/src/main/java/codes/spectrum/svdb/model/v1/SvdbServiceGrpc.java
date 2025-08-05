@@ -17,9 +17,6 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  *    последовательный Fetch из него - по одной записи или батчами
  * </pre>
  */
-@javax.annotation.Generated(
-    value = "by gRPC proto compiler (version 1.65.1)",
-    comments = "Source: v1/dbservice.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class SvdbServiceGrpc {
 
@@ -164,6 +161,21 @@ public final class SvdbServiceGrpc {
         }
       };
     return SvdbServiceStub.newStub(factory, channel);
+  }
+
+  /**
+   * Creates a new blocking-style stub that supports all types of calls on the service
+   */
+  public static SvdbServiceBlockingV2Stub newBlockingV2Stub(
+      io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory<SvdbServiceBlockingV2Stub> factory =
+      new io.grpc.stub.AbstractStub.StubFactory<SvdbServiceBlockingV2Stub>() {
+        @java.lang.Override
+        public SvdbServiceBlockingV2Stub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+          return new SvdbServiceBlockingV2Stub(channel, callOptions);
+        }
+      };
+    return SvdbServiceBlockingV2Stub.newStub(factory, channel);
   }
 
   /**
@@ -378,6 +390,88 @@ public final class SvdbServiceGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service SvdbService.
+   * <pre>
+   * интерфейс основного сервиса для удаленного обмена данными
+   * 1. При установке соединения и успешной аутентификации клиент открывает сессию
+   * 2. Команды выполняются в рамках сессии
+   * 3. C закрытием соединения закроется и сессия
+   * 4. В версии 0.1.0 - 0.2.0 позволяет открыть один запрос и при 
+   *    запросе следующего он будет закрыт, более полное API подразумевает
+   *    дизайн с несколькими одновременными результатами (это сразу будет сделано, 
+   *    но только для embedded режима, а не на gRPC), публикация на gRPC будет
+   *    уточнене после опытной эксплуатации
+   * 5. получив корректный ответ на запрос, клиент может выполнять 
+   *    последовательный Fetch из него - по одной записи или батчами
+   * </pre>
+   */
+  public static final class SvdbServiceBlockingV2Stub
+      extends io.grpc.stub.AbstractBlockingStub<SvdbServiceBlockingV2Stub> {
+    private SvdbServiceBlockingV2Stub(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      super(channel, callOptions);
+    }
+
+    @java.lang.Override
+    protected SvdbServiceBlockingV2Stub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+      return new SvdbServiceBlockingV2Stub(channel, callOptions);
+    }
+
+    /**
+     * <pre>
+     * выполняет запрос, открывает курсор и получает QueryResult, 
+     * в котором есть токен для последующих fetch
+     * в нынешней реализации 
+     * </pre>
+     */
+    public codes.spectrum.svdb.model.v1.Queryresult.QueryResult query(codes.spectrum.svdb.model.v1.Query.QueryOptions request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+          getChannel(), getQueryMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * выполняет получение следующей записи по result_uid,
+     * NOTE: в версии 0.1.0 - 0.2.0 это единственный вариант
+     * фетча - по одной записи, то есть массив records 
+     * будет из одного элемента и по текущему результату
+     * по KISS пока делаем только такую сигнатуру
+     * имеется возможность передать cursorUid
+     * в Fetch и выбрать любой курсор из текущей сессии
+     * </pre>
+     */
+    public codes.spectrum.svdb.model.v1.Queryresult.QueryResult fetch(codes.spectrum.svdb.model.v1.Fetch.FetchOptions request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+          getChannel(), getFetchMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * запрос для теста соединения
+     * реализует логику первого запроса после установки соединения
+     * для аутентификации и инициализации сессии
+     * </pre>
+     */
+    public codes.spectrum.svdb.model.v1.StateOuterClass.State ping(com.google.protobuf.Empty request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+          getChannel(), getPingMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * позволяет удалить сессию или курсор до того,
+     * как ее зачистит внутренний сборщик мусора svdb
+     * передача uid сессии при закрытии курсора обязательна!!
+     * </pre>
+     */
+    public codes.spectrum.svdb.model.v1.StateOuterClass.State cancel(codes.spectrum.svdb.model.v1.Cancel.CancelOptions request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+          getChannel(), getCancelMethod(), getCallOptions(), request);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do limited synchronous rpc calls to service SvdbService.
    * <pre>
    * интерфейс основного сервиса для удаленного обмена данными
    * 1. При установке соединения и успешной аутентификации клиент открывает сессию

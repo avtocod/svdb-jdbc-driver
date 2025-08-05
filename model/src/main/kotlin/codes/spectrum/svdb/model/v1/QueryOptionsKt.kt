@@ -27,12 +27,12 @@ public object QueryOptionsKt {
   ) {
     public companion object {
       @kotlin.jvm.JvmSynthetic
-      @kotlin.PublishedApi
+    @kotlin.PublishedApi
       internal fun _create(builder: codes.spectrum.svdb.model.v1.Query.QueryOptions.Builder): Dsl = Dsl(builder)
     }
 
     @kotlin.jvm.JvmSynthetic
-    @kotlin.PublishedApi
+  @kotlin.PublishedApi
     internal fun _build(): codes.spectrum.svdb.model.v1.Query.QueryOptions = _builder.build()
 
     /**
@@ -43,11 +43,11 @@ public object QueryOptionsKt {
      * `string text = 1;`
      */
     public var text: kotlin.String
-      @JvmName("getText")
-      get() = _builder.getText()
-      @JvmName("setText")
-      set(value) {
-        _builder.setText(value)
+      @kotlin.jvm.JvmName("getText")
+        get() = _builder.text
+      @kotlin.jvm.JvmName("setText")
+        set(value) {
+        _builder.text = value
       }
     /**
      * ```
@@ -75,8 +75,8 @@ public object QueryOptionsKt {
      */
      public val argHeads: com.google.protobuf.kotlin.DslList<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column, ArgHeadsProxy>
       @kotlin.jvm.JvmSynthetic
-      get() = com.google.protobuf.kotlin.DslList(
-        _builder.getArgHeadsList()
+  get() = com.google.protobuf.kotlin.DslList(
+        _builder.argHeadsList
       )
     /**
      * ```
@@ -87,7 +87,7 @@ public object QueryOptionsKt {
      * @param value The argHeads to add.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("addArgHeads")
+@kotlin.jvm.JvmName("addArgHeads")
     public fun com.google.protobuf.kotlin.DslList<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column, ArgHeadsProxy>.add(value: codes.spectrum.svdb.model.v1.ColumnOuterClass.Column) {
       _builder.addArgHeads(value)
     }
@@ -100,7 +100,7 @@ public object QueryOptionsKt {
      * @param value The argHeads to add.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("plusAssignArgHeads")
+@kotlin.jvm.JvmName("plusAssignArgHeads")
     @Suppress("NOTHING_TO_INLINE")
     public inline operator fun com.google.protobuf.kotlin.DslList<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column, ArgHeadsProxy>.plusAssign(value: codes.spectrum.svdb.model.v1.ColumnOuterClass.Column) {
       add(value)
@@ -114,7 +114,7 @@ public object QueryOptionsKt {
      * @param values The argHeads to add.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("addAllArgHeads")
+@kotlin.jvm.JvmName("addAllArgHeads")
     public fun com.google.protobuf.kotlin.DslList<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column, ArgHeadsProxy>.addAll(values: kotlin.collections.Iterable<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column>) {
       _builder.addAllArgHeads(values)
     }
@@ -127,7 +127,7 @@ public object QueryOptionsKt {
      * @param values The argHeads to add.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("plusAssignAllArgHeads")
+@kotlin.jvm.JvmName("plusAssignAllArgHeads")
     @Suppress("NOTHING_TO_INLINE")
     public inline operator fun com.google.protobuf.kotlin.DslList<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column, ArgHeadsProxy>.plusAssign(values: kotlin.collections.Iterable<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column>) {
       addAll(values)
@@ -142,7 +142,7 @@ public object QueryOptionsKt {
      * @param value The argHeads to set.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("setArgHeads")
+@kotlin.jvm.JvmName("setArgHeads")
     public operator fun com.google.protobuf.kotlin.DslList<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column, ArgHeadsProxy>.set(index: kotlin.Int, value: codes.spectrum.svdb.model.v1.ColumnOuterClass.Column) {
       _builder.setArgHeads(index, value)
     }
@@ -154,11 +154,10 @@ public object QueryOptionsKt {
      * `repeated .codes.spectrum.svdb.model.v1.Column argHeads = 2;`
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("clearArgHeads")
+@kotlin.jvm.JvmName("clearArgHeads")
     public fun com.google.protobuf.kotlin.DslList<codes.spectrum.svdb.model.v1.ColumnOuterClass.Column, ArgHeadsProxy>.clear() {
       _builder.clearArgHeads()
     }
-
 
     /**
      * An uninstantiable, behaviorless type to represent the field in
@@ -175,8 +174,8 @@ public object QueryOptionsKt {
      */
      public val argValues: com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, ArgValuesProxy>
       @kotlin.jvm.JvmSynthetic
-      get() = com.google.protobuf.kotlin.DslList(
-        _builder.getArgValuesList()
+  get() = com.google.protobuf.kotlin.DslList(
+        _builder.argValuesList
       )
     /**
      * ```
@@ -187,7 +186,7 @@ public object QueryOptionsKt {
      * @param value The argValues to add.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("addArgValues")
+@kotlin.jvm.JvmName("addArgValues")
     public fun com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, ArgValuesProxy>.add(value: com.google.protobuf.ByteString) {
       _builder.addArgValues(value)
     }/**
@@ -199,7 +198,7 @@ public object QueryOptionsKt {
      * @param value The argValues to add.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("plusAssignArgValues")
+@kotlin.jvm.JvmName("plusAssignArgValues")
     @Suppress("NOTHING_TO_INLINE")
     public inline operator fun com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, ArgValuesProxy>.plusAssign(value: com.google.protobuf.ByteString) {
       add(value)
@@ -212,7 +211,7 @@ public object QueryOptionsKt {
      * @param values The argValues to add.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("addAllArgValues")
+@kotlin.jvm.JvmName("addAllArgValues")
     public fun com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, ArgValuesProxy>.addAll(values: kotlin.collections.Iterable<com.google.protobuf.ByteString>) {
       _builder.addAllArgValues(values)
     }/**
@@ -224,7 +223,7 @@ public object QueryOptionsKt {
      * @param values The argValues to add.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("plusAssignAllArgValues")
+@kotlin.jvm.JvmName("plusAssignAllArgValues")
     @Suppress("NOTHING_TO_INLINE")
     public inline operator fun com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, ArgValuesProxy>.plusAssign(values: kotlin.collections.Iterable<com.google.protobuf.ByteString>) {
       addAll(values)
@@ -238,7 +237,7 @@ public object QueryOptionsKt {
      * @param value The argValues to set.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("setArgValues")
+@kotlin.jvm.JvmName("setArgValues")
     public operator fun com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, ArgValuesProxy>.set(index: kotlin.Int, value: com.google.protobuf.ByteString) {
       _builder.setArgValues(index, value)
     }/**
@@ -249,7 +248,7 @@ public object QueryOptionsKt {
      * `repeated bytes argValues = 3;`
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("clearArgValues")
+@kotlin.jvm.JvmName("clearArgValues")
     public fun com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, ArgValuesProxy>.clear() {
       _builder.clearArgValues()
     }}
