@@ -7,8 +7,8 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 plugins {
-    kotlin("jvm") version "2.0.0"
-    id("com.google.protobuf") version "0.9.4" apply false
+    kotlin("jvm") version "2.1.20"
+    id("com.google.protobuf") version "0.9.5" apply false
 }
 
 group = "codes.spectrum.svdb"
@@ -23,12 +23,12 @@ allprojects {
 
 // версии различных используемых зависимостей
 val kotestVersion = "5.9.1"
-val protobufVersion = "4.27.3"
-val grpcVersion = "1.65.1"
-val grpcKotlinStubVersion = "1.4.0"
-val grpcPluginJavaVersion = "1.65.1"
+val protobufVersion = "4.31.1"
+val grpcVersion = "1.74.0"
+val grpcKotlinStubVersion = "1.4.1"
+val grpcPluginJavaVersion = "1.74.0"
 val grpcPluginKotlinVersion = "1.4.1:jdk8@jar"
-val coroutinesVersion = "1.9.0-RC"
+val coroutinesVersion = "1.9.0"
 val gsonVersion = "2.11.0"
 
 
@@ -97,7 +97,7 @@ project("model") {
         protoc {
             artifact = "com.google.protobuf:protoc:$protobufVersion"
         }
-        generatedFilesBaseDir = "./src"
+        generatedFilesBaseDir = "$buildDir/generated/sources/proto"
         plugins {
             id("grpc") {
                 artifact = "io.grpc:protoc-gen-grpc-java:$grpcPluginJavaVersion"
@@ -116,23 +116,6 @@ project("model") {
                     id("kotlin")
                 }
             }
-        }
-    }
-
-    tasks.getByName("generateProto") {
-        doLast {
-            File("$rootDir/build/model/generated/source/proto/main/java/codes/spectrum/svdb/model/").listFiles()
-                ?.forEach { dir ->
-                    dir.listFiles()?.forEach {
-                        it.writeText("")
-                    }
-                }
-            File("$rootDir/build/model/generated/source/proto/main/kotlin/codes/spectrum/svdb/model/").listFiles()
-                ?.forEach { dir ->
-                    dir.listFiles()?.forEach {
-                        it.writeText("")
-                    }
-                }
         }
     }
 }
