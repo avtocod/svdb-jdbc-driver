@@ -97,7 +97,7 @@ project("model") {
         protoc {
             artifact = "com.google.protobuf:protoc:$protobufVersion"
         }
-        generatedFilesBaseDir = "./src"
+        generatedFilesBaseDir = "$buildDir/generated/sources/proto"
         plugins {
             id("grpc") {
                 artifact = "io.grpc:protoc-gen-grpc-java:$grpcPluginJavaVersion"
@@ -116,23 +116,6 @@ project("model") {
                     id("kotlin")
                 }
             }
-        }
-    }
-
-    tasks.getByName("generateProto") {
-        doLast {
-            File("$rootDir/build/model/generated/source/proto/main/java/codes/spectrum/svdb/model/").listFiles()
-                ?.forEach { dir ->
-                    dir.listFiles()?.forEach {
-                        it.writeText("")
-                    }
-                }
-            File("$rootDir/build/model/generated/source/proto/main/kotlin/codes/spectrum/svdb/model/").listFiles()
-                ?.forEach { dir ->
-                    dir.listFiles()?.forEach {
-                        it.writeText("")
-                    }
-                }
         }
     }
 }
