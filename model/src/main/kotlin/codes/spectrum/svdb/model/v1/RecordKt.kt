@@ -24,12 +24,12 @@ public object RecordKt {
   ) {
     public companion object {
       @kotlin.jvm.JvmSynthetic
-      @kotlin.PublishedApi
+    @kotlin.PublishedApi
       internal fun _create(builder: codes.spectrum.svdb.model.v1.RecordOuterClass.Record.Builder): Dsl = Dsl(builder)
     }
 
     @kotlin.jvm.JvmSynthetic
-    @kotlin.PublishedApi
+  @kotlin.PublishedApi
     internal fun _build(): codes.spectrum.svdb.model.v1.RecordOuterClass.Record = _builder.build()
 
     /**
@@ -47,8 +47,8 @@ public object RecordKt {
      */
      public val fields: com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, FieldsProxy>
       @kotlin.jvm.JvmSynthetic
-      get() = com.google.protobuf.kotlin.DslList(
-        _builder.getFieldsList()
+  get() = com.google.protobuf.kotlin.DslList(
+        _builder.fieldsList
       )
     /**
      * ```
@@ -59,7 +59,7 @@ public object RecordKt {
      * @param value The fields to add.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("addFields")
+@kotlin.jvm.JvmName("addFields")
     public fun com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, FieldsProxy>.add(value: com.google.protobuf.ByteString) {
       _builder.addFields(value)
     }/**
@@ -71,7 +71,7 @@ public object RecordKt {
      * @param value The fields to add.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("plusAssignFields")
+@kotlin.jvm.JvmName("plusAssignFields")
     @Suppress("NOTHING_TO_INLINE")
     public inline operator fun com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, FieldsProxy>.plusAssign(value: com.google.protobuf.ByteString) {
       add(value)
@@ -84,7 +84,7 @@ public object RecordKt {
      * @param values The fields to add.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("addAllFields")
+@kotlin.jvm.JvmName("addAllFields")
     public fun com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, FieldsProxy>.addAll(values: kotlin.collections.Iterable<com.google.protobuf.ByteString>) {
       _builder.addAllFields(values)
     }/**
@@ -96,7 +96,7 @@ public object RecordKt {
      * @param values The fields to add.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("plusAssignAllFields")
+@kotlin.jvm.JvmName("plusAssignAllFields")
     @Suppress("NOTHING_TO_INLINE")
     public inline operator fun com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, FieldsProxy>.plusAssign(values: kotlin.collections.Iterable<com.google.protobuf.ByteString>) {
       addAll(values)
@@ -110,7 +110,7 @@ public object RecordKt {
      * @param value The fields to set.
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("setFields")
+@kotlin.jvm.JvmName("setFields")
     public operator fun com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, FieldsProxy>.set(index: kotlin.Int, value: com.google.protobuf.ByteString) {
       _builder.setFields(index, value)
     }/**
@@ -121,7 +121,7 @@ public object RecordKt {
      * `repeated bytes fields = 1;`
      */
     @kotlin.jvm.JvmSynthetic
-    @kotlin.jvm.JvmName("clearFields")
+@kotlin.jvm.JvmName("clearFields")
     public fun com.google.protobuf.kotlin.DslList<com.google.protobuf.ByteString, FieldsProxy>.clear() {
       _builder.clearFields()
     }}

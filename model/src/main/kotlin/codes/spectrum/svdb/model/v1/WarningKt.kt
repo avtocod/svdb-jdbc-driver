@@ -20,12 +20,12 @@ public object WarningKt {
   ) {
     public companion object {
       @kotlin.jvm.JvmSynthetic
-      @kotlin.PublishedApi
+    @kotlin.PublishedApi
       internal fun _create(builder: codes.spectrum.svdb.model.v1.WarningOuterClass.Warning.Builder): Dsl = Dsl(builder)
     }
 
     @kotlin.jvm.JvmSynthetic
-    @kotlin.PublishedApi
+  @kotlin.PublishedApi
     internal fun _build(): codes.spectrum.svdb.model.v1.WarningOuterClass.Warning = _builder.build()
 
     /**
@@ -36,11 +36,11 @@ public object WarningKt {
      * `int32 code = 1;`
      */
     public var code: kotlin.Int
-      @JvmName("getCode")
-      get() = _builder.getCode()
-      @JvmName("setCode")
-      set(value) {
-        _builder.setCode(value)
+      @kotlin.jvm.JvmName("getCode")
+        get() = _builder.code
+      @kotlin.jvm.JvmName("setCode")
+        set(value) {
+        _builder.code = value
       }
     /**
      * ```
@@ -61,11 +61,11 @@ public object WarningKt {
      * `string state = 2;`
      */
     public var state: kotlin.String
-      @JvmName("getState")
-      get() = _builder.getState()
-      @JvmName("setState")
-      set(value) {
-        _builder.setState(value)
+      @kotlin.jvm.JvmName("getState")
+        get() = _builder.state
+      @kotlin.jvm.JvmName("setState")
+        set(value) {
+        _builder.state = value
       }
     /**
      * ```
@@ -86,11 +86,11 @@ public object WarningKt {
      * `string reason = 3;`
      */
     public var reason: kotlin.String
-      @JvmName("getReason")
-      get() = _builder.getReason()
-      @JvmName("setReason")
-      set(value) {
-        _builder.setReason(value)
+      @kotlin.jvm.JvmName("getReason")
+        get() = _builder.reason
+      @kotlin.jvm.JvmName("setReason")
+        set(value) {
+        _builder.reason = value
       }
     /**
      * ```

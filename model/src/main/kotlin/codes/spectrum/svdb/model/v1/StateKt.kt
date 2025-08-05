@@ -26,12 +26,12 @@ public object StateKt {
   ) {
     public companion object {
       @kotlin.jvm.JvmSynthetic
-      @kotlin.PublishedApi
+    @kotlin.PublishedApi
       internal fun _create(builder: codes.spectrum.svdb.model.v1.StateOuterClass.State.Builder): Dsl = Dsl(builder)
     }
 
     @kotlin.jvm.JvmSynthetic
-    @kotlin.PublishedApi
+  @kotlin.PublishedApi
     internal fun _build(): codes.spectrum.svdb.model.v1.StateOuterClass.State = _builder.build()
 
     /**
@@ -51,11 +51,11 @@ public object StateKt {
      * `int32 code = 1;`
      */
     public var code: kotlin.Int
-      @JvmName("getCode")
-      get() = _builder.getCode()
-      @JvmName("setCode")
-      set(value) {
-        _builder.setCode(value)
+      @kotlin.jvm.JvmName("getCode")
+        get() = _builder.code
+      @kotlin.jvm.JvmName("setCode")
+        set(value) {
+        _builder.code = value
       }
     /**
      * ```
@@ -87,11 +87,11 @@ public object StateKt {
      * `string type = 2;`
      */
     public var type: kotlin.String
-      @JvmName("getType")
-      get() = _builder.getType()
-      @JvmName("setType")
-      set(value) {
-        _builder.setType(value)
+      @kotlin.jvm.JvmName("getType")
+        get() = _builder.type
+      @kotlin.jvm.JvmName("setType")
+        set(value) {
+        _builder.type = value
       }
     /**
      * ```
@@ -114,11 +114,11 @@ public object StateKt {
      * `string message = 3;`
      */
     public var message: kotlin.String
-      @JvmName("getMessage")
-      get() = _builder.getMessage()
-      @JvmName("setMessage")
-      set(value) {
-        _builder.setMessage(value)
+      @kotlin.jvm.JvmName("getMessage")
+        get() = _builder.message
+      @kotlin.jvm.JvmName("setMessage")
+        set(value) {
+        _builder.message = value
       }
     /**
      * ```

@@ -7,7 +7,7 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 plugins {
-    kotlin("jvm") version "2.0.0"
+    kotlin("jvm") version "2.1.20"
     id("com.google.protobuf") version "0.9.4" apply false
 }
 
@@ -23,12 +23,12 @@ allprojects {
 
 // версии различных используемых зависимостей
 val kotestVersion = "5.9.1"
-val protobufVersion = "4.27.3"
-val grpcVersion = "1.65.1"
-val grpcKotlinStubVersion = "1.4.0"
-val grpcPluginJavaVersion = "1.65.1"
+val protobufVersion = "4.31.1"
+val grpcVersion = "1.74.0"
+val grpcKotlinStubVersion = "1.4.1"
+val grpcPluginJavaVersion = "1.74.0"
 val grpcPluginKotlinVersion = "1.4.1:jdk8@jar"
-val coroutinesVersion = "1.9.0-RC"
+val coroutinesVersion = "1.9.0"
 val gsonVersion = "2.11.0"
 
 

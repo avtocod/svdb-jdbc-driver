@@ -24,12 +24,12 @@ public object ColumnKt {
   ) {
     public companion object {
       @kotlin.jvm.JvmSynthetic
-      @kotlin.PublishedApi
+    @kotlin.PublishedApi
       internal fun _create(builder: codes.spectrum.svdb.model.v1.ColumnOuterClass.Column.Builder): Dsl = Dsl(builder)
     }
 
     @kotlin.jvm.JvmSynthetic
-    @kotlin.PublishedApi
+  @kotlin.PublishedApi
     internal fun _build(): codes.spectrum.svdb.model.v1.ColumnOuterClass.Column = _builder.build()
 
     /**
@@ -40,11 +40,11 @@ public object ColumnKt {
      * `string code = 1;`
      */
     public var code: kotlin.String
-      @JvmName("getCode")
-      get() = _builder.getCode()
-      @JvmName("setCode")
-      set(value) {
-        _builder.setCode(value)
+      @kotlin.jvm.JvmName("getCode")
+        get() = _builder.code
+      @kotlin.jvm.JvmName("setCode")
+        set(value) {
+        _builder.code = value
       }
     /**
      * ```
@@ -65,18 +65,18 @@ public object ColumnKt {
      * `.codes.spectrum.svdb.model.v1.DataType dataType = 2;`
      */
     public var dataType: codes.spectrum.svdb.model.v1.ColumnOuterClass.DataType
-      @JvmName("getDataType")
-      get() = _builder.getDataType()
-      @JvmName("setDataType")
-      set(value) {
-        _builder.setDataType(value)
+      @kotlin.jvm.JvmName("getDataType")
+        get() = _builder.dataType
+      @kotlin.jvm.JvmName("setDataType")
+        set(value) {
+        _builder.dataType = value
       }
     public var dataTypeValue: kotlin.Int
-      @JvmName("getDataTypeValue")
-      get() = _builder.getDataTypeValue()
-      @JvmName("setDataTypeValue")
-      set(value) {
-        _builder.setDataTypeValue(value)
+      @kotlin.jvm.JvmName("getDataTypeValue")
+        get() = _builder.dataTypeValue
+      @kotlin.jvm.JvmName("setDataTypeValue")
+        set(value) {
+        _builder.dataTypeValue = value
       }
     /**
      * ```
@@ -104,9 +104,9 @@ public object ColumnKt {
      */
      public val options: com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, OptionsProxy>
       @kotlin.jvm.JvmSynthetic
-      @JvmName("getOptionsMap")
+@kotlin.jvm.JvmName("getOptionsMap")
       get() = com.google.protobuf.kotlin.DslMap(
-        _builder.getOptionsMap()
+        _builder.optionsMap
       )
     /**
      * ```
@@ -115,7 +115,7 @@ public object ColumnKt {
      *
      * `map<string, string> options = 3;`
      */
-    @JvmName("putOptions")
+    @kotlin.jvm.JvmName("putOptions")
     public fun com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, OptionsProxy>
       .put(key: kotlin.String, value: kotlin.String) {
          _builder.putOptions(key, value)
@@ -128,7 +128,7 @@ public object ColumnKt {
      * `map<string, string> options = 3;`
      */
     @kotlin.jvm.JvmSynthetic
-    @JvmName("setOptions")
+@kotlin.jvm.JvmName("setOptions")
     @Suppress("NOTHING_TO_INLINE")
     public inline operator fun com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, OptionsProxy>
       .set(key: kotlin.String, value: kotlin.String) {
@@ -142,7 +142,7 @@ public object ColumnKt {
      * `map<string, string> options = 3;`
      */
     @kotlin.jvm.JvmSynthetic
-    @JvmName("removeOptions")
+@kotlin.jvm.JvmName("removeOptions")
     public fun com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, OptionsProxy>
       .remove(key: kotlin.String) {
          _builder.removeOptions(key)
@@ -155,7 +155,7 @@ public object ColumnKt {
      * `map<string, string> options = 3;`
      */
     @kotlin.jvm.JvmSynthetic
-    @JvmName("putAllOptions")
+@kotlin.jvm.JvmName("putAllOptions")
     public fun com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, OptionsProxy>
       .putAll(map: kotlin.collections.Map<kotlin.String, kotlin.String>) {
          _builder.putAllOptions(map)
@@ -168,7 +168,7 @@ public object ColumnKt {
      * `map<string, string> options = 3;`
      */
     @kotlin.jvm.JvmSynthetic
-    @JvmName("clearOptions")
+@kotlin.jvm.JvmName("clearOptions")
     public fun com.google.protobuf.kotlin.DslMap<kotlin.String, kotlin.String, OptionsProxy>
       .clear() {
          _builder.clearOptions()
